@@ -1,7 +1,7 @@
 o Leetcode 19
-- Leetcode 24
-- Leetcode 83
-- Leetcode 141
+o Leetcode 24
+o Leetcode 83
+o Leetcode 141
 - Leetcode 160
 - Leetcode 202
 - Leetcode 203
