@@ -2,9 +2,9 @@ o Leetcode 19
 o Leetcode 24
 o Leetcode 83
 o Leetcode 141
-- Leetcode 160
-- Leetcode 202
-- Leetcode 203
-- Leetcode 206
+o Leetcode 160
+o Leetcode 202
+o Leetcode 203
+o Leetcode 206
 - Leetcode 234
 - Leetcode 237
