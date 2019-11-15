@@ -1,26 +1,46 @@
-#include "Vector.h"
 #include <iostream>
 
-Vector::Vector() {
+template <class Type>
+class Vector {
+   private:
+    Type size, length;
+    Type *data;
+
+   public:
+    Vector();
+    Vector(int size_num);
+    void expand();
+    void insert(int index, Type val);
+    int search(Type val);
+    void delete_element(int index);
+    int len();
+    void output();
+};
+
+template <class Type>
+Vector<Type>::Vector() {
     size = 100;
     length = 0;
-    data = (int *)malloc(sizeof(int) * size);
+    data = (Type *)malloc(sizeof(Type) * size);
 }
 
-Vector::Vector(int size_num) {
+template <class Type>
+Vector<Type>::Vector(int size_num) {
     size = size_num;
     length = 0;
-    data = (int *)malloc(sizeof(int) * size);
+    data = (Type *)malloc(sizeof(Type) * size);
 }
 
-void Vector::expand() {
+template <class Type>
+void Vector<Type>::expand() {
     size *= 2;
-    data = (int *)realloc(data, sizeof(int) * size);
+    data = (Type *)realloc(data, sizeof(Type) * size);
     std::cout << "Expand successful.\n";
     return;
 }
 
-void Vector::insert(int index, int val) {
+template <class Type>
+void Vector<Type>::insert(int index, Type val) {
     if (index < 0 || index > length) {
         std::cout << "Insert failed! Index:" << index << std::endl;
         return;
@@ -36,16 +56,21 @@ void Vector::insert(int index, int val) {
     return;
 }
 
-int Vector::search(int val) {
+template <class Type>
+int Vector<Type>::search(Type val) {
     for (int i = 0; i < length; ++i) {
         if (data[i] == val) return i;
     }
     return -1;
 }
 
-int Vector::len() { return length; }
+template <class Type>
+int Vector<Type>::len() {
+    return length;
+}
 
-void Vector::delete_element(int index) {
+template <class Type>
+void Vector<Type>::delete_element(int index) {
     if (index < 0 || index >= length) {
         std::cout << "Delete failed! Index" << index << std::endl;
         return;
@@ -58,7 +83,8 @@ void Vector::delete_element(int index) {
     return;
 }
 
-void Vector::output() {
+template <class Type>
+void Vector<Type>::output() {
     std::cout << "Output: [";
     for (int i = 0; i < length; ++i) {
         if (i > 0) std::cout << ", ";
