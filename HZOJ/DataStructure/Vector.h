@@ -10,5 +10,6 @@ class Vector {
     void insert(int index, int val);
     int search(int val);
     void delete_element(int index);
+    int len();
     void output();
 };
