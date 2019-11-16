@@ -16,8 +16,8 @@ using namespace std;
 int cnt[MAXN];
 
 int main() {
-    int n;
+    long long n;
     cin >> n;
-    
+    cout << n;
     return 0;
 }
