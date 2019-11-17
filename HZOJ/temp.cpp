@@ -1,22 +1,18 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Created Time: 2019-11-14 14:48:00
-************************************************************/
 #include <algorithm>
-#include <cmath>
-#include <cstdio>
-#include <iomanip>
 #include <iostream>
-#include <string>
 using namespace std;
 
 int main() {
-    double a;
-    while(cin >> a) {
-        cout << setiosflags(ios::fixed) << setprecision(2);
-        cout << fabs(a) << endl;
+    int n, m, book[110];
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i) {
+        cin >> book[i];
     }
+    sort(book, book + n);
+    int ans = 0;
+    for (int i = 0; i < m; ++i) {
+        if (book[i] < 0) ans -= book[i];
+    }
+    cout << ans << endl;
     return 0;
 }
