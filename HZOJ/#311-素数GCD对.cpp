@@ -5,6 +5,7 @@
     Created Time: 2019-11-17 15:38:40
 ************************************************************/
 #include <algorithm>
+#include <cctype>
 #include <cmath>
 #include <cstdio>
 #include <iomanip>
@@ -35,11 +36,12 @@ int main() {
     prime_init();
     int n, ans = 0;
     cin >> n;
-    for(int i = 1; i <= n; ++i) {
-        for(int j = 1; j <= n; ++j) {
-            if(is_prime[gcd(i, j)]) ans++;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            if (is_prime[gcd(i, j)]) ans++;
         }
     }
+    string s = "hj";
     cout << ans << endl;
     return 0;
 }
