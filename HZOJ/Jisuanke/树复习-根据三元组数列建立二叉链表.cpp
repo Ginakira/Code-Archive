@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define TEST printf("TEST OUTPUT\n");
 
 typedef struct Node {
     char data;
@@ -43,7 +44,7 @@ int push(Queue *q, pNode p) {
 
 int pop(Queue *q) {
     if (empty(q)) return 0;
-    q->tail--;
+    q->head++;
     return 0;
 }
 
@@ -77,26 +78,43 @@ Node *build_tree() {
     Queue *q = (Queue *)malloc(sizeof(Queue));
     init_queue(q, 200);
     while (scanf("%c%c%c", &f, &c, &lr)) {
+        getchar();
         if (f == '^' && c == '^') break;
         if (f == '^') {
             root = init(c);
             push(q, root);
         } else {
-            while (!empty(q) && front(q)->data != f) pop(q);
+            while (!empty(q) && front(q)->data != f) {
+                pop(q);
+            }
             node = init_node(c);
-            if(front(q)->data == f) {
-                if(lr == 'L') front(q)->lchild = node;
-                else if(lr == 'R') front(q)->rchild = node;
+            if (!empty(q) && front(q)->data == f) {
+                if (lr == 'L')
+                    front(q)->lchild = node;
+                else if (lr == 'R')
+                    front(q)->rchild = node;
                 push(q, node);
             }
         }
     }
+    return root;
 }
 
-void output(Node *p) {}
+void output(Node *p) {
+    if (p == NULL) return;
+    printf("%c", p->data);
+    if (p->lchild || p->rchild) printf("(");
+    if (p->lchild) output(p->lchild);
+    if (p->rchild) {
+        printf(",");
+        output(p->rchild);
+    }
+    if (p->lchild || p->rchild) printf(")");
+}
 
 int main() {
     Node *root = NULL;
     root = build_tree();
+    output(root);
     return 0;
 }

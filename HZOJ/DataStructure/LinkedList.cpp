@@ -25,17 +25,22 @@ bool LinkedList::insert(int index, int val) {
     }
     Node *p = &head;
     while (index--) p = p->next;
-    
+
     //可以运行
     Node *new_node = new Node(val);
     new_node->next = p->next;
     p->next = new_node;
 
-/*  段错误
-    Node new_node(val);
+    //  段错误
+    /* Node new_node(val);
     new_node.next = p->next;
-    p->next = &new_node;
- */
+    p->next = &new_node; */
+    /* Node *node = (Node *)malloc(sizeof(Node));
+    node->data = val;
+    node->next = nullptr;
+    node->next = p->next;
+    p->next = node; */
+
     length++;
     cout << "Insert successful! (index)" << tmp << " (val)" << val << endl;
     return true;
