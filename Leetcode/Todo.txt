@@ -9,9 +9,9 @@ o Leetcode 206
 o Leetcode 234
 o Leetcode 237
 o Leetcode 100
-- Leetcode 101
-- Leetcode 102
-- Leetcode 104
+o Leetcode 101
+o Leetcode 102
+o Leetcode 104
 - Leetcode 107
 - Leetcode 110
 - Leetcode 112
