@@ -12,7 +12,7 @@ o Leetcode 100
 o Leetcode 101
 o Leetcode 102
 o Leetcode 104
-- Leetcode 107
+o Leetcode 107
 - Leetcode 110
 - Leetcode 112
 - Leetcode 111
