@@ -12,25 +12,24 @@
 #include <string>
 using namespace std;
 
+int find_sub(string s, string sub) {
+    int num = 0;
+    size_t len = sub.length();
+    if(len == 0) len = 1;
+    for(size_t i = 0; (i = s.find(sub, i)) != s.npos; ++num, i += len);
+    return num;
+}
+
 int main() {
-    int ans = 1;
+    ios_base::sync_with_stdio(false);
     string s;
     while (cin >> s) {
+        int ans = 1;
         if (s == ".") break;
         int len = s.length();
-        for (int i = 1; i < len / 2; ++i) {
-            int tmp = 0;
-            string sub = s.substr(0, i);
-            for (int j = 0; j < len; j += i) {
-                string sub2 = s.substr(0, i);
-                if (sub == sub2)
-                    tmp++;
-                else {
-                    tmp = 0;
-                    break;
-                }
-            }
-            ans = max(ans, tmp);
+        for (int i = 1; i <= len / 2; ++i) {
+            int tmp = find_sub(s, s.substr(0, i));
+            if(tmp * i == len) ans = max(ans, tmp);
         }
         cout << ans << endl;
     }
