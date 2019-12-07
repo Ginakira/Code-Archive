@@ -36,7 +36,7 @@ int main() {
             max_match = max(cnt, max_match);
         }
         max_match *= 2;
-        cout << "appx(" << a << "," << b << ") = ";
+        cout << "appx(" << a << "," << b << ")=";
         if (max_match % total_len == 0) {
             cout << max_match / total_len << "\n";
         } else {
