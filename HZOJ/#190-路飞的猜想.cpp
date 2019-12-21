@@ -1,38 +1,40 @@
+/************************************************************
+    File Name : #190-路飞的猜想.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Created Time: 2019/12/21 19:42:39
+************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <iomanip>
 #include <iostream>
 #include <string>
-#include <cstring>
-#define MAXN 8000010
 using namespace std;
+#define MAXN 8000000
 
-bool is_prime[MAXN];
+int is_prime[MAXN + 5] = {0};
+int prime[MAXN + 5] = {0};
 
 void init() {
-    is_prime[0] = is_prime[1] = false;
-    is_prime[2] = true;
-    memset(is_prime, true, sizeof(is_prime));
-    for(int i = 2; i * i <= MAXN; ++i) {
-        if(is_prime[i] == true) {
-            for(int j = i * i; j <= MAXN; j += i) {
-                is_prime[j] = false;
-            }
+    for (int i = 2; i <= MAXN; ++i) {
+        if (!is_prime[i]) prime[++prime[0]] = i;
+        for (int j = 1; j <= prime[0]; ++j) {
+            if (prime[j] * i > MAXN) break;
+            is_prime[prime[j] * i] = 1;
+            if (i % prime[j] == 0) break;
         }
     }
+    return;
 }
 
 int main() {
-    int n, cnt = 0;
-    cin >> n;
     init();
-    for(int i = 2; i <= n / 2; ++i) {
-        int j = n - i;
-        if(!is_prime[i] || !is_prime[j]) continue;
-        else if(i + j == n) {
-            cnt++;
-        }
+    int n, ans = 0;
+    cin >> n;
+    for (int i = 2; i <= n / 2; ++i) {
+        if (!is_prime[i] && !is_prime[n - i]) ans++;
     }
-    cout << cnt;
+    cout << ans << endl;
     return 0;
 }
