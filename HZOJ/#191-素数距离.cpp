@@ -1,63 +1,55 @@
+/************************************************************
+    File Name : #191-素数距离.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Created Time: 2019/12/21 20:14:20
+************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
-#include <cstring>
+#include <iomanip>
 #include <iostream>
 #include <string>
-#define MAXN 8000010
 using namespace std;
+#define MAXN 8000000
 
-bool is_prime[MAXN];
-int prime[MAXN];
+int is_prime[MAXN + 5];
+int prime[MAXN + 5];
 
-void init() {
-    is_prime[0] = is_prime[1] = false;
-    is_prime[2] = true;
-    memset(is_prime, true, sizeof(is_prime));
-    for (int i = 2; i * i <= MAXN; ++i) {
-        if (is_prime[i] == true) {
-            for (int j = i * i; j <= MAXN; j += i) {
-                is_prime[j] = false;
-            }
+void init(int n) {
+    for (int i = 2; i <= n; ++i) {
+        if (!is_prime[i]) prime[++prime[0]] = i;
+        for (int j = 1; j <= prime[0]; ++j) {
+            if (prime[j] * i > n) break;
+            is_prime[prime[j] * i] = 1;
+            if (i % prime[j] == 0) break;
         }
     }
-    for (int i = 2, j = 0; i < MAXN; ++i) {
-        if (is_prime[i]) {
-            prime[j++] = i;
-        }
-    }
+    return;
 }
 
 int main() {
-    init();
     int l, r;
     cin >> l >> r;
-    bool exsist = false;
-    int a = 0, b = 0, c = 0, d = 0;
-    int lb = 0, rb = 0;
-    for(int i = 0; prime[i] < l; ++i) lb++;
-    rb = lb;
-    for(int i = lb; prime[i] < r; ++i) rb++;
-    int maxd = -9999, mind = 0x3f3f3f3f;
-    for (int i = lb; i < rb; ++i) {
-        if (prime[i + 1] - prime[i] < mind && i + 1 < rb) {
-            mind = prime[i + 1] - prime[i];
-            a = prime[i], b = prime[i + 1];
-            exsist = true;
-        }
+    init(r);
+    int index = 1;
+    while (prime[index] < l) index++;
+    if (index == prime[0]) {
+        cout << "There are no adjacent primes.\n";
+        return 0;
     }
-    for (int i = lb; i < rb && exsist; ++i) {
-        if (prime[i + 1] - prime[i] > maxd && i + 1 < rb) {
-            maxd = prime[i + 1] - prime[i];
+    int a, b, c, d, mind = MAXN, maxd = 0;
+    for (int i = index; i < prime[0]; ++i) {
+        int dist = prime[i + 1] - prime[i];
+        if (dist > maxd) {
             c = prime[i], d = prime[i + 1];
+            maxd = dist;
+        }
+        if (dist < mind) {
+            a = prime[i], b = prime[i + 1];
+            mind = dist;
         }
     }
-    if (exsist) {
-        cout << a << "," << b << " are closest, " << c << "," << d
-             << " are most distant.";
-    } else {
-        cout << "There are no adjacent primes.";
-    }
-
+    printf("%d,%d are closest, %d,%d are most distant.\n", a, b, c, d);
     return 0;
 }
