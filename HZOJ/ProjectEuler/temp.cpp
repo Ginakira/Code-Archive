@@ -40,7 +40,7 @@ void linear_init() {
     return;
 }
 
-int main() {
+int main() {与知道内容相似度超过85%！
     linear_init();
     printf("%d prime numbers, answer: %d\n", prime[0], prime[10001]);
     return 0;
