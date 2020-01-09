@@ -1,30 +1,37 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Created Time: 2019/12/20 20:10:56
-************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <iomanip>
 #include <iostream>
-#include <string>
+#include <map>
+#include <vector>
 using namespace std;
 
-int main() {
+struct stu {
+    string s;
     int num;
-    cin >> num;
-    char *d1 = (char *)&num;
-    char *d2 = (char *)&num + 2;
-    char *d3 = (char *)&num + 3;
-    char *d4 = (char *)&num + 4;
-    *d3 = *d1;
-    *d1 = 0;
-    printf("%d\n", *d1);
-    printf("%d\n", *d2);
-    printf("%d\n", *d3);
-    printf("%d\n", *d4);
-    cout << num;
+} w[1001];
+
+bool cmp(stu a, stu b) {
+    if (a.s.size() != b.s.size())
+        return a.s.size() > b.s.size();
+    else {
+        for (int i = 0; i < b.s.size(); i++) {
+            return a.s[i] > b.s[i];
+        }
+    }
+    return true;
+}
+int main() {
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> w[i].s;
+        w[i].num = i + 1;
+    }
+    sort(w, w + n, cmp);
+    cout << w[0].num << endl;
+    cout << w[0].s << endl;
     return 0;
 }

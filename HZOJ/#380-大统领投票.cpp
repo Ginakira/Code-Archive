@@ -18,9 +18,10 @@ bool cmp(pair<int, string> a, pair<int, string> b) {
     if (a.second.length() == b.second.length()) {
         int len = a.second.length();
         for (int i = 0; i < len; ++i) {
-            if (a.second[i] > b.second[i]) return true;
+            if (a.second[i] == b.second[i]) continue;
+            return a.second[i] > b.second[i];
         }
-        return false;
+        return true;
     }
     return a.second.length() > b.second.length();
 }
