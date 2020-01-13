@@ -14,7 +14,7 @@ using namespace std;
 
 int mark[2333] = {0};
 
-int main() {
+int main() { 
     string s;
     int maxh = 0;
     while (cin >> s) {
