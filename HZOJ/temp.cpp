@@ -2,18 +2,26 @@
     File Name : temp.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/01/10 13:32:30
+    Created Time: 2020/01/22 13:14:22
 ************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 #include <string>
 using namespace std;
 
 int main() {
-    int a = 0b11111111111111100010101101010110;
-    cout << a << endl;
+    stringstream ss;
+    string input;
+    getline(cin, input);
+    ss << input;
+    int temp;
+    while (ss) {
+        ss >> temp;
+        cout << temp << endl;
+    }
     return 0;
 }
