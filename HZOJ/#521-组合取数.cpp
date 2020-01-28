@@ -10,12 +10,14 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
-#define MAXN 1000000
+#define MAXN 2000000
 
 int prime[MAXN + 5];
 int is_prime[MAXN + 5];
 int arr[35];
+int n, r, ans;
 
 void init() {
     for (int i = 2; i < MAXN; ++i) {
@@ -29,16 +31,29 @@ void init() {
     return;
 }
 
+void findCombinations(int n, int r, int begin, int sum, int cnt) {
+    if (cnt == r) {
+        ans += !is_prime[sum];
+        return;
+    }
+    for (int i = begin; i < n - (r - cnt) + 1; ++i) {
+        sum += arr[i];
+        cnt++;
+        findCombinations(n, r, i + 1, sum, cnt);
+        sum -= arr[i];
+        cnt--;
+    }
+    return;
+}
+
 int main() {
     init();
-    int n, r;
     cin >> n >> r;
     for (int i = 0; i < n; ++i) {
         cin >> arr[i];
     }
-    int ans = 0;
-    for (int i = 0; i + r < n; ++i) {
-    }
+    vector<int> pre;
+    findCombinations(n, r, 0, 0, 0);
     cout << ans << endl;
     return 0;
 }

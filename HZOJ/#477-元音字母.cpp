@@ -1,3 +1,9 @@
+/************************************************************
+    File Name : #477-元音字母.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Created Time: 2020/01/28 15:17:01
+************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
@@ -6,16 +12,20 @@
 #include <string>
 using namespace std;
 
+bool is_vowel(char c) {
+    return (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U');
+}
+
 int main() {
     string s;
-    int l = 110, r = -1;
     cin >> s;
-    for(int i = 0; i < s.length(); ++i) {
-        if(s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U') {
-            l = min(i, l);
-            r = max(i, r);
+    int pre = s.length(), ans = 1;
+    for (int i = 0; i < s.length(); ++i) {
+        if (is_vowel(s[i])) {
+            ans = max(ans, i - pre);
+            pre = i;
         }
     }
-    cout << r - l << endl;
+    cout << ans << endl;
     return 0;
 }
