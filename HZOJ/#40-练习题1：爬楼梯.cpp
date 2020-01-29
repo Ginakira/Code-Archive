@@ -15,8 +15,8 @@ using namespace std;
 int dp[505][100];
 
 void large_add(int a[], int ans[]) {
-    ans[0] = a[0];
-    for (int i = 1; i <= ans[0]; ++i) {
+    if (a[0] > ans[0]) ans[0] = a[0];
+    for (int i = 1; i <= a[0]; ++i) {
         ans[i] += a[i];
     }
     for (int i = 1; i <= ans[0]; ++i) {
@@ -33,6 +33,7 @@ void solve(int n) {
     dp[2][0] = 1, dp[2][1] = 1;
     dp[3][0] = 1, dp[3][1] = 1;
     for (int i = 4; i <= n; ++i) {
+        dp[i][0] = 1;
         large_add(dp[i - 2], dp[i]);
         large_add(dp[i - 3], dp[i]);
     }

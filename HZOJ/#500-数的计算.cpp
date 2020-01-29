@@ -1,8 +1,8 @@
 /************************************************************
-    File Name : #40-练习题1：爬楼梯.cpp
+    File Name : #500-数的计算.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/01/28 18:33:22
+    Created Time: 2020/01/28 19:45:13
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -12,18 +12,17 @@
 #include <string>
 using namespace std;
 
-long long dp[505] = {0, 0, 1, 1, 1};
-
-int solve(int n) {
-    for (int i = 5; i <= n; ++i) {
-        dp[i] = dp[i - 2] + dp[i - 3];
-    }
-    return dp[n];
-}
+long long ans[1010];
 
 int main() {
     int n;
     cin >> n;
-    cout << solve(n) << endl;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= i >> 1; ++j) {
+            ans[i] += ans[j];
+        }
+        ans[i]++;
+    }
+    cout << ans[n] << endl;
     return 0;
 }
