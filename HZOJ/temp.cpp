@@ -10,11 +10,16 @@
 #include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
+vector<vector<int>> mat = {{1, 1, 0, 0, 0},
+                           {1, 1, 1, 1, 0},
+                           {1, 0, 0, 0, 0},
+                           {1, 1, 0, 0, 0},
+                           {1, 1, 1, 1, 1}};
+
 int main() {
-    char *p;
-    p = (char *)malloc(1000);
-    cout << sizeof(p) << endl;
+    cout << mat[0].size() << endl;
     return 0;
 }
