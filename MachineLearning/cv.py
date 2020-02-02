@@ -20,3 +20,6 @@ model.fit(training_images, training_labels, epochs=5)
 
 print("Test data accuracy:")
 model.evaluate(test_images, test_labels)
+
+classfications = model.predict(test_images)
+print(classfications[0])
