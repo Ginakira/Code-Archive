@@ -12,14 +12,30 @@
 #include <string>
 using namespace std;
 
+void statistic(string s, int point) {
+    int win = 0, lose = 0;
+    for (int i = 0; i < s.length(); ++i) {
+        if (s[i] == 'W')
+            win++;
+        else
+            lose++;
+        if ((win >= point || lose >= point) && abs(win - lose) >= 2) {
+            cout << win << ":" << lose << endl;
+            win = 0, lose = 0;
+        }
+    }
+    cout << win << ":" << lose << endl;
+    return;
+}
+
 int main() {
     string s = "", tmp;
     while (cin >> tmp) {
         s += tmp;
     }
-    for (auto &i : s) {
-        if (s[i] == 'E') {
-        }
-    }
+    s = s.substr(0, s.find('E'));
+    statistic(s, 11);
+    cout << endl;
+    statistic(s, 21);
     return 0;
 }
