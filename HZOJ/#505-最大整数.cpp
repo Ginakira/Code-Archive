@@ -13,12 +13,17 @@
 using namespace std;
 #define MAXN 100000
 
+bool cmp(string a, string b) {
+    string c = a + b, d = b + a;
+    return c > d;
+}
+
 int main() {
     int n;
     cin >> n;
     string arr[n];
     for (auto &i : arr) cin >> i;
-    sort(arr, arr + n);
-    for (auto i : arr) cout << i << endl;
+    sort(arr, arr + n, cmp);
+    for (auto i : arr) cout << i;
     return 0;
 }
