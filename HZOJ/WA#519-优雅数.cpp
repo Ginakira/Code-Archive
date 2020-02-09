@@ -36,7 +36,7 @@ bool is_elegent_number(int a) {
 }
 
 int main() {
-    int l, r, cnt = 0;
+    long long l, r, cnt = 0;
     cin >> l >> r;
     for (int i = l; i <= r; ++i) {
         if (is_elegent_number(i)) cnt++;
