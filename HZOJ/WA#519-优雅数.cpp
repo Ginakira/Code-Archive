@@ -10,29 +10,23 @@
 #include <cstring>
 #include <iomanip>
 #include <iostream>
-#include <set>
 #include <string>
 using namespace std;
 
-int mark[10];
-
-bool is_elegent_number(int a) {
-    memset(mark, 0, sizeof(mark));
-    string s = to_string(a);
-    while (a > 0) {
-        mark[a % 10]++;
+bool is_elegent_number(long long a) {
+    int cnt = 0, mark[10] = {0};
+    while (a) {
+        int num = a % 10;
         a /= 10;
+        if (cnt > 2) return false;
+        if (mark[num] == 0) cnt++;
+        mark[num]++;
     }
-    int cnt = 0, tmp = 0;
-    char num;
-    for (int i = 0; i < 10; ++i) {
-        if (mark[i] == 0) cnt++;
-        if (mark[i] == 1) num = i + '0';
+    if (cnt != 2) return false;
+    for (auto i : mark) {
+        if (i == 1) return true;
     }
-    for (int i = 0; i < s.length(); ++i) {
-        if (s[i] == num) tmp++;
-    }
-    return cnt == 8 && tmp == 1;
+    return false;
 }
 
 int main() {
