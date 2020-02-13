@@ -12,14 +12,14 @@ typedef struct List {
     int length;
 } List;
 
-ListNode *getNewNode(int val) {
-    ListNode *p = (ListNode *)malloc(sizeof(ListNode));
-    p->data = val;
-    p->next = NULL;
-    return p;
+ListNode *get_newNode(int val) {
+    ListNode *node = (ListNode *)malloc(sizeof(ListNode));
+    node->data = val;
+    node->next = NULL;
+    return node;
 }
 
-List *getLinkList() {
+List *init_list() {
     List *l = (List *)malloc(sizeof(List));
     l->head.next = NULL;
     l->length = 0;
@@ -27,70 +27,65 @@ List *getLinkList() {
 }
 
 int insert(List *l, int ind, int val) {
-    if (l == NULL) return 0;
-    if (ind < 0 || ind > l->length) return 0;
-    ListNode *p = &(l->head), *node = getNewNode(val);
+    if (!l) return -1;
+    if (ind < 0 || ind > l->length) return -1;
+    int ret = ind;
+    ListNode *p = &(l->head), *node = get_newNode(val);
     while (ind--) p = p->next;
     node->next = p->next;
     p->next = node;
     l->length++;
-    return 1;
+    return ret;
 }
 
 int erase(List *l, int ind) {
-    if (l == NULL) return 0;
-    if (ind < 0 || ind >= l->length) return 0;
-    ListNode *p = &(l->head), *q;
+    if (!l) return -1;
+    if (ind < 0 || ind >= l->length) return -1;
+    ListNode *p = &(l->head), *node;
     while (ind--) p = p->next;
-    q = p->next;
-    p->next = q->next;
-    free(q);
+    node = p->next;
+    p->next = node->next;
+    free(node);
     l->length--;
-    return 1;
+    return ind;
 }
 
-int reverse(List *l) {
-    if (l == NULL) return 0;
-    ListNode *p = l->head.next, *q;
-    l->head.next = NULL;
-    while (p) {
-        q = p->next;
-        p->next = l->head.next;
-        l->head.next = p;
-        p = q;
+void output_search(List *l, int ind) {
+    char str[100];
+    int offset = 3;
+    ListNode *p = l->head.next;
+    while (ind != -1 && p) {
+        offset += sprintf(str, "%d->", p->data);
+        ind--;
+        p = p->next;
     }
-    return 1;
+    for (int i = 0; i < offset; ++i) printf(" ");
+    printf("^\n");
+    for (int i = 0; i < offset; ++i) printf(" ");
+    printf("|\n\n");
 }
 
-void output(List *l, int val) {
-    int cnt = 0, tmp;
-    bool flag = false;
-    cnt += printf("List(%d) = [", l->length);
+void output(List *l) {
+    printf("head->");
     for (ListNode *p = l->head.next; p; p = p->next) {
-        tmp = printf("%d->", p->data);
-        if (p->data == val)
-            flag = true;
-        else
-            !flag && (cnt += tmp);
+        printf("%d->", p->data);
     }
-    printf("NULL]\n");
-    while (cnt--) printf(" ");
-    printf("↑\n");
+    printf("NULL\n");
     return;
 }
 
-void clear_listNode(ListNode *node) {
-    if (node == NULL) return;
+void clear_node(ListNode *node) {
+    if (!node) return;
     free(node);
     return;
 }
 
 void clear_list(List *l) {
-    if (l == NULL) return;
+    if (!l) return;
     ListNode *p = l->head.next, *q;
     while (p) {
         q = p->next;
-        clear_listNode(p);
+        clear_node(p);
         p = q;
     }
     free(l);
@@ -100,26 +95,26 @@ void clear_list(List *l) {
 int main() {
 #define max_op 20
     srand(time(0));
-    List *l = getLinkList();
-    int op, ind, val;
+    List *l = init_list();
+    int op, ind, val, flag;
     for (int i = 0; i < max_op; ++i) {
         op = rand() % 4;
         ind = rand() % (l->length + 3) - 1;
         val = rand() % 100;
         switch (op) {
-            case 0: {
-                printf("Reversed list = %d\n", reverse(l));
-            } break;
+            case 0:
             case 1:
             case 2: {
-                printf("Insert %d at %d to list = %d\n", val, ind,
-                       insert(l, ind, val));
+                flag = insert(l, ind, val);
+                printf("Insert %d at %d to list = %d\n", val, ind, flag);
             } break;
             case 3: {
-                printf("Erase item at %d from list = %d\n", ind, erase(l, ind));
+                flag = erase(l, ind);
+                printf("Erase item at %d from list = %d\n", ind, flag);
             } break;
         }
-        output(l, val);
+        output(l);
+        output_search(l, flag);
         printf("\n");
     }
     clear_list(l);

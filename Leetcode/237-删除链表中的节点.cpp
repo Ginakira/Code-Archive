@@ -1,20 +1,15 @@
 struct ListNode {
     int val;
-    ListNode *next;
+    ListNode* next;
     ListNode(int x) : val(x), next() {}
 };
 
+//没有给head 很因吹斯汀
 class Solution {
    public:
-    void deleteNode(ListNode *node) {
-        ListNode *p = node, *pre;
-        while (p->next) {
-            p->val = p->next->val;
-            pre = p;
-            p = p->next;
-        }
-        delete pre->next;
-        pre->next = nullptr;
+    void deleteNode(ListNode* node) {
+        node->val = node->next->val;
+        node->next = node->next->next;
         return;
     }
 };
