@@ -18,6 +18,5 @@ int main() {
     printf("%d\n", digit);
     digit = printf("%d", number);
     printf("\n%d\n", digit);
-    
     return 0;
 }
