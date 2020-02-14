@@ -97,6 +97,7 @@ int main() {
         rpn[i] = tmp;
         pop(number);
     }
+    // printf("%s\n", rpn);
     // Calculate RPN
     Stack *ans = (Stack *)malloc(sizeof(Stack));
     init(ans, 20);
