@@ -20,16 +20,15 @@ int empty(Queue *q) { return !q->count; }
 int front(Queue *q) { return q->data[q->head]; }
 
 int expand(Queue *q) {
-    int extra_size = q->size;
-    int *p;
-    while (extra_size) {
-        p = (int *)realloc(q->data, sizeof(int) * (q->size + extra_size));
-        if (p) break;
-        extra_size /= 2;
+    int *new_data = (int *)malloc(sizeof(int) * (q->size * 2));
+    if (!new_data) return 0;
+    for (int i = q->head, j = 0; j < q->count; i = (i + 1) % q->size, j++) {
+        new_data[j] = q->data[i];
     }
-    if (!p) return 0;
-    q->size += extra_size;
-    q->data = p;
+    q->head = 0, q->tail = q->count;
+    free(q->data);
+    q->data = new_data;
+    q->size *= 2;
     return 1;
 }
 
@@ -37,7 +36,7 @@ int push(Queue *q, int val) {
     if (!q) return 0;
     if (q->count == q->size) {
         if (!expand(q)) return 0;
-        printf("Expanded successfully! Size = %d\n", q->size);  // BUG
+        printf("Expanded successfully! Size = %d\n", q->size);
     }
     q->data[q->tail++] = val;
     if (q->tail == q->size) q->tail -= q->size;
@@ -74,9 +73,9 @@ void clear(Queue *q) {
 int main() {
 #define max_op 20
     srand(time(0));
-    Queue *q = init(max_op);
+    Queue *q = init(max_op / 2);
     int op, val;
-    for (int i = 0; i < max_op * 3; ++i) {
+    for (int i = 0; i < max_op * 2; ++i) {
         op = rand() % 4;
         val = rand() % 100;
         switch (op) {
