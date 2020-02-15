@@ -49,7 +49,8 @@ void insert(Tree *tree, int val) {
 void output_node(Node *root) {
     if (!root) return;
     printf("%d", root->data);
-    printf("(");
+    if (!root->lchild && !root->rchild) return;
+    printf("("); 
     output_node(root->lchild);
     printf(",");
     output_node(root->rchild);
