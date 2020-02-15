@@ -20,19 +20,21 @@ int empty(Queue *q) { return !q->count; }
 int front(Queue *q) { return q->data[q->head]; }
 
 int expand(Queue *q) {
-    
-}
-
-int my_expand(Queue *q) {
-    int *new_data = (int *)malloc(sizeof(int) * (q->size * 2));
-    if (!new_data) return 0;
-    for (int i = q->head, j = 0; j < q->count; i = (i + 1) % q->size, j++) {
-        new_data[j] = q->data[i];
+    int extra_size = q->size;
+    int *p;
+    while (extra_size) {
+        p = (int *)malloc(sizeof(int) * (q->size + extra_size));
+        if (p) break;
+        extra_size /= 2;
+    }
+    if (!p) return 0;
+    for (int i = q->head, j = 0; j < q->count; ++j) {
+        p[j] = q->data[(i + j) % q->size];
     }
     q->head = 0, q->tail = q->count;
+    q->size += extra_size;
     free(q->data);
-    q->data = new_data;
-    q->size *= 2;
+    q->data = p;
     return 1;
 }
 
