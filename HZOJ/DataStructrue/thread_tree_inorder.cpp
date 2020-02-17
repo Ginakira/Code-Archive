@@ -1,3 +1,11 @@
+/*
+    线索化二叉树 - 中序遍历
+     - 构建线索化时，使用左根右的顺序，pre记录的是上一个走的节点，方便记录前驱
+       在记录前驱时，同时将pre的后继指向当前的节点
+     - 输出时，因为是中序遍历，所以执行输出要先走到树的最左叶节点
+       所以，如果右孩子是线索，也就是后继的话，就走到后继，如果不是，就往下走到右子树的最左子节点
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -47,47 +55,9 @@ void build_thread_inorder(Node *root) {
     return;
 }
 
-void build_thread_postorder(Node *root) {
-    if (!root) return;
-    static Node *pre = NULL;
-    build_thread_postorder(root->lchild);
-    build_thread_postorder(root->rchild);
-    if (!root->lchild) {
-        root->lchild = pre;
-        root->ltag = THREAD;
-    }
-    if (pre && !pre->rchild) {
-        pre->rchild = root;
-        pre->rtag = THREAD;
-    }
-    pre = root;
-    return;
-}
-
 Node *most_left(Node *p) {
     while (p && p->ltag == NORMAL && p->lchild) p = p->lchild;
     return p;
-}
-
-void output_postorder(Node *root) {
-    Node *p = root;
-    while (p) {
-        if (p->ltag == NORMAL && p->lchild)
-            p = p->lchild;
-        else if (p->rtag == NORMAL && p->rchild)
-            p = p->rchild;
-        else
-            break;
-    }
-    while (p) {
-        printf("%d ", p->data);
-        if (p->rtag == THREAD) {
-            p = p->rchild;
-        } else {
-            p = most_left(p->rchild);
-        }
-    }
-    return;
 }
 
 void output_inorder(Node *root) {
@@ -110,13 +80,6 @@ void in_order(Node *root) {
     return;
 }
 
-void post_order(Node *root) {
-    if (!root) return;
-    if (root->ltag == NORMAL) post_order(root->lchild);
-    if (root->rtag == NORMAL) post_order(root->rchild);
-    printf("%d ", root->data);
-}
-
 void clear(Node *root) {
     if (!root) return;
     if (root->ltag == NORMAL) clear(root->lchild);
@@ -128,18 +91,16 @@ int main() {
 #define max_op 10
     srand(time(0));
     Node *root = NULL;
-    for (int i = 0; i < max_op; ++i) {
+    printf("Insert values:\t ");
+    for (int i = 0; i < 5; ++i) {
         int val = rand() % 100;
         printf("%d ", val);
         root = insert(root, val);
     }
-    // build_thread_inorder(root);
-    // printf("Thread-In-Order: "), output_inorder(root), printf("\n");
-    // printf("In-Order:\t "), in_order(root), printf("\n");
-    build_thread_postorder(root);
-    printf("\nPost-Order:\t "), post_order(root), printf("\n");
-    getchar();
-    printf("Thread-Post-Order: "), output_postorder(root), printf("\n");
+    build_thread_inorder(root);
+    printf("\nThread-In-Order: "), output_inorder(root), printf("\n");
+    printf("In-Order:\t "), in_order(root), printf("\n");
+
     clear(root);
     return 0;
 }
