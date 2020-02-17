@@ -1,22 +1,33 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Created Time: 2019-12-01 15:28:38
-************************************************************/
-#include <algorithm>
-#include <cmath>
 #include <cstdio>
-#include <iomanip>
 #include <iostream>
 #include <string>
 using namespace std;
 
+void output(string str, int ind) {
+    cout << str[ind];
+    if (str[ind * 2]) {
+        cout << '(';
+        output(str, ind * 2);
+    }
+    if (str[ind * 2 + 1]) {
+        cout << ',';
+        output(str, ind * 2 + 1);
+        // cout << ')';
+    }
+    cout << ')';
+    // if (!str[ind * 2 + 1]) cout << ')';
+    return;
+}
+
 int main() {
-    int number, digit;
-    digit = scanf("%d", &number);
-    printf("%d\n", digit);
-    digit = printf("%d", number);
-    printf("\n%d\n", digit);
+    char str[100], x;
+    int ind = 1;
+    while (1) {
+        scanf("%c", &x);
+        if (x == '$') break;
+        if (x == ' ') continue;
+        str[ind++] = x;
+    }
+    output(str, 1);
     return 0;
 }

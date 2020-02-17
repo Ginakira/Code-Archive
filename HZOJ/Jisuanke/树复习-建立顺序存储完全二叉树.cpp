@@ -13,22 +13,22 @@ char tree[10000];
 
 void output(int index) {
     printf("%c", tree[index]);
-    if (tree[index * 2 + 1] != '#') {
+    if (tree[index * 2 + 1]) {
         printf("(");
         output(index * 2 + 1);
     }
-    if (tree[index * 2 + 2] != '#') {
+    if (tree[index * 2 + 2]) {
         printf(",");
         output(index * 2 + 2);
     }
-    if (tree[index * 2 + 1] != '#' || tree[index * 2 + 2] != '#') {
+    if (tree[index * 2 + 1] || tree[index * 2 + 2]) {
         printf(")");
     }
 }
 
 int main() {
     char ch;
-    memset(tree, '#', sizeof(tree));
+    memset(tree, 0, sizeof(tree));
     int ind = 0;
     while (scanf("%c", &ch)) {
         if (ch == '$')
