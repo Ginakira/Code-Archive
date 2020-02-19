@@ -14,7 +14,7 @@ class Solution {
     vector<vector<int>> levelOrder(TreeNode *root) {
         vector<vector<int>> ans;
         queue<TreeNode *> q, tmp;
-        q.push(root);
+        if (root) q.push(root);
         while (!q.empty()) {
             vector<int> v;
             while (!q.empty()) {

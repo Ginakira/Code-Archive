@@ -24,3 +24,14 @@ class Solution {
         return cnt;
     }
 };
+
+//递归 每次求得左右子树的深度 取最大值加一即为本层最大深度
+class Solution2 {
+   public:
+    int maxDepth(TreeNode *root) {
+        if (!root) return 0;
+        int left = maxDepth(root->left);
+        int right = maxDepth(root->right);
+        return max(left, right) + 1;
+    }
+};

@@ -8,6 +8,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+//自顶向下的递归 时间复杂度O(nlogn)
 class Solution {
    public:
     int countDeep(TreeNode *root) {

@@ -34,3 +34,22 @@ class Solution {
         return ans;
     }
 };
+
+//同102题 DFS递归求得正向结果后翻转
+class Solution2 {
+   public:
+    vector<vector<int>> ans;
+    void dfs(TreeNode *root, int depth) {
+        if (!root) return;
+        if (depth == ans.size()) ans.emplace_back();
+        ans[depth].push_back(root->val);
+        dfs(root->left, depth + 1);
+        dfs(root->right, depth + 1);
+    }
+
+    vector<vector<int>> levelOrderBottom(TreeNode *root) {
+        dfs(root, 0);
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
