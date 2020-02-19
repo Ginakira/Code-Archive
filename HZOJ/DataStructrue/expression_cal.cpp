@@ -3,7 +3,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-#define MAX_N 100
+#define MAX_N 1000
 
 int calc(const char *str, int l, int r) {
     int prior = INT32_MAX - 1, temp = 0, pos = -1;
@@ -17,9 +17,17 @@ int calc(const char *str, int l, int r) {
                 temp -= 100;
                 break;
             case '+':
-            case '-':
                 cur_prior = temp + 1;
                 break;
+            case '-': {
+                cur_prior = temp + 1;
+                if (i == 0) break;
+                int pre = i - 1;
+                while (pre >= 0 && (str[pre] == ' ' || str[pre] == ')')) pre--;
+                if (!isdigit(str[pre])) {
+                    cur_prior += temp + 50;
+                }
+            } break;
             case '*':
             case '/':
                 cur_prior = temp + 2;
@@ -36,7 +44,7 @@ int calc(const char *str, int l, int r) {
     if (pos == -1) {
         int num = 0;
         for (int i = l; i <= r; ++i) {
-            if (!isnumber(str[i])) continue;
+            if (!isdigit(str[i])) continue;
             num = num * 10 + str[i] - '0';
         }
         return num;
@@ -65,9 +73,7 @@ int calc(const char *str, int l, int r) {
 
 int main() {
     char str[MAX_N + 5] = {0};
-    while (scanf("%[^\n]s", str) != EOF) {
-        getchar();
-        printf("%d\n", calc(str, 0, strlen(str) - 1));
-    }
+    scanf("%[^\n]s", str);
+    printf("%d\n", calc(str, 0, strlen(str) - 1));
     return 0;
 }
