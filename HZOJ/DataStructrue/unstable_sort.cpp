@@ -46,6 +46,24 @@ void quick_sort(int *num, int l, int r) {
     return;
 }
 
+// 优化 稳定在O(nlogn)
+void quick_sort_optimized(int *num, int l, int r) {
+    while (l < r) {
+        int x = l, y = r, z = num[(l + r) >> 1];
+        do {
+            while (x <= y && num[x] < z) ++x;
+            while (x <= y && num[y] > z) --y;
+            if (x <= y) {
+                swap(num[x], num[y]);
+                ++x, --y;
+            }
+        } while (x <= y);
+        quick_sort_optimized(num, x, r);
+        r = y;
+    }
+    return;
+}
+
 void randint(int *arr, int n) {
     while (n--) arr[n] = rand() % 100;
     return;
@@ -67,6 +85,6 @@ int main() {
     int arr[max_op];
     randint(arr, max_op);
     TEST(arr, max_op, select_sort, num, max_op);
-    TEST(arr, max_op, quick_sort, num, 0, max_op - 1);
+    TEST(arr, max_op, quick_sort_optimized, num, 0, max_op - 1);
     return 0;
 }
