@@ -1,9 +1,3 @@
-/*************************************************************************
-        > File Name: 15.binary_search.cpp
-        > Author:
-        > Mail:
-        > Created Time: 六  2/22 16:38:03 2020
- ************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -12,7 +6,7 @@ typedef struct Node {
     struct Node *lchild, *rchild;
 } Node;
 
-Node *getNewNode(int key) {
+Node *get_new_node(int key) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->key = key;
     p->lchild = p->rchild = NULL;
@@ -20,7 +14,7 @@ Node *getNewNode(int key) {
 }
 
 Node *insert(Node *root, int key) {
-    if (root == NULL) return getNewNode(key);
+    if (!root) return get_new_node(key);
     if (root->key == key) return root;
     if (key < root->key)
         root->lchild = insert(root->lchild, key);
@@ -36,13 +30,13 @@ Node *predecessor(Node *root) {
 }
 
 Node *erase(Node *root, int key) {
-    if (root == NULL) return root;
+    if (!root) return root;
     if (key < root->key)
         root->lchild = erase(root->lchild, key);
     else if (key > root->key)
         root->rchild = erase(root->rchild, key);
     else {
-        if (root->lchild == NULL || root->rchild == NULL) {
+        if (!root->lchild || !root->rchild) {
             Node *temp = root->lchild ? root->lchild : root->rchild;
             free(root);
             return temp;
@@ -56,7 +50,7 @@ Node *erase(Node *root, int key) {
 }
 
 void __in_order(Node *root) {
-    if (root == NULL) return;
+    if (!root) return;
     __in_order(root->lchild);
     printf("%d ", root->key);
     __in_order(root->rchild);
@@ -64,14 +58,14 @@ void __in_order(Node *root) {
 }
 
 void in_order(Node *root) {
-    printf("in order output : ");
+    printf("In-order output : ");
     __in_order(root);
     printf("\n");
     return;
 }
 
 void clear(Node *root) {
-    if (root == NULL) return;
+    if (!root) return;
     clear(root->lchild);
     clear(root->rchild);
     free(root);
