@@ -7,15 +7,6 @@ struct TreeNode {
 
 class Solution {
    public:
-    // Way 2
-    bool hasPathSum(TreeNode *root, int sum) {
-        if (!root) return false;
-        if (!root->left && !root->right) return root->val == sum;
-        bool lflag = hasPathSum(root->left, sum - root->val);
-        bool rflag = hasPathSum(root->right, sum - root->val);
-        return lflag || rflag;
-    }
-    // Way 1
     bool myPath(TreeNode *root, int sum) {
         if (!root->left && !root->right) {
             if (sum == 0)
@@ -37,5 +28,16 @@ class Solution {
         if (!root) return false;
         if (!root->left && !root->right) return root->val == sum;
         return myPath(root, sum - root->val);
+    }
+};
+
+//递归 时间复杂度O(n)
+class Solution2 {
+   public:
+    bool hasPathSum(TreeNode *root, int sum) {
+        if (!root) return false;
+        if (!root->left && !root->right) return root->val == sum;
+        return hasPathSum(root->left, sum - root->val) ||
+               hasPathSum(root->right, sum - root->val);
     }
 };
