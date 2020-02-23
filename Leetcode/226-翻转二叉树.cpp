@@ -10,20 +10,24 @@ struct TreeNode {
 
 class Solution {
    public:
-    // my way 8ms
-    TreeNode* invertTree1(TreeNode* root) {
-        if (!root) return nullptr;
-        swap(root->left, root->right);
-        invertTree1(root->left);
-        invertTree1(root->right);
-        return root;
-    }
-    // other way
+    // 其实与交换左右子树同理
     TreeNode* invertTree(TreeNode* root) {
         if (!root) return nullptr;
         TreeNode* t = root->left;
         root->left = invertTree(root->right);
         root->right = invertTree(t);
+        return root;
+    }
+};
+
+// 0ms 交换左右子树，然后递归反转两个子树即可
+class Solution2 {
+   public:
+    TreeNode* invertTree(TreeNode* root) {
+        if (!root) return nullptr;
+        swap(root->left, root->right);
+        invertTree(root->left);
+        invertTree(root->right);
         return root;
     }
 };
