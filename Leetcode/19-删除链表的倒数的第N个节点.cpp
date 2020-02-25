@@ -32,7 +32,7 @@ class Solution1 {
     }
 };
 
-//解法2:一趟遍历 双指针法
+//解法2:一趟遍历 双指针法 4ms
 class Solution2 {
    public:
     ListNode *removeNthFromEnd(ListNode *head, int n) {
@@ -52,3 +52,18 @@ class Solution2 {
         return dummy->next;
     }
 };
+
+// C语言版 0ms
+#include <stdlib.h>
+struct ListNode *removeNthFromEnd(struct ListNode *head, int n) {
+    struct ListNode ret(-1), *p, *q;
+    ret.next = head;
+    p = q = &ret;
+    while (n--) q = q->next;
+    q = q->next;
+    while (q) p = p->next, q = q->next;
+    q = p->next;
+    p->next = q->next;
+    free(q);
+    return ret.next;
+}
