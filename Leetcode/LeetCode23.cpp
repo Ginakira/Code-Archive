@@ -9,7 +9,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-// 使用优先队列遍历原链表同时入队 然后遍历队列生成新链表 32ms
+// 暴力法 使用优先队列遍历原链表同时入队 然后遍历队列生成新链表 32ms
 class Solution {
    public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
@@ -26,6 +26,29 @@ class Solution {
             ListNode *temp = new ListNode(q.top());
             p->next = temp;
             p = p->next;
+            q.pop();
+        }
+        return ret->next;
+    }
+};
+
+// 使用优先队列将节点入队 重载比较规则 所有头结点入队后构造链表 并将其next入队
+class Solution2 {
+   public:
+    struct cmp {
+        bool operator()(ListNode *a, ListNode *b) { return a->val > b->val; }
+    };
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        if (lists.size() == 0) return nullptr;
+        priority_queue<ListNode *, vector<ListNode *>, cmp> q;
+        ListNode *ret = new ListNode(-1), *p = ret;
+        for (auto &i : lists) {
+            if (i) q.push(i);
+        }
+        while (!q.empty()) {
+            ListNode *tmp = q.top();
+            p->next = tmp, p = p->next;
+            if (tmp->next) q.push(tmp->next);
             q.pop();
         }
         return ret->next;
