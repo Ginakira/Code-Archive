@@ -25,7 +25,7 @@ class Solution {
         }
     }
 
-    bool hasPathSum1(TreeNode *root, int sum) {
+    bool hasPathSum(TreeNode *root, int sum) {
         if (!root) return false;
         if (!root->left && !root->right) return root->val == sum;
         return myPath(root, sum - root->val);

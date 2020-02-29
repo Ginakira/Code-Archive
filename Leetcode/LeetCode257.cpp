@@ -34,3 +34,38 @@ class Solution {
         return;
     }
 };
+
+// C语言版 大致思路同上
+class SolutionC {
+   public:
+    int getPathCount(struct TreeNode *root) {
+        if (!root) return 0;
+        if (!root->left && !root->right) return 1;
+        return getPathCount(root->left) + getPathCount(root->right);
+    }
+
+    int getResult(struct TreeNode *root, int len, int k, char **ret,
+                  char *buff) {
+        if (!root) return 0;
+        len += sprintf(buff + len, "%d", root->val);
+        buff[len] = 0;
+        if (!root->left && !root->right) {
+            ret[k] = strdup(buff);
+            return 1;
+        }
+        len += sprintf(buff + len, "->");
+        int cnt = getResult(root->left, len, k, ret, buff);
+        cnt += getResult(root->right, len, k + cnt, ret, buff);
+        return cnt;
+    }
+
+    char **binaryTreePaths(struct TreeNode *root, int *returnSize) {
+        int pathCount = getPathCount(root);
+        char **ret = (char **)malloc(sizeof(char *) * pathCount);
+        int max_len = 1024;
+        char *buff = (char *)malloc(sizeof(char) * max_len);
+        getResult(root, 0, 0, ret, buff);
+        *returnSize = pathCount;
+        return ret;
+    }
+};
