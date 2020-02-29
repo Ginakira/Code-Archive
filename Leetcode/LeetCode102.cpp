@@ -51,3 +51,45 @@ class Solution2 {
         return ans;
     }
 };
+
+// 思路同解法2 C语言版
+class Solution2C {
+   public:
+    int getDepth(struct TreeNode *root) {
+        if (!root) return 0;
+        int l = getDepth(root->left), r = getDepth(root->right);
+        return (l > r ? l : r) + 1;
+    }
+
+    void getCount(struct TreeNode *root, int k, int *cnt) {
+        if (!root) return;
+        cnt[k]++;
+        getCount(root->left, k + 1, cnt);
+        getCount(root->right, k + 1, cnt);
+        return;
+    }
+
+    void getResult(struct TreeNode *root, int k, int *cnt, int **ret) {
+        if (!root) return;
+        ret[k][cnt[k]++] = root->val;
+        getResult(root->left, k + 1, cnt, ret);
+        getResult(root->right, k + 1, cnt, ret);
+        return;
+    }
+
+    int **levelOrder(struct TreeNode *root, int *returnSize,
+                     int **returnColumnSizes) {
+        int depth = getDepth(root);
+        int **ret = (int **)malloc(sizeof(int *) * depth);
+        int *cnt = (int *)calloc(depth, sizeof(int));
+        getCount(root, 0, cnt);
+        for (int i = 0; i < depth; ++i) {
+            ret[i] = (int *)malloc(sizeof(int) * cnt[i]);
+            cnt[i] = 0;
+        }
+        getResult(root, 0, cnt, ret);
+        *returnSize = depth;
+        *returnColumnSizes = cnt;
+        return ret;
+    }
+};
