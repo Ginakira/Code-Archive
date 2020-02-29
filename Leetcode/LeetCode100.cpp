@@ -16,3 +16,10 @@ class Solution {
         return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
     }
 };
+
+// 缩写
+bool isSameTree(struct TreeNode* p, struct TreeNode* q) {
+    if (!p && !q) return true;
+    return (p && q) && (p->val == q->val) && isSameTree(p->left, q->left) &&
+           isSameTree(p->right, q->right);
+}
