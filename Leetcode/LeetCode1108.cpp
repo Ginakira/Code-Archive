@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+// string库中的replace方法：s.replace(int p0, int n0, const char *s2)
+// 删除从p0开始的n0个字符，然后在p0处插入串s2
 class Solution {
    public:
     string defangIPaddr(string address) {
