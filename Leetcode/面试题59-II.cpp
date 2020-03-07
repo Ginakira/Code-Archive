@@ -30,7 +30,7 @@ class MaxQueue {
 };
 
 // 队列+双端队列 与单调队列RMQ操作思想相仿 官方说均摊复杂度O(1)
-// 但实际上没有第一种方法快 208ms
+// 但实际上没有第一种方法快 140ms~212ms
 class MaxQueue2 {
    private:
     queue<int> q;
