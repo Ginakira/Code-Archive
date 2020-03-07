@@ -1,4 +1,5 @@
 // 最长连续序列
+#include <unordered_map>
 #include <unordered_set>
 #include <vector>
 using namespace std;
@@ -62,5 +63,32 @@ class Solution3 {
             max_len = max(max_len, current_len);
         }
         return max_len;
+    }
+};
+
+// 并查集 与哈希表法思想相仿 16ms
+// 如果存在当前数字的下一个数字 就合并到这个数字的集合中 然后计算长度
+class Solution4 {
+   private:
+    unordered_map<int, int> uf, cnt;
+
+   public:
+    int find(int x) { return x == uf[x] ? x : uf[x] = find(uf[x]); }
+
+    int merge(int a, int b) {
+        int fa = find(a), fb = find(b);
+        if (fa == fb) return cnt[fa];
+        uf[fb] = a, cnt[fa] += cnt[fb];
+        return cnt[fa];
+    }
+
+    int longestConsecutive(vector<int>& nums) {
+        if (!nums.size()) return 0;
+        int ans = 1;
+        for (int i : nums) uf[i] = i, cnt[i] = 1;
+        for (int i : nums) {
+            if (uf.count(i + 1)) ans = max(ans, merge(i, i + 1));
+        }
+        return ans;
     }
 };
