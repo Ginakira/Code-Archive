@@ -1,8 +1,8 @@
 /************************************************************
-    File Name : #236-递归实现组合型枚举.cpp
+    File Name : #237-递归实现排列型枚举.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/03/11 19:25:03
+    Created Time: 2020/03/11 19:33:29
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -13,10 +13,11 @@
 #include <vector>
 using namespace std;
 
-int n, m, ans[15], cnt;
+int n, ans[10], cnt;
+bool mark[15] = {0};
 
 void output() {
-    for (int i = 0; i < m; ++i) {
+    for (int i = 0; i < n; ++i) {
         i&& cout << " ";
         cout << ans[i];
     }
@@ -24,21 +25,22 @@ void output() {
     return;
 }
 
-void func(int s, int left) {
+void func(int left) {
     if (!left) {
         output();
         return;
     }
-    for (int i = s; i <= n - left + 1; ++i) {
-        ans[cnt++] = i;
-        func(i + 1, left - 1);
-        cnt--;
+    for (int i = 1; i <= n; ++i) {
+        if (mark[i]) continue;
+        ans[cnt++] = i, mark[i] = 1;
+        func(left - 1);
+        cnt--, mark[i] = 0;
     }
     return;
 }
 
 int main() {
-    cin >> n >> m;
-    func(1, m);
+    cin >> n;
+    func(n);
     return 0;
 }
