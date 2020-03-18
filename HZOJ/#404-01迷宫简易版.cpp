@@ -22,8 +22,7 @@ void dfs(int x, int y) {
     int tx, ty;
     for (int i = 0; i < 4; ++i) {
         tx = x + dir[i][0], ty = y + dir[i][1];
-        if (tx < 1 || ty < 1 || tx > n || ty > m) continue;
-        if (!visited[tx][ty] && (grid[tx][ty] != grid[x][y])) {
+        if (grid[tx][ty] && !visited[tx][ty] && (grid[tx][ty] != grid[x][y])) {
             ans++, visited[tx][ty] = 1;
             dfs(tx, ty);
         }
