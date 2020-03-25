@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-int n, cost, price[45], record[2][3000005], cnt[2];
+int n, cost, price[45], record[2][2100005], cnt[2];
 
 void dfs(int set_num, int start, int end, int sum) {
     if (sum > cost) return;
