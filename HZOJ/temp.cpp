@@ -2,39 +2,47 @@
     File Name : temp.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/02/05 19:55:16
+    Github: https://github.com/Ginakira
+    Created Time: 2020/04/04 12:44:56
 ************************************************************/
 #include <algorithm>
-#include <bitset>
 #include <cmath>
-#include <cstdio>
-#include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-void my_swap(bitset<32UL>::reference a, bitset<32UL>::reference b) {
-    int tmp = a;
-    a = b;
-    b = tmp;
+int C[500005];
+
+int lowbit(int x) { return x & (-x); }
+
+void add(int x, int val, int n) {
+    while (x <= n) C[x] += val, x += lowbit(x);
     return;
 }
 
-int main() {
-    bitset<32> a(1418399120);
+int query(int x) {
+    int sum = 0;
+    while (x) sum += C[x], x -= lowbit(x);
+    return sum;
+}
 
-    cout << a << endl;
-    for (int i = 0; i < 8; ++i) {
-        my_swap(a[i], a[i + 16]);
-        my_swap(a[i + 8], a[i + 24]);
+int main() {
+    ios::sync_with_stdio(false);
+    int n, m, temp;
+    cin >> n >> m;
+    for (int i = 1; i <= n; ++i) {
+        cin >> temp;
+        add(i, temp, n);
     }
-    string s = a.to_string();
-    int cal = 0;
-    for (int i = 31; i >= 0; --i) {
-        cal += (s[i] - '0') * pow(2, 31 - i);
+    int op, a, b;
+    while (m--) {
+        cin >> op >> a >> b;
+        if (op == 1) {
+            add(a, b, n);
+        } else if (op == 2) {
+            cout << (query(b) - query(a - 1)) << endl;
+        }
     }
-    cout << cal << endl;
-    cout << a << endl;
-    cout << a.to_ullong();
     return 0;
 }
