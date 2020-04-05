@@ -7,12 +7,13 @@
 ************************************************************/
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
 
-int C[500005];
+long long C[1000005];
 
 int lowbit(int x) { return x & (-x); }
 
@@ -21,14 +22,14 @@ void add(int x, int val, int n) {
     return;
 }
 
-int query(int x) {
-    int sum = 0;
+long long query(int x) {
+    long long sum = 0;
     while (x) sum += C[x], x -= lowbit(x);
     return sum;
 }
 
 int main() {
-    ios::sync_with_stdio(false);
+    ios_base::sync_with_stdio(false);
     int n, m, temp;
     cin >> n >> m;
     for (int i = 1; i <= n; ++i) {
@@ -41,7 +42,7 @@ int main() {
         if (op == 1) {
             add(a, b, n);
         } else if (op == 2) {
-            cout << (query(b) - query(a - 1)) << endl;
+            cout << query(b) - query(a - 1) << endl;
         }
     }
     return 0;
