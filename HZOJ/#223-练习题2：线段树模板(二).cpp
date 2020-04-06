@@ -1,33 +1,37 @@
-/*************************************************************************
-   > File Name: 223.cpp
-   > Author: hug
-   > Mail:   hug@haizeix.com
-   > Created Time: 六  8/24 20:14:12 2019
- ************************************************************************/
-
+/************************************************************
+    File Name : #223-练习题2：线段树模板(二).cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/04/06 23:06:52
+************************************************************/
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
-#include <map>
+#include <string>
 #include <vector>
 using namespace std;
 #define MAX_N 10000
 #define lc(ind) (tree[ind].lind)
 #define rc(ind) (tree[ind].rind)
-#define tag(ind) tree[ind].tag
-#define sum(ind) tree[ind].sum
-#define cnt(ind) tree[ind].cnt
+#define tag(ind) (tree[ind].tag)
+#define sum(ind) (tree[ind].sum)
+#define cnt(ind) (tree[ind].cnt)
 
-struct node {
+struct Node {
     long long sum, tag, cnt;
     int lind, rind;
 } tree[(MAX_N << 1) + 5];
 int root = 0, cnt = 1;
+
 long long arr[MAX_N + 5];
+
 int getNode() { return cnt++; }
+
+void UP(int ind) {
+    tree[ind].sum = tree[lc(ind)].sum + tree[rc(ind)].sum;
+    return;
+}
 
 void DOWN(int ind) {
     if (tag(ind)) {
@@ -40,10 +44,8 @@ void DOWN(int ind) {
     return;
 }
 
-void UP(int ind) { tree[ind].sum = tree[lc(ind)].sum + tree[rc(ind)].sum; }
-
 void build(int ind, int l, int r) {
-    tree[ind].cnt = (r - l + 1);
+    tree[ind].cnt = r - l + 1;
     if (l == r) {
         tree[ind].sum = arr[l];
         return;
@@ -86,9 +88,9 @@ long long query(int ind, int x, int y, int l, int r) {
 int main() {
     int n, m;
     cin >> n >> m;
-    for (int i = 1; i <= n; i++) cin >> arr[i];
+    for (int i = 1; i <= n; ++i) cin >> arr[i];
     build(root, 1, n);
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < m; ++i) {
         long long a, b, c, d;
         cin >> a >> b >> c;
         if (a == 1) {
