@@ -62,6 +62,7 @@ int query(int ind, int x, int y, int l, int r) {
 }
 
 int main() {
+    ios_base::sync_with_stdio(false);
     int n, m;
     cin >> n >> m;
     for (int i = 1; i <= n; ++i) cin >> arr[i];

@@ -1,33 +1,31 @@
-/*************************************************************************
-   > File Name: 223.cpp
-   > Author: hug
-   > Mail:   hug@haizeix.com
-   > Created Time: 六  8/24 20:14:12 2019
- ************************************************************************/
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/04/07 11:13:41
+************************************************************/
 
-#include <algorithm>
-#include <cmath>
 #include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <iostream>
-#include <map>
-#include <vector>
 using namespace std;
-#define MAX_N 10000
+#define MAX_N 100000
 #define lc(ind) (tree[ind].lind)
 #define rc(ind) (tree[ind].rind)
-#define tag(ind) tree[ind].tag
-#define sum(ind) tree[ind].sum
-#define cnt(ind) tree[ind].cnt
+#define sum(ind) (tree[ind].sum)
+#define tag(ind) (tree[ind].tag)
+#define cnt(ind) (tree[ind].cnt)
 
-struct node {
-    long long sum, tag, cnt;
-    int lind, rind;
+struct Node {
+    long long sum, tag;
+    int cnt, lind, rind;
 } tree[(MAX_N << 1) + 5];
 int root = 0, cnt = 1;
 long long arr[MAX_N + 5];
+
 int getNode() { return cnt++; }
+
+void UP(int ind) { sum(ind) = sum(lc(ind)) + sum(rc(ind)); }
 
 void DOWN(int ind) {
     if (tag(ind)) {
@@ -40,27 +38,25 @@ void DOWN(int ind) {
     return;
 }
 
-void UP(int ind) { tree[ind].sum = tree[lc(ind)].sum + tree[rc(ind)].sum; }
-
 void build(int ind, int l, int r) {
-    tree[ind].cnt = (r - l + 1);
+    cnt(ind) = r - l + 1;
     if (l == r) {
-        tree[ind].sum = arr[l];
+        sum(ind) = arr[l];
         return;
     }
     int mid = (l + r) >> 1;
-    tree[ind].lind = getNode();
-    tree[ind].rind = getNode();
+    lc(ind) = getNode();
+    rc(ind) = getNode();
     build(lc(ind), l, mid);
     build(rc(ind), mid + 1, r);
     UP(ind);
     return;
 }
 
-void modify(int ind, int x, int y, long long d, int l, int r) {
-    if (x <= l && r <= y) {
-        tree[ind].tag += d;
-        tree[ind].sum += d * tree[ind].cnt;
+void modify(int ind, int x, int y, int d, int l, int r) {
+    if (x <= l && y >= r) {
+        tag(ind) += d;
+        sum(ind) += d * cnt(ind);
         return;
     }
     DOWN(ind);
@@ -72,7 +68,7 @@ void modify(int ind, int x, int y, long long d, int l, int r) {
 }
 
 long long query(int ind, int x, int y, int l, int r) {
-    if (x <= l && r <= y) {
+    if (x <= l && y >= r) {
         return sum(ind);
     }
     DOWN(ind);
@@ -85,17 +81,17 @@ long long query(int ind, int x, int y, int l, int r) {
 
 int main() {
     int n, m;
-    cin >> n >> m;
-    for (int i = 1; i <= n; i++) cin >> arr[i];
+    scanf("%d%d", &n, &m);
+    for (int i = 1; i <= n; ++i) scanf("%lld", &arr[i]);
     build(root, 1, n);
-    for (int i = 0; i < m; i++) {
+    while (m--) {
         long long a, b, c, d;
-        cin >> a >> b >> c;
+        scanf("%lld%lld%lld", &a, &b, &c);
         if (a == 1) {
-            cin >> d;
+            scanf("%lld", &d);
             modify(root, b, c, d, 1, n);
         } else {
-            cout << query(root, b, c, 1, n) << endl;
+            printf("%lld\n", query(root, b, c, 1, n));
         }
     }
     return 0;
