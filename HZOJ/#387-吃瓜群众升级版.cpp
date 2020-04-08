@@ -1,42 +1,38 @@
 /************************************************************
-    File Name : #386-吃瓜群众.cpp
+    File Name : #387-吃瓜群众升级版.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/04/08 19:42:12
+    Created Time: 2020/04/08 20:03:50
 ************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
-
 using namespace std;
-
 #define MAX_N 100000
 
 struct Node {
-    int amount, id;
+    int id, amount;
 };
 
 bool cmp(Node a, Node b) { return a.amount < b.amount; }
 
-int n, m;
 Node melon[MAX_N + 5];
+int n, m;
 
-int binary_search(int goal) {
+int binary_search(int target) {
     int l = 0, r = m - 1;
-    while (l <= r) {
+    while (l != r) {
         int mid = (l + r) >> 1;
-        if (melon[mid].amount == goal) return melon[mid].id;
-        if (melon[mid].amount < goal)
+        if (melon[mid].amount >= target)
+            r = mid;
+        else
             l = mid + 1;
-        else if (melon[mid].amount > goal)
-            r = mid - 1;
     }
-    return 0;
+    return melon[l].id;
 }
-
 int main() {
     ios_base::sync_with_stdio(false);
     cin >> m >> n;
@@ -48,6 +44,10 @@ int main() {
     for (int i = 0; i < n; ++i) {
         int temp;
         cin >> temp;
+        if (temp > melon[m - 1].amount) {
+            cout << 0 << endl;
+            continue;
+        }
         cout << binary_search(temp) << endl;
     }
     return 0;
