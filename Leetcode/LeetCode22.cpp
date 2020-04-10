@@ -40,3 +40,21 @@ class Solution {
         return results;
     }
 };
+
+// 剪枝 + DFS
+class Solution2 {
+   public:
+    void dfs(string current, int l, int r, int n, vector<string> &results) {
+        if (r > l || l > n || r > n) return;
+        if (l == n && r == n) results.push_back(current);
+        dfs(current + '(', l + 1, r, n, results);
+        dfs(current + ')', l, r + 1, n, results);
+        return;
+    }
+
+    vector<string> generateParenthesis(int n) {
+        vector<string> results;
+        dfs("", 0, 0, n, results);
+        return results;
+    }
+};
