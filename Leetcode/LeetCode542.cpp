@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+// 多源BFS
 class Solution {
    private:
     int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
