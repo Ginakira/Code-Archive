@@ -52,7 +52,7 @@ void modify(int ind, int x, int y, int l, int r) {
 }
 
 int query(int ind, int x, int y, int l, int r) {
-    if (x <= l && r <= y) {
+    if (x <= l && y >= r) {
         return tree[ind].sum;
     }
     int ans = 0x80000000, mid = (l + r) >> 1;
