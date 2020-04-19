@@ -1,9 +1,9 @@
 /************************************************************
-    File Name : temp.cpp
+    File Name : 树状数组-P3374.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/04/18 21:53:29
+    Created Time: 2020/04/19 09:09:52
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -11,74 +11,28 @@
 #include <string>
 #include <vector>
 using namespace std;
-typedef long long LL;
-#define MAX_N 100000
-#define lc(ind) (ind << 1)
-#define rc(ind) (ind << 1 | 1)
-#define tag(ind) (tree[ind].tag)
-#define sum(ind) (tree[ind].sum)
-#define cnt(ind) (tree[ind].cnt)
+#define MAX_N 500000
 
-struct Node {
-    LL sum;
-    int tag, cnt;
-} tree[(MAX_N << 2) + 5];
+inline int lowbit(int x) { return x & (-x); }
+
 int arr[MAX_N + 5];
-int root = 1;
+int C[MAX_N + 5];
 
-void UP(int ind) {
-    sum(ind) = sum(lc(ind)) + sum(rc(ind));
-    return;
-}
-
-void DOWN(int ind) {
-    if (tag(ind)) {
-        tag(lc(ind)) += tag(ind);
-        tag(rc(ind)) += tag(ind);
-        sum(lc(ind)) += tag(ind) * cnt(lc(ind));
-        sum(rc(ind)) += tag(ind) * cnt(rc(ind));
-        tag(ind) = 0;
+void update(int ind, int val, int n) {
+    while (ind <= n) {
+        C[ind] += val;
+        ind += lowbit(ind);
     }
     return;
 }
 
-void build(int ind, int l, int r) {
-    cnt(ind) = r - l + 1;
-    if (l == r) {
-        sum(ind) = arr[l];
-        return;
+int query(int ind) {
+    int sum = 0;
+    while (ind) {
+        sum += C[ind];
+        ind -= lowbit(ind);
     }
-    int mid = (l + r) >> 1;
-    build(lc(ind), l, mid);
-    build(rc(ind), mid + 1, r);
-    UP(ind);
-    return;
-}
-
-void modify(int ind, int x, int y, int k, int l, int r) {
-    if (x <= l && y >= r) {
-        tag(ind) += k;
-        sum(ind) += k * cnt(ind);
-        return;
-    }
-    DOWN(ind);
-    int mid = (l + r) >> 1;
-    if (x <= mid) modify(lc(ind), x, y, k, l, mid);
-    if (y > mid) modify(rc(ind), x, y, k, mid + 1, r);
-    UP(ind);
-    return;
-}
-
-LL query(int ind, int x, int y, int l, int r) {
-    if (x <= l && r <= y) {
-        return sum(ind);
-    }
-    DOWN(ind);
-    int mid = (l + r) >> 1;
-    LL ans = 0;
-    if (x <= mid) ans += query(lc(ind), x, y, l, mid);
-    if (y > mid) ans += query(rc(ind), x, y, mid + 1, r);
-    return ans;
+    return sum;
 }
 
 int main() {
@@ -87,17 +41,18 @@ int main() {
     cin >> n >> m;
     for (int i = 1; i <= n; ++i) {
         cin >> arr[i];
+        update(i, arr[i], n);
     }
-    build(root, 1, n);
+
+    int a, b, c;
     while (m--) {
-        int opt, x, y, k;
-        cin >> opt >> x >> y;
-        if (opt == 1) {
-            cin >> k;
-            modify(root, x, y, k, 1, n);
+        cin >> a >> b >> c;
+        if (a == 1) {
+            update(b, c, n);
         } else {
-            cout << query(root, x, y, 1, n) << endl;
+            cout << query(c) - query(b - 1) << endl;
         }
     }
+
     return 0;
 }
