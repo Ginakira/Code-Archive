@@ -1,26 +1,25 @@
+/************************************************************
+    File Name : binary_search_tree.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/04/21 19:25:46
+************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 typedef struct Node {
     int key;
     struct Node *lchild, *rchild;
 } Node;
 
-Node *get_new_node(int key) {
+Node *getNewNode(int key) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->key = key;
     p->lchild = p->rchild = NULL;
     return p;
-}
-
-Node *insert(Node *root, int key) {
-    if (!root) return get_new_node(key);
-    if (root->key == key) return root;
-    if (key < root->key)
-        root->lchild = insert(root->lchild, key);
-    else
-        root->rchild = insert(root->rchild, key);
-    return root;
 }
 
 Node *predecessor(Node *root) {
@@ -29,14 +28,24 @@ Node *predecessor(Node *root) {
     return temp;
 }
 
+Node *insert(Node *root, int key) {
+    if (root == NULL) return getNewNode(key);
+    if (root->key == key) return root;
+    if (root->key > key)
+        root->lchild = insert(root->lchild, key);
+    else
+        root->rchild = insert(root->rchild, key);
+    return root;
+}
+
 Node *erase(Node *root, int key) {
-    if (!root) return root;
-    if (key < root->key)
+    if (root == NULL) return root;
+    if (key < root->key) {
         root->lchild = erase(root->lchild, key);
-    else if (key > root->key)
+    } else if (key > root->key) {
         root->rchild = erase(root->rchild, key);
-    else {
-        if (!root->lchild || !root->rchild) {
+    } else {
+        if (root->lchild == NULL || root->rchild == NULL) {
             Node *temp = root->lchild ? root->lchild : root->rchild;
             free(root);
             return temp;
@@ -49,43 +58,44 @@ Node *erase(Node *root, int key) {
     return root;
 }
 
-void __in_order(Node *root) {
-    if (!root) return;
-    __in_order(root->lchild);
-    printf("%d ", root->key);
-    __in_order(root->rchild);
-    return;
-}
-
-void in_order(Node *root) {
-    printf("In-order output : ");
-    __in_order(root);
-    printf("\n");
-    return;
-}
-
 void clear(Node *root) {
-    if (!root) return;
+    if (root == NULL) return;
     clear(root->lchild);
     clear(root->rchild);
     free(root);
     return;
 }
 
+void output(Node *root) {
+    if (root == NULL) return;
+    output(root->lchild);
+    printf("%d ", root->key);
+    output(root->rchild);
+    return;
+}
+
 int main() {
-    int op, val;
+    srand(time(0));
+#define MAX_OP 30
     Node *root = NULL;
-    while (~scanf("%d%d", &op, &val)) {
+    for (int i = 0; i < MAX_OP; ++i) {
+        int op = rand() % 5, val = rand() % 20;
         switch (op) {
-            case 1:
-                root = insert(root, val);
-                break;
+            case 0:
             case 2:
+            case 3:
+            case 4: {
+                printf("Insert %d to binary search tree\n", val);
+                root = insert(root, val);
+
+            } break;
+            case 1: {
+                printf("Erase %d from binary search tree\n", val);
                 root = erase(root, val);
-                break;
+            } break;
         }
-        in_order(root);
+        output(root);
+        printf("\n");
     }
-    clear(root);
     return 0;
 }
