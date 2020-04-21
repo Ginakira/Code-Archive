@@ -45,11 +45,11 @@ Node *erase(Node *root, int key) {
     } else if (key > root->key) {
         root->rchild = erase(root->rchild, key);
     } else {
-        if (root->lchild == NULL || root->rchild == NULL) {
+        if (root->lchild == NULL || root->rchild == NULL) {  // 删除度为0或1
             Node *temp = root->lchild ? root->lchild : root->rchild;
             free(root);
             return temp;
-        } else {
+        } else {  // 删除度为2
             Node *temp = predecessor(root);
             root->key = temp->key;
             root->lchild = erase(root->lchild, temp->key);
