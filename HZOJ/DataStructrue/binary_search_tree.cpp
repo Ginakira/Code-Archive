@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
 typedef struct Node {
     int key;
     struct Node *lchild, *rchild;
