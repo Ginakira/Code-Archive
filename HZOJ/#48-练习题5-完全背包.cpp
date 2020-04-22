@@ -1,5 +1,5 @@
 /************************************************************
-    File Name : #48-练习题5-完全背包.cpp
+    File Name : #48-练习题5-完全背包-二维.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
