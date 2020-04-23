@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/04/23 18:50:31
+    Created Time: 2020/04/23 19:33:04
 ************************************************************/
 
 #include <stdio.h>
@@ -12,8 +12,8 @@
 
 #define L(root) (root)->lchild
 #define R(root) (root)->rchild
-#define K(root) (root)->key
 #define H(root) (root)->h
+#define K(root) (root)->key
 
 typedef struct Node {
     int key, h;
@@ -38,7 +38,7 @@ Node *getNewNode(int key) {
 }
 
 void update_height(Node *root) {
-    H(root) = (H(L(root)) > H(R(root)) ? H(L(root)) : H(R(root))) + 1;
+    root->h = (H(L(root)) > H(R(root)) ? H(L(root)) : H(R(root))) + 1;
     return;
 }
 
@@ -78,13 +78,39 @@ Node *maintain(Node *root) {
 
 Node *insert(Node *root, int key) {
     if (root == NIL) return getNewNode(key);
-    if (K(root) == key) return root;
-    if (K(root) > key) {
-        root->rchild = insert(root->rchild, key);
-    } else {
+    if (root->key == key) return root;
+    if (key < root->key) {
         root->lchild = insert(root->lchild, key);
+    } else {
+        root->rchild = insert(root->rchild, key);
     }
     update_height(root);
+    return maintain(root);
+}
+
+Node *predecessor(Node *root) {
+    Node *temp = root->lchild;
+    while (temp->rchild != NIL) temp = temp->rchild;
+    return temp;
+}
+
+Node *erase(Node *root, int key) {
+    if (root == NIL) return root;
+    if (root->key > key) {
+        root->lchild = erase(root->lchild, key);
+    } else if (root->key < key) {
+        root->rchild = erase(root->rchild, key);
+    } else {
+        if (root->lchild == NIL || root->rchild == NIL) {
+            Node *temp = root->lchild == NIL ? root->rchild : root->lchild;
+            free(root);
+            return temp;
+        } else {
+            Node *temp = predecessor(root);
+            root->key = temp->key;
+            root->lchild = erase(root->lchild, temp->key);
+        }
+    }
     return maintain(root);
 }
 
@@ -96,4 +122,7 @@ void clear(Node *root) {
     return;
 }
 
-int main() { return 0; }
+int main() {
+#define MAX_OP 20
+    return 0;
+}
