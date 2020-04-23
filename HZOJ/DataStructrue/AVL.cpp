@@ -53,7 +53,7 @@ Node *left_rotate(Node *root) {
 
 Node *right_rotate(Node *root) {
     Node *temp = root->lchild;  // Roor after rotate
-    root->lchild = root->rchild;
+    root->lchild = temp->rchild;
     temp->rchild = root;
     update_height(root);
     update_height(temp);
@@ -87,6 +87,32 @@ Node *insert(Node *root, int key) {
     return maintain(root);
 }
 
+Node *predecessor(Node *root) {
+    Node *temp = root->lchild;
+    while (temp->rchild != NIL) temp = temp->rchild;
+    return temp;
+}
+
+Node *erase(Node *root, int key) {
+    if (root == NIL) return root;
+    if (root->key > key) {
+        root->lchild = erase(root->lchild, key);
+    } else if (root->key < key) {
+        root->rchild = erase(root->rchild, key);
+    } else {
+        if (root->lchild == NIL || root->rchild == NIL) {
+            Node *temp = root->lchild == NIL ? root->rchild : root->lchild;
+            free(root);
+            return temp;
+        } else {
+            Node *temp = predecessor(root);
+            root->key = temp->key;
+            root->lchild = erase(root->lchild, temp->key);
+        }
+    }
+    return maintain(root);
+}
+
 void clear(Node *root) {
     if (root == NIL) return;
     clear(root->lchild);
@@ -100,16 +126,22 @@ void output(Node *root) {
     printf("(%d, %d, %d)\n", K(root), K(L(root)), K(R(root)));
     output(root->lchild);
     output(root->rchild);
+    return;
 }
 
 int main() {
-#define MAX_OP 30
+#define MAX_OP 20
     srand(time(0));
     Node *root = NIL;
     for (int i = 0; i < MAX_OP; ++i) {
         int val = rand() % 100;
-        printf("Insert %d to AVL tree\n", val);
         root = insert(root, val);
+    }
+    output(root);
+    int val;
+    while (~scanf("%d", &val)) {
+        root = erase(root, val);
+        printf("Erase %d from AVL tree\n", val);
         output(root);
     }
     return 0;
