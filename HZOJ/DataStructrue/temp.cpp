@@ -3,16 +3,16 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/04/23 19:33:04
+    Created Time: 2020/04/25 23:40:05
 ************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
+#define H(root) (root)->h
 #define L(root) (root)->lchild
 #define R(root) (root)->rchild
-#define H(root) (root)->h
 #define K(root) (root)->key
 
 typedef struct Node {
@@ -24,7 +24,7 @@ Node __NIL;
 #define NIL (&__NIL)
 
 __attribute__((constructor)) void init_NIL() {
-    NIL->h = NIL->key = 0;
+    NIL->key = NIL->h = 0;
     NIL->lchild = NIL->rchild = NIL;
     return;
 }
@@ -79,7 +79,7 @@ Node *maintain(Node *root) {
 Node *insert(Node *root, int key) {
     if (root == NIL) return getNewNode(key);
     if (root->key == key) return root;
-    if (key < root->key) {
+    if (root->key > key) {
         root->lchild = insert(root->lchild, key);
     } else {
         root->rchild = insert(root->rchild, key);
@@ -111,6 +111,7 @@ Node *erase(Node *root, int key) {
             root->lchild = erase(root->lchild, temp->key);
         }
     }
+    update_height(root);
     return maintain(root);
 }
 
@@ -120,9 +121,4 @@ void clear(Node *root) {
     clear(root->rchild);
     free(root);
     return;
-}
-
-int main() {
-#define MAX_OP 20
-    return 0;
 }
