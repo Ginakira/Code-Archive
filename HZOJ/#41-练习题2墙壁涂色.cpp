@@ -12,6 +12,8 @@
 #include <vector>
 using namespace std;
 
+// i j 代表首尾颜色
+
 int f[1005][15][15];
 
 int main() {
