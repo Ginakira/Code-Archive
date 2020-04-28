@@ -1,44 +1,42 @@
 /************************************************************
-    File Name : WA#271-滑动窗口.cpp
+    File Name : #271-滑动窗口.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/02/15 12:28:39
+    Github: https://github.com/Ginakira
+    Created Time: 2020/04/28 20:02:25
 ************************************************************/
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
-#define MAXN 300000
+#define MAX_N 300000
 
-int arr[MAXN];
-int q[MAXN], head, tail;
+int a[MAX_N + 5];
+int q[MAX_N + 5], head = 0, tail = 0;
 
 int main() {
     int n, k;
     cin >> n >> k;
-    for (int i = 0; i < n; ++i) cin >> arr[i];
-    head = 0, tail = 0;
-    for (int i = 0; i < n; ++i) {
-        while (tail - head && arr[i] < arr[q[tail - 1]]) tail--;
+    for (int i = 1; i <= n; ++i) cin >> a[i];
+    for (int i = 1; i <= n; ++i) {
+        while (tail - head && a[q[tail - 1]] >= a[i]) tail--;
         q[tail++] = i;
-        if (i + 1 < k) continue;
-        if (i - q[head] == k) head++;
-        i + 1 == k || cout << " ";
-        cout << arr[q[head]];
+        if (q[head] <= i - k) head++;
+        if (i < k) continue;
+        i == k || cout << " ";
+        cout << a[q[head]];
     }
     cout << endl;
-    head = 0, tail = 0;
-    for (int i = 0; i < n; ++i) {
-        while (tail - head && arr[i] > arr[q[tail - 1]]) tail--;
+    head = tail = 0;
+    for (int i = 1; i <= n; ++i) {
+        while (tail - head && a[q[tail - 1]] <= a[i]) tail--;
         q[tail++] = i;
-        if (i + 1 < k) continue;
-        if (i - q[head] == k) head++;
-        i + 1 == k || cout << " ";
-        cout << arr[q[head]];
+        if (q[head] <= i - k) head++;
+        if (i < k) continue;
+        i == k || cout << " ";
+        cout << a[q[head]];
     }
     cout << endl;
     return 0;
