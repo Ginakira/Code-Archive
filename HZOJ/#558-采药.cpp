@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/04/22 21:10:53
+    Created Time: 2020/04/29 18:13:29
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -12,23 +12,24 @@
 #include <vector>
 using namespace std;
 
-int T, M, v[105], w[105], ans[1005];
+int t, m, mtime[105], mval[105], ans[1005];
 
-// 01-Knapsack
 int main() {
-    cin >> T >> M;
-    for (int i = 1; i <= M; ++i) {
-        cin >> w[i] >> v[i];
+    cin >> t >> m;
+    for (int i = 1; i <= m; ++i) {
+        cin >> mtime[i] >> mval[i];
     }
-    for (int i = 1; i <= M; ++i) {
-        for (int j = T; j; --j) {
-            if (j < w[i]) {
+
+    for (int i = 1; i <= m; ++i) {
+        for (int j = t; j > 0; --j) {
+            if (j < mtime[i]) {
                 break;
             } else {
-                ans[j] = max(ans[j], v[i] + ans[j - w[i]]);
+                ans[j] = max(ans[j], ans[j - mtime[i]] + mval[i]);
             }
         }
     }
-    cout << ans[T] << endl;
+    cout << ans[t] << endl;
+
     return 0;
 }
