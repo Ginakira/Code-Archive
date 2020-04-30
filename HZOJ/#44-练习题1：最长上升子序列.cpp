@@ -12,6 +12,7 @@
 #include <vector>
 using namespace std;
 #define MAX_N 1000000
+#define INF 0x3f3f3f3f
 
 int dp[MAX_N + 5];
 int len[MAX_N + 5], ans = 0;
@@ -30,7 +31,7 @@ int main() {
     for (int i = 1; i <= n; ++i) {
         cin >> a[i];
         dp[i] = 1;
-        len[i] = n + 1;
+        len[i] = INF;
     }
     len[++ans] = a[1];
     dp[1] = 1;
