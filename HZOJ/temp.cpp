@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/02 23:00:27
+    Created Time: 2020/05/03 23:48:04
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -11,23 +11,27 @@
 #include <string>
 #include <vector>
 using namespace std;
-#define MAX_N 1000
-int f[MAX_N + 5][MAX_N + 5];
+#define MAX_N 100000
+
+int f[MAX_N + 5];
+int val[MAX_N + 5];
 
 int main() {
     int n;
     cin >> n;
     for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j <= i; ++j) {
-            cin >> f[i][j];
-        }
+        cin >> val[i];
+        f[i] = 1;
     }
 
-    for (int i = n - 1; i > 0; --i) {
-        for (int j = 1; j <= i; ++j) {
-            f[i][j] += max(f[i + 1][j], f[i + 1][j + 1]);
+    int ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j < i; ++j) {
+            if (val[j] >= val[i]) continue;
+            f[i] = max(f[i], f[j] + 1);
         }
+        ans = max(ans, f[i]);
     }
-    cout << f[1][1] << endl;
+    cout << ans << endl;
     return 0;
 }
