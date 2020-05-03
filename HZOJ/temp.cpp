@@ -11,10 +11,19 @@
 #include <string>
 #include <vector>
 using namespace std;
-#define MAX_N 100000
+#define MAX_N 1000000
+#define INF 0x3f3f3f3f
 
 int f[MAX_N + 5];
 int val[MAX_N + 5];
+int len[MAX_N + 5], ans = 0;
+
+int bs(int *arr, int l, int r, int x) {
+    if (l == r) return l;
+    int mid = (l + r) >> 1;
+    if (arr[mid] < x) return bs(arr, mid + 1, r, x);
+    return bs(arr, l, mid, x);
+}
 
 int main() {
     int n;
@@ -22,14 +31,13 @@ int main() {
     for (int i = 1; i <= n; ++i) {
         cin >> val[i];
         f[i] = 1;
+        len[i] = INF;
     }
 
-    int ans = 0;
-    for (int i = 1; i <= n; ++i) {
-        for (int j = 1; j < i; ++j) {
-            if (val[j] >= val[i]) continue;
-            f[i] = max(f[i], f[j] + 1);
-        }
+    len[++ans] = val[1];
+    for (int i = 2; i <= n; ++i) {
+        f[i] = bs(len, 1, ans + 1, val[i]);
+        len[f[i]] = val[i];
         ans = max(ans, f[i]);
     }
     cout << ans << endl;
