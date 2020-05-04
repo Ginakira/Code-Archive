@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cctype>
 #include <cmath>
 #include <cstdio>
 #include <iostream>
@@ -10,11 +11,11 @@ int main() {
     getline(cin, s);
     int ch = 0, num = 0, space = 0, other = 0;
     for (int i = 0; i < s.length(); ++i) {
-        if (s[i] >= '0' && s[i] <= '9')
+        if (isdigit(s[i]))
             num++;
-        else if ((s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= 'a' && s[i] <= 'z'))
+        else if (isalpha(s[i]))
             ch++;
-        else if (s[i] == ' ')
+        else if (isblank(s[i]))
             space++;
         else
             other++;
