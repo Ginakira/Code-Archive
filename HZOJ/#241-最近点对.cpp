@@ -1,9 +1,9 @@
 /************************************************************
-    File Name : temp.cpp
+    File Name : #241-最近点对.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/06 19:21:34
+    Created Time: 2020/05/06 19:28:16
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -16,7 +16,7 @@ using namespace std;
 #define INF 0x3f3f3f3f
 
 struct node {
-    int x, y;
+    int x, y, z;
 };
 
 bool cmp(node a, node b) {
@@ -25,7 +25,7 @@ bool cmp(node a, node b) {
 }
 
 int n;
-node p[MAX_N + 5];
+node p[(2 * MAX_N) + 5];
 
 inline double dis(int p1, int p2) {
     return sqrt(pow(p[p1].x - p[p2].x, 2) + pow(p[p1].y - p[p2].y, 2));
@@ -34,10 +34,18 @@ inline double dis(int p1, int p2) {
 double func(int l, int r) {
     if (l == r) return INF;
     if (l + 1 == r) {
-        return dis(l, r);
+        if (p[l].z != p[r].z) return dis(l, r);
+        return INF;
     }
     int mid = (l + r) >> 1;
     double d = min(func(l, mid), func(mid + 1, r));
+    for (int i = mid; i >= l && p[mid].x - p[i].x < d; --i) {
+        for (int j = mid + 1; j <= r && p[j].x - p[mid].x < d; ++j) {
+            if (p[i].z != p[j].z) {
+                d = min(d, dis(i, j));
+            }
+        }
+    }
     return d;
 }
 
@@ -45,9 +53,14 @@ int main() {
     scanf("%d", &n);
     for (int i = 0; i < n; ++i) {
         scanf("%d%d", &p[i].x, &p[i].y);
+        p[i].z = 1;
     }
-    sort(p, p + n, cmp);
-    double ans = func(0, n - 1);
-    printf("%lf\n", ans);
+    for (int i = 2 * n - 1; i >= n; --i) {
+        scanf("%d%d", &p[i].x, &p[i].y);
+        p[i].z = 2;
+    }
+    sort(p, p + 2 * n, cmp);
+    double ans = func(0, 2 * n - 1);
+    printf("%.3f\n", ans);
     return 0;
 }
