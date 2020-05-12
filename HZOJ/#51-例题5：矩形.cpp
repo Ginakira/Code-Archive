@@ -14,7 +14,7 @@ using namespace std;
 #define MAX_N 1000
 #define MOD 100007
 int f[MAX_N + 5];
-int a[MAX_N + 5];  // a[i]第i列 向下数连续白色格子的数量
+int a[MAX_N + 5];  // a[i] 当前行第i列 向下数连续白色格子的数量
 int s[MAX_N + 5], top = -1;
 
 int main() {
