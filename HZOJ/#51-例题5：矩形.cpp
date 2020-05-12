@@ -14,7 +14,9 @@ using namespace std;
 #define MAX_N 1000
 #define MOD 100007
 int f[MAX_N + 5];
-int a[MAX_N + 5];  // a[i] 当前行第i列 向下数连续白色格子的数量
+// 可通过一个左上角坐标和右下角坐标确定一个矩形
+int a[MAX_N + 5];
+// a[i] 当前行第i列 向下数连续白色格子的数量 从最后一行开始往上算
 int s[MAX_N + 5], top = -1;
 
 int main() {
@@ -22,6 +24,7 @@ int main() {
     cin >> n >> m;
     a[m + 1] = -1;
     f[m + 1] = 0;
+    // 将矩阵倒过来也不影响结果 所以不用存
     for (int i = 1; i <= n; ++i) {
         for (int j = 1, val; j <= m; ++j) {
             cin >> val;
