@@ -1,20 +1,15 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2020/05/08 15:53:12
-************************************************************/
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+#include <string.h>
+#define max_n 50
 
 int main() {
-    int i = 65535;
-    int *p = &i;
-    cout << *(short *)p << endl;
+    char s[max_n + 5] = {0};
+    int l = 0;
+    scanf("%s", s);
+    for (int i = strlen(s); i > 0; --i) {
+        if (s[i] == ' ') break;
+        l++;
+    }
+    printf("%d\n", l);
     return 0;
 }
