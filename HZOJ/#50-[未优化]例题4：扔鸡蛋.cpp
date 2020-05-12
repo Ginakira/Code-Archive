@@ -13,7 +13,7 @@
 using namespace std;
 #define MAX_N 32
 #define MAX_M 10000
-int dp[MAX_N + 5][MAX_M + 5];
+int dp[MAX_N + 5][MAX_M + 5];  // dp[n][m] n个鸡蛋测m层楼最坏情况下最少测多少次
 int f[MAX_N + 5][MAX_M + 5];  // i枚鸡蛋测j层楼 第一枚在哪里扔
 
 int main() {
