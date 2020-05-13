@@ -2,33 +2,35 @@
     File Name : #504-删数.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/02/08 21:22:16
+    Github: https://github.com/Ginakira
+    Created Time: 2020/05/13 18:43:00
 ************************************************************/
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 int main() {
+    string str;
     int n;
-    string s;
-    cin >> s >> n;
-    int len = s.length();
-    int index = 0;
-    while (n) {
-        index = 0;
-        while (s[index] <= s[index + 1]) ++index;
-        s.erase(index, 1);
-        len--, n--;
+    cin >> str >> n;
+    for (int i = 0; i < n; ++i) {
+        int ind = str.size() - 1;
+        for (int j = 0; j < str.size() - 1; j++) {
+            if (str[j] > str[j + 1]) {
+                ind = j;
+                break;
+            }
+        }
+        str.replace(ind, 1, "");
     }
-    bool flag = false;
-    for (int i = 0; i < len; ++i) {
-        if (!flag && s[i] == '0') continue;
-        flag = true;
-        cout << s[i];
+    int flag = 0;
+    for (int i = 0; i < str.size(); ++i) {
+        if (str[i] != '0') flag = 1;
+        if (flag) cout << str[i];
     }
+    cout << endl;
     return 0;
 }
