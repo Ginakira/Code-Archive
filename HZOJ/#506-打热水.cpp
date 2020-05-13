@@ -2,38 +2,39 @@
     File Name : #506-打热水.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/01/28 14:25:57
+    Github: https://github.com/Ginakira
+    Created Time: 2020/05/13 18:09:46
 ************************************************************/
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <iomanip>
+#include <cstring>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
+#define MAX_N 2000
+pair<int, int> stu[MAX_N + 5];
 
-pair<int, int> arr[35];
-
-bool cmp(pair<int, int> a, pair<int, int> b) {
-    if (a.first == b.first) return a.second < b.second;
-    return a.first < b.first;
+bool cmp(const pair<int, int> &a, const pair<int, int> &b) {
+    return a.second < b.second;
 }
 
 int main() {
     int n;
     cin >> n;
     for (int i = 1; i <= n; ++i) {
-        cin >> arr[i].first;
-        arr[i].second = i;
+        scanf("%d", &stu[i].second);
+        stu[i].first = i;
     }
-    sort(arr + 1, arr + n + 1, cmp);
-    double sum = 0, total = 0;
+    sort(stu + 1, stu + n + 1, cmp);
+    double ans = 0;
+    int now = 0;
     for (int i = 1; i <= n; ++i) {
-        i > 1 && cout << " ";
-        cout << arr[i].second;
-        sum += arr[i - 1].first;
-        total += sum;
+        i == 1 || printf(" ");
+        now += stu[i - 1].second;
+        ans += now;
+        printf("%d", stu[i].first);
     }
-    printf("\n%.2f", total / n);
+    printf("\n%.2f\n", ans / n);
     return 0;
 }
