@@ -1,61 +1,85 @@
-#include <iostream>
-using namespace std;
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/05/14 17:09:09
+************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
 
-char str[6005];
-int n, m, ans[6005], mem[6005];
+#define H(root) (root)->h
+#define L(root) (root)->lchild
+#define R(root) (root)->rchild
 
-int main() {
-    cin >> n >> m >> &str[1];
-    for (int i = 1; i <= n / 2; i++) {  //枚举长度
-        int same = 0;
-        for (int j = 1, k = i + 1; j <= i; j++, k++) {  //起点为1时
-            if (str[j] == str[k]) {
-                same++;
-            }
-        }
-        ans[same]++;
-        for (int j = 2; j - 1 + i + i <= n; j++) {  //枚举起点
-            if (str[j - 1] == str[j - 1 + i]) {  //删掉的那对字符是否相等
-                same--;
-            }
-            if (str[j - 1 + i] == str[j - 1 + i + i]) {  //加入的那对是否相等
-                same++;
-            }
-            ans[same]++;
-        }
-        mem[i] = same;
-    }
-    for (int i = 0; i < m; i++) {
-        int t;
-        cin >> t;
-        if (t == 2) {
-            cin >> t;
-            cout << ans[t] << endl;
-            continue;
-        }
-        char l;
-        cin >> l;
-        str[++n] = l;
-        if (!(n & 1)) {  //加进来如果变成偶数 多计算一轮
-            int same = 0, mid = n / 2;
-            for (int j = 1, k = 1 + mid; j <= mid; j++, k++) {
-                if (str[j] == str[k]) {
-                    same++;
-                }
-            }
-            ans[same]++;
-            mem[mid] = same;
-        }
-        for (int j = 1; j <= (n - 1) / 2; j++) {  //加入字符后 在枚举一轮长度
-            if (str[n - j - j] == str[n - j]) {
-                mem[j]--;
-            }
-            if (str[n] == str[n - j]) {
-                mem[j]++;
-            }
-            ans[mem[j]]++;
-        }
-    }
+typedef struct Node {
+    int key, h;
+    struct Node *lchild, *rchild;
+} Node;
 
-    return 0;
+Node __NIL;
+#define NIL (&__NIL)
+
+__attribute__((constructor)) void init_NIL() {
+    NIL->key = 0;
+    NIL->h = 0;
+    NIL->lchild = NIL->rchild = NIL;
+    return;
 }
+
+Node *getNewNode(int key) {
+    Node *p = (Node *)malloc(sizeof(Node));
+    p->key = key;
+    p->lchild = p->rchild = NIL;
+    p->h = 1;
+    return p;
+}
+
+void update_height(Node *root) {
+    root->h = H(L(root)) > H(R(root)) ? H(L(root)) : H(R(root));
+    return;
+}
+
+Node *left_rotate(Node *root) {
+    Node *temp = root->rchild;
+    
+}
+
+Node *right_rotate(Node *root) {}
+
+Node *maintain(Node *root) {
+    if (abs(H(L(root)) - H(R(root))) <= 1) return root;
+    if (H(L(root)) > H(R(root))) {            // L
+        if (H(R(L(root))) > H(L(L(root)))) {  // LR
+            root = left_rotate(root->lchild);
+        }
+        root = right_rotate(root);
+    } else {                                  // R
+        if (H(L(R(root))) > H(R(R(root)))) {  // RL
+            root = right_rotate(root->rchild);
+        }
+        root = left_rotate(root);
+    }
+    return root;
+}
+
+Node *insert(Node *root, int key) {
+    if (root == NIL) return getNewNode(key);
+    if (root->key == key) return root;
+    if (root->key > key)
+        root->lchild = insert(root->lchild, key);
+    else
+        root->rchild = insert(root->rchild, key);
+    update_height(root);
+    return maintain(root);
+}
+
+void clear(Node *root) {
+    if (root == NIL) return;
+    clear(root->lchild);
+    clear(root->rchild);
+    free(root);
+    return;
+}
+
+int main() { return 0; }
