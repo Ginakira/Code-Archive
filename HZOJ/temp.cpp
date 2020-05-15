@@ -85,6 +85,33 @@ Node *insert(Node *root, int key) {
     return maintain(root);
 }
 
+Node *predecessor(Node *root) {
+    Node *temp = root->lchild;
+    while (temp->rchild != NIL) temp = temp->rchild;
+    return temp;
+}
+
+Node *erase(Node *root, int key) {
+    if (root == NIL) return root;
+    if (root->key > key) {
+        root->lchild = erase(root->lchild, key);
+    } else if (root->key < key) {
+        root->rchild = erase(root->rchild, key);
+    } else {
+        if (root->lchild == NIL || root->rchild == NIL) {
+            Node *temp = root->lchild == NIL ? root->rchild : root->lchild;
+            free(root);
+            return temp;
+        } else {
+            Node *temp = predecessor(root);
+            temp->key = root->key;
+            root->lchild = erase(root->lchild, temp->key);
+        }
+    }
+    update_height(root);
+    return maintain(root);
+}
+
 void clear(Node *root) {
     if (root == NIL) return;
     clear(root->lchild);
