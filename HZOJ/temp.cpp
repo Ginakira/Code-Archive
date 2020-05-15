@@ -42,10 +42,21 @@ void update_height(Node *root) {
 
 Node *left_rotate(Node *root) {
     Node *temp = root->rchild;
-    
+    root->rchild = temp->lchild;
+    temp->lchild = root;
+    update_height(root);
+    update_height(temp);
+    return temp;
 }
 
-Node *right_rotate(Node *root) {}
+Node *right_rotate(Node *root) {
+    Node *temp = root->lchild;
+    root->lchild = temp->rchild;
+    temp->rchild = root;
+    update_height(root);
+    update_height(temp);
+    return temp;
+}
 
 Node *maintain(Node *root) {
     if (abs(H(L(root)) - H(R(root))) <= 1) return root;
