@@ -1,9 +1,10 @@
-/*************************************************************************
-        > File Name: 2.RBT.cpp
-        > Author: huguang
-        > Mail: hug@haizeix.com
-        > Created Time: 六  5/16 14:27:40 2020
- ************************************************************************/
+/************************************************************
+    File Name : rb_tree.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/05/16 14:28:26
+************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,11 +16,12 @@
 
 typedef struct Node {
     int key;
-    int color;  // 0 red, 1 black, 2 double black
+    int color;  // 0 RED 1 BLACK 2 DOUBLE BLACK
     struct Node *lchild, *rchild;
 } Node;
 
 Node __NIL;
+
 #define NIL (&__NIL)
 
 __attribute__((constructor)) void init_NIL() {
@@ -38,7 +40,7 @@ Node *getNewNode(int key) {
 }
 
 bool has_red_child(Node *root) {
-    return root->lchild->color == 0 || root->rchild->color == 0;
+    return root->lchild->color == RED || root->rchild->color == RED;
 }
 
 Node *left_rotate(Node *root) {
@@ -62,15 +64,15 @@ Node *insert_maintain(Node *root) {
         root->lchild->color = root->rchild->color = BLACK;
         return root;
     }
-    if (root->lchild->color == RED) {
+    if (root->lchild->color == RED) {  // L
         if (!has_red_child(root->lchild)) return root;
-        if (root->lchild->rchild->color == RED) {
+        if (root->lchild->rchild->color == RED) {  // LR
             root->lchild = left_rotate(root->lchild);
         }
         root = right_rotate(root);
-    } else {
+    } else {  // R
         if (!has_red_child(root->rchild)) return root;
-        if (root->rchild->lchild->color == RED) {
+        if (root->rchild->lchild->color == RED) {  // RL
             root->rchild = right_rotate(root->rchild);
         }
         root = left_rotate(root);
