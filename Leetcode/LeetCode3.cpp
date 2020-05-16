@@ -76,3 +76,50 @@ class Solution4 {
         return max_len;
     }
 };
+
+// 二分 + 判定
+class Solution5 {
+   public:
+    bool check(string &s, int l) {
+        int cnt = 0;
+        int arr[256] = {0};
+        for (int i = 0; s[i]; ++i) {
+            arr[s[i]]++;
+            if (arr[s[i]] == 1) cnt++;
+            if (i >= l) {
+                arr[s[i - l]]--;
+                if (arr[s[i - l]] == 0) cnt--;
+            }
+            if (cnt == l) return true;
+        }
+        return false;
+    }
+
+    int bs(string &s, int l, int r) {
+        if (l == r) return l;
+        int mid = (l + r + 1) >> 1;
+        if (check(s, mid)) return bs(s, mid, r);
+        return bs(s, l, mid - 1);
+    }
+
+    int lengthOfLongestSubstring(string s) {
+        if (s == "") return 0;
+        return bs(s, 1, s.size());
+    }
+};
+
+// 记录最后出现的位置
+class Solution6 {
+   public:
+    int lengthOfLongestSubstring(string s) {
+        int ind[256] = {0};
+        int l = 0, ans = 0;
+        for (int i = 0; s[i]; ++i) {
+            l += 1;
+            l = min(l, (i + 1) - ind[s[i]]);
+            ind[s[i]] = i + 1;
+            ans = max(ans, l);
+        }
+        return ans;
+    }
+};
