@@ -82,6 +82,89 @@ Node *insert_maintain(Node *root) {
     return root;
 }
 
+Node *predecessor(Node *root) {
+    Node *temp = root->lchild;
+    while (temp->rchild != NIL) temp = temp->rchild;
+    return temp;
+}
+
+Node *erase_maintain(Node *root) {
+    if (root->lchild->color != DBLACK && root->rchild->color != DBLACK)
+        return root;
+    if (has_red_child(root)) {
+        root->color = RED;
+        if (root->lchild->color == RED) {
+            root = right_rotate(root);
+            root->rchild = erase_maintain(root->rchild);
+        } else {
+            root = left_rotate(root);
+            root->lchild = erase_maintain(root->lchild);
+        }
+        root->color = BLACK;
+        return root;
+    }
+
+    if ((root->lchild->color == DBLACK && !has_red_child(root->rchild)) ||
+        (root->rchild->color == DBLACK && !has_red_child(root->lchild))) {
+        root->color += 1;
+        root->lchild->color -= 1;
+        root->rchild->color -= 1;
+        return root;
+    }
+
+    if (root->rchild->color == BLACK) {            // R
+        if (root->rchild->rchild->color != RED) {  // RL
+            root->rchild->color = RED;
+            root->rchild = right_rotate(root->rchild);
+            root->rchild->color = BLACK;
+        }
+        root->rchild->color = root->color;
+        root->color = BLACK;
+        root->lchild->color -= 1;
+        root = left_rotate(root);
+        root->rchild->color = BLACK;
+    } else {                                       // L
+        if (root->lchild->lchild->color != RED) {  // LR
+            root->lchild->color = RED;
+            root->lchild = left_rotate(root->lchild);
+            root->lchild->color = BLACK;
+        }
+        root->lchild->color = root->color;
+        root->color = BLACK;
+        root->rchild->color -= 1;
+        root = right_rotate(root);
+        root->lchild->color = BLACK;
+    }
+    return root;
+}
+
+Node *__erase(Node *root, int key) {
+    if (root == NIL) return root;
+    if (root->key > key) {
+        root->lchild = __erase(root->lchild, key);
+    } else if (root->key < key) {
+        root->rchild = __erase(root->rchild, key);
+    } else {
+        if (root->lchild == NIL || root->rchild == NIL) {
+            Node *temp = root->lchild == NIL ? root->rchild : root->lchild;
+            temp->color += root->color;
+            free(root);
+            return temp;
+        } else {
+            Node *temp = predecessor(root);
+            root->key = temp->key;
+            root->lchild = __erase(root->lchild, temp->key);
+        }
+    }
+    return erase_maintain(root);
+}
+
+Node *erase(Node *root, int key) {
+    root = __erase(root, key);
+    root->color = BLACK;
+    return root;
+}
+
 Node *__insert(Node *root, int key) {
     if (root == NIL) return getNewNode(key);
     if (root->key == key) return root;
