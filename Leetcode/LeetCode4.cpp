@@ -18,3 +18,4 @@ class Solution {
         return (n & 1) ? ans[n >> 1] : (ans[n / 2 - 1] + ans[n / 2]) / 2.0;
     }
 };
+
