@@ -208,6 +208,7 @@ int main() {
                 root = insert(root, val);
                 break;
             case 1:
+                root = erase(root, val);
                 break;
         }
         output(root);
