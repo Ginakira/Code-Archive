@@ -39,3 +39,20 @@ class Solution3 {
         return lower_bound(nums.begin(), nums.end(), target) - nums.begin();
     }
 };
+
+// 000001111 找第一个大于等于target的位置
+class Solution4 {
+   public:
+    int searchInsert(vector<int>& nums, int target) {
+        int l = 0, r = nums.size();
+        while (l != r) {
+            int mid = (l + r) >> 1;
+            if (nums[mid] == target) return mid;
+            if (nums[mid] < target)
+                l = mid + 1;
+            else
+                r = mid;
+        }
+        return l;
+    }
+};
