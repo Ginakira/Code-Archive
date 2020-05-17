@@ -11,6 +11,8 @@
 // 这样问题就变成了找一个位置从那断开（将其作为计算的第一个位置）
 // Si = \sigma{k = 1, i} a_k
 // gi = s_i - i * c 代表从1点开始的调整代价
+// Ans = \sigma{k = 1, n} |g_i - g_k|
+// 与货仓选址公式一致 g_k一定是gi序列的中位数 才能使ans最小
 
 #include <algorithm>
 #include <cmath>
