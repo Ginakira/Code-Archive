@@ -39,7 +39,7 @@ class Solution {
 };
 
 // Haizei
-class Solution {
+class Solution2 {
    public:
     int myAtoi(string str) {
         int flag = 1, num = 0, i = 0, pre_max = INT_MAX / 10, d = INT_MAX % 10;
