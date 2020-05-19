@@ -3,6 +3,7 @@
 #include <string>
 using namespace std;
 
+// Manacher 算法
 class Solution {
    public:
     string get_new_str(string &s) {
