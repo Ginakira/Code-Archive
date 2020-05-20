@@ -13,15 +13,26 @@
 #include <string>
 using namespace std;
 #define LL long long
+#define MAX_N 15000000
+LL a, num[MAX_N + 5];
 
 int main() {
-    LL a;
     cin >> a;
-    for (LL n = a + 1; n < INT_MAX; ++n) {
-        for (LL k = a; k < n; ++k) {
-            if (k * (k - 1) == (n + k + 1) * (n - k)) {
-                cout << k << ' ' << n << endl;
+    for (int i = 1; i <= MAX_N; ++i) {
+        num[i] = num[i - 1] + i;
+    }
+    for (int i = a; 1; ++i) {  // 枚举k
+        int l = i + 1, r = MAX_N;
+        while (l <= r) {
+            int mid = (l + r) >> 1;
+            if (num[mid] - num[i] == num[i - 1]) {
+                cout << i << ' ' << mid << endl;
                 return 0;
+            }
+            if (num[mid] - num[i] > num[i - 1]) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
             }
         }
     }
