@@ -6,13 +6,11 @@ using namespace std;
 
 class Solution {
    public:
-    bool isAlpha(char ch) { return ch <= 'x' && ch >= 'a'; }
-
+    bool isAlpha(char ch) { return ch <= 'z' && ch >= 'a'; }
     bool isDigit(char ch) { return ch <= '9' && ch >= '0'; }
-
     bool isPalindrome(string s) {
         int p1 = 0, p2 = s.size() - 1;
-        for (int i = 0; s[i]; ++i) {
+        for (int i = 0; s[i]; i++) {
             if (s[i] <= 'Z' && s[i] >= 'A') s[i] += 32;
         }
         while (p1 < p2) {
