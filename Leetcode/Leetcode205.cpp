@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 
+// 一一对应的绑定关系
 class Solution {
    public:
     bool isIsomorphic(string s, string t) {
