@@ -92,3 +92,57 @@ class Solution4 {
         return ans;
     }
 };
+
+// Haizei
+class Solution5 {
+   public:
+    // 1. 根据时间复杂度反推解题过程
+    // 2. 设计算法/数据结构
+    //  - 找数字 -> 哈希表
+    //  - 连接操作 -> O(1) -> 并查集
+    struct UnionSet {
+        int *fa, *cnt;
+        UnionSet(int n) {
+            fa = new int[n + 1];
+            cnt = new int[n + 1];
+            for (int i = 0; i <= n; ++i) {
+                fa[i] = i, cnt[i] = 1;
+            }
+            return;
+        }
+        bool is_root(int x) { return fa[x] == x; }
+        int get(int x) { return (fa[x] = (x == fa[x] ? x : get(fa[x]))); }
+        void merge(int a, int b) {
+            int aa = get(a), bb = get(b);
+            if (aa == bb) return;
+            fa[aa] = bb;
+            cnt[bb] += cnt[aa];
+            return;
+        }
+        ~UnionSet() {
+            delete[] fa;
+            delete[] cnt;
+        }
+    };
+
+    int longestConsecutive(vector<int>& nums) {
+        UnionSet u(nums.size());
+        unordered_map<int, int> h;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (h.find(nums[i]) != h.end()) continue;
+            if (h.find(nums[i] - 1) != h.end()) {
+                u.merge(i, h[nums[i] - 1]);
+            }
+            if (h.find(nums[i] + 1) != h.end()) {
+                u.merge(i, h[nums[i] + 1]);
+            }
+            h[nums[i]] = i;
+        }
+        int ans = 0;
+        for (int i = 0; i < nums.size(); ++i) {
+            if (!u.is_root(i)) continue;
+            ans = max(ans, u.cnt[i]);
+        }
+        return ans;
+    }
+};
