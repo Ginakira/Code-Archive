@@ -1,10 +1,11 @@
 /************************************************************
-    File Name : temp.cpp
+    File Name : #226-a^b问题.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/24 19:54:01
+    Created Time: 2020/05/24 20:07:56
 ************************************************************/
+
 #include <algorithm>
 #include <cmath>
 #include <iostream>
