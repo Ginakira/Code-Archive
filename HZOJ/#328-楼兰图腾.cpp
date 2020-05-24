@@ -7,37 +7,38 @@
 ************************************************************/
 #include <algorithm>
 #include <cmath>
+#include <cstring>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cstring>
 using namespace std;
+typedef long long LL;
 #define MAX_N 200000
-#define lowbit(x) ((x) & (-x))
-// rise 前面小的 fall 前面大的
-int rise[MAX_N + 5], fall[MAX_N + 5];
-int pre_sm[MAX_N + 5], pre_lg[MAX_N + 5];  // 某一位前面比它小的 前面比它大的
-int suf_sm[MAX_N + 5], suf_lg[MAX_N + 5];  // 后面比它小的 后面比它大的
-int a[MAX_N + 5];
+int arr[MAX_N + 5];
+LL c[MAX_N + 5];
 
-void add(int *c, int i, int val, int n) {
-    while (i <= n) c[i] += val, i += lowbit(i);
-    return;
+inline int lowbit(int x) { return x & (-x); }
+void add(int x, int val, int n) {
+    while (x <= n) c[x] += val, x += lowbit(x);
 }
 
-int query(int *c, int i) {
-    int sum = 0;
-    while (i) sum += c[i], i -= lowbit(i);
-    return sum;
-}
+LL query(int x) { return (x ? c[x] + query(x - lowbit(x)) : 0); }
 
 int main() {
     int n;
+    LL ans1 = 0, ans2 = 0;
     cin >> n;
+    for (int i = 1; i <= n; ++i) cin >> arr[i];
     for (int i = 1; i <= n; ++i) {
-        cin >> a[i];
+        LL pre_sm = query(arr[i]);
+        LL suf_sm = arr[i] - pre_sm - 1;
+        LL pre_lg = i - 1 - pre_sm;
+        LL suf_lg = n - arr[i] - pre_lg;
+        ans1 += pre_lg * suf_lg;
+        ans2 += pre_sm * suf_sm;
+        add(arr[i], 1, n);
     }
+    cout << ans1 << ' ' << ans2 << endl;
 
-    
     return 0;
 }
