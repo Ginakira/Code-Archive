@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/24 19:54:01
+    Created Time: 2020/05/25 19:43:37
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -11,19 +11,28 @@
 #include <string>
 #include <vector>
 using namespace std;
-long long qpow(int a, int b, int MOD) {
-    long long ans = 1, base = a;
-    while (b) {
-        if (b & 1) ans = ans * base % MOD;
-        base = base * base % MOD;
-        b >>= 1;
-    }
-    return ans;
-}
+typedef long long LL;
+#define MAX_N 1000000
+LL arr[MAX_N + 5];
+LL s[MAX_N + 5], f[MAX_N + 5];
+LL n;
 
 int main() {
-    int a, b, p;
-    cin >> a >> b >> p;
-    cout << qpow(a, b, p) << endl;
+    cin >> n;
+    s[0] = 0;
+    for (int i = 1; i <= n; ++i) {
+        cin >> arr[i];
+        s[i] = s[i - 1] + arr[i];
+    }
+    LL c = s[n] / n;
+    for (int i = 1; i <= n; ++i) {
+        f[i] = s[i] - i * c;
+    }
+    sort(f + 1, f + n + 1);
+    LL tf = f[(n + 1) >> 1], cost = 0;
+    for (int i = 1; i <= n; ++i) {
+        cost += abs(f[i] - tf);
+    }
+    cout << cost << endl;
     return 0;
 }
