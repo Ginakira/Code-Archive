@@ -3,28 +3,29 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/24 20:07:56
+    Created Time: 2020/05/25 10:32:06
 ************************************************************/
-
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
 using namespace std;
-long long qpow(int a, int b, int MOD) {
-    long long ans = 1, base = a;
+typedef long long LL;
+
+LL quick_mod(LL a, LL b, LL p) {
+    LL tmp = a, ans = 1;
     while (b) {
-        if (b & 1) ans = ans * base % MOD;
-        base = base * base % MOD;
+        if (b & 1) ans = ans * tmp % p;
+        tmp = tmp * tmp % p;
         b >>= 1;
     }
-    return ans;
+    return ans % p;
 }
 
 int main() {
-    int a, b, p;
+    LL a, b, p;
     cin >> a >> b >> p;
-    cout << qpow(a, b, p) << endl;
+    cout << quick_mod(a, b, p) << endl;
     return 0;
 }
