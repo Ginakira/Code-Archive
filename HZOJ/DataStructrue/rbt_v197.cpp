@@ -22,7 +22,7 @@ Node _NIL, *const NIL = &_NIL;
 __attribute__((constructor)) void init_NIL() {
     NIL->key = 0;
     NIL->lchild = NIL->rchild = NIL;
-    NIL->color = RED;
+    NIL->color = BLACK;
     return;
 }
 
@@ -30,6 +30,7 @@ Node *getNewNode(int key) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->key = key;
     p->lchild = p->rchild = NIL;
+    p->color = RED;
     return p;
 }
 
