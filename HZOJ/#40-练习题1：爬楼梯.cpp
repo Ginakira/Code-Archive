@@ -2,50 +2,62 @@
     File Name : #40-练习题1：爬楼梯.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
-    Created Time: 2020/01/28 18:33:22
+    Github: https://github.com/Ginakira
+    Created Time: 2020/05/28 12:53:43
 ************************************************************/
+
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <iomanip>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
-int dp[505][100];
+struct BigInt : vector<int> {
+    BigInt(int x) {
+        push_back(x);
+        normal();
+    }
 
-void large_add(int a[], int ans[]) {
-    if (a[0] > ans[0]) ans[0] = a[0];
-    for (int i = 1; i <= a[0]; ++i) {
-        ans[i] += a[i];
+    BigInt operator+(const BigInt &b) {
+        BigInt ret = *this;
+        for (int i = 0; i < b.size(); ++i) {
+            if (i < ret.size()) {
+                ret[i] += b[i];
+            } else {
+                ret.push_back(b[i]);
+            }
+        }
+        ret.normal();
+        return ret;
     }
-    for (int i = 1; i <= ans[0]; ++i) {
-        if (ans[i] < 10) continue;
-        ans[i + 1] += ans[i] / 10;
-        ans[i] %= 10;
-        ans[0] += (i == ans[0]);
-    }
-    return;
-}
 
-void solve(int n) {
-    dp[0][0] = 1, dp[1][0] = 1;
-    dp[2][0] = 1, dp[2][1] = 1;
-    dp[3][0] = 1, dp[3][1] = 1;
-    for (int i = 4; i <= n; ++i) {
-        dp[i][0] = 1;
-        large_add(dp[i - 2], dp[i]);
-        large_add(dp[i - 3], dp[i]);
+    void normal() {
+        for (int i = 0; i < size(); ++i) {
+            if (at(i) < 10) continue;
+            if (i + 1 == size()) push_back(0);
+            at(i + 1) += at(i) / 10;
+            at(i) %= 10;
+        }
+        return;
     }
-    return;
+};
+
+ostream &operator<<(ostream &out, const BigInt &a) {
+    for (int i = a.size() - 1; i >= 0; --i) {
+        out << a[i];
+    }
+    return out;
 }
 
 int main() {
     int n;
     cin >> n;
-    solve(n);
-    for (int i = dp[n][0]; i > 0; --i) {
-        cout << dp[n][i];
+    BigInt a = 0, b = 1, c = 1, d = 1;
+    for (int i = 2; i <= n; ++i) {
+        a = b, b = c, c = d;
+        d = a + b;
     }
+    cout << a << endl;
     return 0;
 }
