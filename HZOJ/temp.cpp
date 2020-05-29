@@ -3,8 +3,9 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/28 23:18:12
+    Created Time: 2020/05/29 10:19:31
 ************************************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -18,7 +19,7 @@ typedef struct Node {
     struct Node *lchild, *rchild;
 } Node;
 
-Node __NIL, *NIL = &__NIL;
+Node __NIL, *const NIL = &__NIL;
 
 __attribute__((constructor)) void init_NIL() {
     NIL->key = 0;
