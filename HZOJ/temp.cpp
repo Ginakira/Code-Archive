@@ -1,28 +1,24 @@
 /************************************************************
-    File Name : #64-海贼红黑树.cpp
+    File Name : temp.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/05/16 14:28:26
+    Created Time: 2020/05/29 23:37:08
 ************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define RED 0
 #define BLACK 1
 #define DBLACK 2
 
 typedef struct Node {
-    int key;
-    int color;  // 0 RED 1 BLACK 2 DOUBLE BLACK
+    int key, color;
     struct Node *lchild, *rchild;
 } Node;
 
-Node __NIL;
-
-#define NIL (&__NIL)
+Node __NIL, *const NIL = &__NIL;
 
 __attribute__((constructor)) void init_NIL() {
     NIL->key = 0;
@@ -120,10 +116,9 @@ Node *erase_maintain(Node *root) {
             root->rchild->color = BLACK;
         }
         root->rchild->color = root->color;
-        root->color = BLACK;
         root->lchild->color -= 1;
         root = left_rotate(root);
-        root->rchild->color = BLACK;
+        root->lchild->color = root->rchild->color = BLACK;
     } else {                                       // L
         if (root->lchild->lchild->color != RED) {  // LR
             root->lchild->color = RED;
@@ -131,10 +126,9 @@ Node *erase_maintain(Node *root) {
             root->lchild->color = BLACK;
         }
         root->lchild->color = root->color;
-        root->color = BLACK;
         root->rchild->color -= 1;
         root = right_rotate(root);
-        root->lchild->color = BLACK;
+        root->lchild->color = root->rchild->color = BLACK;
     }
     return root;
 }
@@ -216,6 +210,5 @@ int main() {
             } break;
         }
     }
-
     return 0;
 }
