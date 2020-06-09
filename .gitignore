@@ -11,5 +11,4 @@ MSP/
 Qt5/
 MachineLearning/venv/
 
-a.out
-HZOJ/a.out
+*.out
