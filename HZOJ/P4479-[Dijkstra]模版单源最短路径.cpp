@@ -19,12 +19,13 @@ struct Node {
     bool operator<(const Node &b) const { return this->dist > b.dist; }
 };
 
-int n, m, s, dis[1005][1005], ans[1005];
+int n, m, s, ans[1005];
 
 int main() {
+    cin >> n >> m >> s;
+    int dis[n + 5][n + 5];
     memset(dis, 0x3f, sizeof(dis));
     memset(ans, 0x3f, sizeof(ans));
-    cin >> n >> m >> s;
     for (int i = 0; i < m; ++i) {
         int a, b, c;
         cin >> a >> b >> c;
