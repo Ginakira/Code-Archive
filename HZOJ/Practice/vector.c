@@ -60,15 +60,17 @@ int main() {
     Vector *vec = init(max_op);
     int op, ind, val;
     for (int i = 0; i < max_op; ++i) {
-        op = rand() % 2;
-        ind = rand() % (vec->length + 1);
+        op = rand() % 4;
+        ind = rand() % (vec->length + 3) - 1;
         val = rand() % 100;
         switch (op) {
-            case 0: {
+            case 0:
+            case 1:
+            case 2: {
                 printf("Insert %d at %d = %d\n", val, ind,
                        insert(vec, ind, val));
             } break;
-            case 1: {
+            case 3: {
                 printf("Erase %d index = %d\n", ind, erase(vec, ind));
             } break;
         }
