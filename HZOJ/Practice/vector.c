@@ -15,10 +15,27 @@ Vector *init(int n) {
     return vec;
 }
 
+int expand(Vector *vec) {
+    int extra_size = vec->size;
+    int *p;
+    while (extra_size) {
+        p = (int *)realloc(vec->data, sizeof(int) * (vec->size + extra_size));
+        if (p) break;
+        extra_size /= 2;
+    }
+    if (!p) return 0;
+    vec->data = p;
+    vec->size += extra_size;
+    return 1;
+}
+
 int insert(Vector *vec, int ind, int val) {
     if (!vec) return 0;
     if (ind < 0 || ind > vec->length) return 0;
-    if (vec->length == vec->size) return 0;
+    if (vec->length == vec->size) {
+        if (!expand(vec)) return 0;
+        printf("Expanded successfully! Size = %d\n", vec->size);
+    }
     for (int i = vec->length; i > ind; --i) {
         vec->data[i] = vec->data[i - 1];
     }
@@ -57,7 +74,7 @@ void clear(Vector *vec) {
 int main() {
 #define max_op 20
     srand(time(0));
-    Vector *vec = init(max_op);
+    Vector *vec = init(1);
     int op, ind, val;
     for (int i = 0; i < max_op; ++i) {
         op = rand() % 4;
