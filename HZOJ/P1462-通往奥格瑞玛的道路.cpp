@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/07/01 20:39:34
+    Created Time: 2020/07/01 20:39:36
 ************************************************************/
 #include <cstring>
 #include <iostream>
