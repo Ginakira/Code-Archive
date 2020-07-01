@@ -1,3 +1,10 @@
+/************************************************************
+    File Name : P3393-逃离僵尸岛.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/07/01 19:10:11
+************************************************************/
 #include <cstring>
 #include <iostream>
 #include <queue>
