@@ -14,7 +14,7 @@ using namespace std;
 
 int main() {
     __int64_t mask = 0x8000000000000000;
-    double a = -0.111, b = 4.200001;
+    double a = 0.111, b = -4.200001;
     int sa = (__int64_t)a & mask;
     int sb = (__int64_t)b & mask;
     cout << sa << ' ' << sb;
