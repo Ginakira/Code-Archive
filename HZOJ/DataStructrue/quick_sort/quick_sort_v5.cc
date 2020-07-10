@@ -1,10 +1,12 @@
 /************************************************************
-    File Name : quick_sort_v4.cc
+    File Name : quick_sort_v5.cc
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/07/10 10:55:47
+    Created Time: 2020/07/10 11:19:14
 ************************************************************/
+
+#include <iostream>
 
 #include "quick_sort.h"
 
@@ -15,7 +17,7 @@
     }
 
 // 区间左闭右闭
-// 小数据范围改插入排序
+// 基准值：随机法
 
 static void unguarded_insert_sort(int *arr, int l, int r) {
     int ind = l;
@@ -33,9 +35,9 @@ static void unguarded_insert_sort(int *arr, int l, int r) {
     return;
 }
 
-void quick_sort_v4(int *arr, int l, int r) {
+void quick_sort_v5(int *arr, int l, int r) {
     while (r - l >= 16) {
-        int x = l, y = r, z = arr[l], temp;
+        int x = l, y = r, z = arr[l + rand() % (r - l + 1)], temp;
         do {
             while (arr[x] < z) x++;
             while (arr[y] > z) y--;

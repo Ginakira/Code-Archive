@@ -14,11 +14,10 @@
 
 #include "quick_sort.h"
 using namespace std;
-#define MAX_N 10000000
 
 #define TEST(func, arr, l, r)                                             \
     {                                                                     \
-        int *temp = (int *)malloc(sizeof(int) * MAX_N);                   \
+        int *temp = (int *)malloc(sizeof(int) * (r - l + 1));             \
         memcpy(temp, arr, sizeof(int) * (r - l + 1));                     \
         int b = clock();                                                  \
         func(temp, l, r);                                                 \
@@ -29,12 +28,13 @@ using namespace std;
         } else {                                                          \
             printf("%s(%.3lf s) is \033[1;32mOK\033[0m\n", #func, t);     \
         }                                                                 \
+        free(temp);                                                       \
     }
 
 int *gen_data(int n) {
     int *arr = (int *)malloc(sizeof(int) * n);
     for (int i = 0; i < n; ++i) {
-        arr[i] = rand() % MAX_N;
+        arr[i] = rand() % n;
     }
     return arr;
 }
@@ -46,12 +46,39 @@ int check(int *arr, int l, int r) {
     return 1;
 }
 
-int main() {
-    srand(time(0));
+void test1() {
+#define MAX_N 10000000
+    printf("\ntest 1, random data, size: %d\n", MAX_N);
     int *arr = gen_data(MAX_N);
     TEST(quick_sort_v1, arr, 0, MAX_N - 1);
     TEST(quick_sort_v2, arr, 0, MAX_N - 1);
     TEST(quick_sort_v3, arr, 0, MAX_N - 1);
     TEST(quick_sort_v4, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v5, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v6, arr, 0, MAX_N - 1);
+    free(arr);
+    return;
+#undef MAX_N
+}
+
+void test2() {
+#define MAX_N 100000
+    printf("\ntest 2, ordered data, size: %d\n", MAX_N);
+    int *arr = gen_data(MAX_N);
+    for (int i = 0; i < MAX_N; ++i) arr[i] = i;
+    TEST(quick_sort_v1, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v2, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v3, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v4, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v5, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v6, arr, 0, MAX_N - 1);
+    free(arr);
+#undef MAX_N
+}
+
+int main() {
+    srand(time(0));
+    test1();
+    test2();
     return 0;
 }
