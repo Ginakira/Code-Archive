@@ -8,8 +8,8 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 #include <iostream>
-#include <string>
 #include <vector>
 
 #include "quick_sort.h"
@@ -51,5 +51,7 @@ int main() {
     int *arr = gen_data(MAX_N);
     TEST(quick_sort_v1, arr, 0, MAX_N - 1);
     TEST(quick_sort_v2, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v3, arr, 0, MAX_N - 1);
+    TEST(quick_sort_v4, arr, 0, MAX_N - 1);
     return 0;
 }

@@ -11,5 +11,7 @@
 
 void quick_sort_v1(int *arr, int l, int r);
 void quick_sort_v2(int *arr, int l, int r);
+void quick_sort_v3(int *arr, int l, int r);
+void quick_sort_v4(int *arr, int l, int r);
 
 #endif
