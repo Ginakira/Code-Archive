@@ -43,16 +43,16 @@ static inline int median_number(int *arr, int l, int r) {
 
 void quick_sort_v6(int *arr, int l, int r) {
     while (r - l >= 16) {
-        int x = l, y = r, z = median_number(arr, l, r), temp;
+        int x = l, y = r, z = median_number(arr, l, r);
         do {
             while (arr[x] < z) x++;
             while (arr[y] > z) y--;
             if (x <= y) {
-                temp = arr[x], arr[x] = arr[y], arr[y] = temp;
+                swap(arr[x], arr[y]);
                 x++, y--;
             }
         } while (x <= y);
-        quick_sort_v4(arr, l, y);
+        quick_sort_v6(arr, l, y);
         l = x;
     }
     if (l < r) unguarded_insert_sort(arr, l, r);
