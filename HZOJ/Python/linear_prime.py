@@ -17,5 +17,5 @@ for i in range(2, MAX_N + 1):
             break
 
 
-print(prime[0])
+print(“Prime count: ", prime[0])
 print(prime[prime[0]])
