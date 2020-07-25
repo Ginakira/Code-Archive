@@ -11,9 +11,10 @@
 #include <string>
 #include <vector>
 using namespace std;
+#define MAX_N 100
 
 int main() {
-    int n, arr[105][105];
+    int n, arr[MAX_N + 5][MAX_N + 5];
     cin >> n;
     for (int i = 1; i <= n; ++i) {
         for (int j = 1; j <= i; ++j) {
