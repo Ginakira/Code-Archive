@@ -26,12 +26,38 @@ class People {
         this->x = x;
     }
 
+    People(const People &a) {
+        cout << "copy constructor" << endl;
+        this->name = a.name;
+        this->x = a.x;
+    }
+
+    void operator=(const People &a) {
+        cout << "Operator =" << endl;
+        this->name = a.name;
+        this->x = a.x;
+    }
+
     ~People() { cout << "Destructor" << endl; }
     string name;
     int x;
 };
 
+void increase(int &a) {
+    a++;
+    return;
+}
+
+int add(People a, People b) {
+    return a.x + b.x;
+}
+
 int main() {
+    int num = 7;
+    increase(num);
+    cout << num << endl;
+    cout << add(4, 5) << endl;
+    
     People a("sakata");
     People b = string("hug");
     People c(543);
@@ -44,5 +70,11 @@ int main() {
     cout << c.x << endl;
     d = string("gintoki");
     cout << d.name << endl;
+    People e = a;
+    cout << e.name << endl;
+    cout << e.x << endl;
+    c = a;
+    cout << c.name << endl;
+    cout << c.x << endl;
     return 0;
 }
