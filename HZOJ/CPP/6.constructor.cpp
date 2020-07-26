@@ -14,7 +14,9 @@ using namespace std;
 
 class People {
    public:
-    People() {}
+    // 将隐藏的规则变为显式的规则 方便维护代码
+    People() = default;
+    // People() = delete;
 
     People(string name) {
         cout << "Parameter constructor" << endl;
@@ -48,16 +50,14 @@ void increase(int &a) {
     return;
 }
 
-int add(People a, People b) {
-    return a.x + b.x;
-}
+int add(People a, People b) { return a.x + b.x; }
 
 int main() {
     int num = 7;
     increase(num);
     cout << num << endl;
     cout << add(4, 5) << endl;
-    
+
     People a("sakata");
     People b = string("hug");
     People c(543);
