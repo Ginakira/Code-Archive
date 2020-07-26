@@ -3,67 +3,24 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/07/25 22:52:21
+    Created Time: 2020/07/26 12:24:14
 ************************************************************/
 
-#include <algorithm>
-#include <functional>
-#include <iostream>
-#include <iterator>
-#include <vector>
-using namespace std;
+struct X {
+    X() = delete;
+    X(const X&) = delete;
+    X(int) {}
+};
 
-void PrintVector(vector<int> &numbers) {
-    for (auto it = begin(numbers); it != end(numbers); ++it) {
-        if (it != begin(numbers)) {
-            cout << ", ";
-        }
-        cout << *it;
-    }
-    cout << endl;
-}
-
-bool IsOdd(int a) { return a % 2 == 1; }
-
-bool Not(bool b) { return !b; }
-
-bool And(bool a, bool b) { return a && b; }
-
-bool Or(bool a, bool b) { return a || b; }
-
-decltype(auto) GreaterThan(int x) {
-    return [=](int y) { return y > x; };
-}
-
-decltype(auto) EqualsTo(int x) {
-    return [=](int y) { return y == x; };
-}
-
-auto Compose = [](auto f, auto g) { return [=](auto x) { return f(g(x)); }; };
-
-auto Combine = [](auto c, auto f, auto g) {
-    return [=](auto x) { return c(f(x), g(x)); };
+struct Y {
+    X x;
+    Y() = delete;
+    Y(const Y&) = delete;
+    Y(int) : x{0} {}
 };
 
 int main() {
-    vector<int> numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-
-    vector<int> odds;
-    copy_if(begin(numbers), end(numbers), back_inserter(odds), IsOdd);
-    PrintVector(odds);
-
-    vector<int> evens;
-    copy_if(begin(numbers), end(numbers), back_inserter(evens),
-            Compose(Not, IsOdd));
-    PrintVector(evens);
-
-    vector<int> one_two_nine_ten;
-    copy_if(begin(numbers), end(numbers), back_inserter(one_two_nine_ten),
-            Combine(Or,
-                    Combine(And, Combine(Or, GreaterThan(1), EqualsTo(1)),
-                            Compose(Not, GreaterThan(2))),
-                    Combine(And, Combine(Or, GreaterThan(9), EqualsTo(9)),
-                            Compose(Not, GreaterThan(10)))));
-    PrintVector(one_two_nine_ten);
+    Y y1{0};
+    // Y y2 = y1;
     return 0;
 }
