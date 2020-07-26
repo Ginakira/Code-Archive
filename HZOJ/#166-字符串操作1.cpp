@@ -1,27 +1,24 @@
+/************************************************************
+    File Name : #166-字符串操作1.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/07/26 23:43:44
+************************************************************/
 #include <algorithm>
 #include <cmath>
-#include <cstdio>
 #include <iostream>
 #include <string>
+#include <vector>
 using namespace std;
 
 int main() {
-    string a, b, ans;
-    int n, l, l1;
-    cin >> a >> n >> b;
-    l = a.length(), l1 = b.length();
-    if (l > 100)
-        cout << 100 << endl;
-    else
-        cout << l << endl;
-    ans = a.substr(0, n - 1) + b + a.substr(n - 1, l - n + 1);
-    cout << ans << endl;
-    reverse(ans.begin(), ans.end());
-    for (int i = 1; i <= l + l1; ++i) {
-        if (ans[i - 1] == 'x') {
-            cout << i << endl;
-            break;
-        }
-    }
+    string str1, str2;
+    int n;
+    cin >> str1 >> n >> str2;
+    cout << min(str1.length(), (size_t)100) << endl;
+    str1.insert(n - 1, str2);
+    cout << str1 << endl;
+    cout << str1.length() - str1.rfind('x') << endl;
     return 0;
 }
