@@ -44,6 +44,18 @@ class Point {
         return;
     }
 
+    void set(int x, int y) {
+        this->x = x, this->y = y;
+        return;
+    }
+
+    void seek() const {
+        seek_cnt += 1;
+        cout << x << " " << y << endl;
+    }
+
+    int S() const { return seek_cnt; }
+
     static int T() { return Point::total_cnt; }
 
     ~Point() {
@@ -53,6 +65,7 @@ class Point {
 
    private:
     int x, y;
+    mutable int seek_cnt;  // mutable声明的属性可以在const方法中修改
     static int total_cnt;
 };
 
@@ -79,5 +92,19 @@ int main() {
     cout << &b << endl;
     cout << &c << endl;
     cout << &d << endl;
+    d.seek();
+    c.seek();
+    const Point e(6, 7);
+    e.seek();
+    e.seek();
+    cout << e.S() << endl;
     return 0;
 }
+/*
+    1. 调用了c的赋值运算符
+    2. 又因为operator=(People &a)，所以需要将5.6作为一个对象绑定到引用上
+    3. 所以中间会生成一个匿名对象，调用的是Point(double z) :
+   Point()这个构造函数，这个转换构造函数会先构造默认构造函数，构造完后，引用绑定到了匿名对象上
+    4. 继续执行赋值运算符中的代码
+    5. 执行完，释放掉5.6所绑定的匿名对象
+*/
