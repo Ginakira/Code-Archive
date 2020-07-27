@@ -61,6 +61,7 @@ std::ostream &operator+(std::ostream &out, const int &z) {
 
 int main() {
     int n, m;
+    // 会被编译器转换成haizei::cin.operator>>(n)
     haizei::cin >> n >> m;
     haizei::cout << n << " " << m << "\n";
     double k = 5.6;
