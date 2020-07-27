@@ -15,7 +15,19 @@ using namespace std;
 // 内部实现
 class A {
    public:
+    A() { arr = new int[10]; }
+    // 默认浅拷贝 都输出6687
+    // 因为arr存储的是地址 默认拷贝后指向的都是同一片内存区域
+    A(const A &a) : A() {
+        for (int i = 0; i < 10; ++i) {
+            this->arr[i] = a.arr[i];
+        }
+        this->x = a.x;
+        this->y = a.y;
+        return;
+    }
     int x, y;
+    int *arr;
 };
 
 class B {
@@ -67,10 +79,16 @@ int main() {
     cout << add[3] << endl;
     add["hello world"];
     // p是指针对象而并不是指针 只是表现得像指针
-    A a;
+    A a, b(a);
     a.x = 67, a.y = 99;
     B p = &a;
     cout << p->x << " " << p->y << endl;
     cout << *p << endl;
+
+    a.arr[3] = 9973;
+    b.arr[3] = 6687;
+    cout << a.arr[3] << endl;
+    cout << b.arr[3] << endl;
+    cout << sizeof(A) << endl;
     return 0;
 }
