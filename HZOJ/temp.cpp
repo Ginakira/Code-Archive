@@ -3,24 +3,36 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/07/26 12:24:14
+    Created Time: 2020/07/27 12:18:45
 ************************************************************/
-
-struct X {
-    X() = delete;
-    X(const X&) = delete;
-    X(int) {}
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+struct Data {
+    int a, b;
+    bool operator<(const Data &obj) const { return a * b < obj.a * obj.b; }
 };
 
-struct Y {
-    X x;
-    Y() = delete;
-    Y(const Y&) = delete;
-    Y(int) : x{0} {}
-};
+vector<Data> arr;
 
 int main() {
-    Y y1{0};
-    // Y y2 = y1;
+    int n, a, b;
+    cin >> n;
+    for (int i = 0; i <= n; ++i) {
+        cin >> a >> b;
+        arr.push_back({a, b});
+    }
+    sort(arr.begin() + 1, arr.end());
+    int p = arr[0].a, ans = 0;
+    for (int i = 1; i <= n; ++i) {
+        if (p / arr[i].b > ans) {
+            ans = p / arr[i].b;
+            p *= arr[i].a;
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
