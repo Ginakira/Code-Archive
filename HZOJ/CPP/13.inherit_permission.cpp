@@ -22,6 +22,7 @@ class Animal {
    protected:
     string __name;
 
+    // 是声明而不是定义 因为每定义一个对象就会定义一个age 所以只是声明
    private:
     int age;
 };
@@ -52,5 +53,6 @@ int main() {
     Cat a("kitty", 29);
     a.say();
     Bat b("hug", 16384);
+    b.say();
     return 0;
 }
