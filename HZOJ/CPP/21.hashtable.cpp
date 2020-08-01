@@ -1,17 +1,18 @@
+/************************************************************
+    File Name : 21.hashtable.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/08/01 19:46:10
+************************************************************/
 #include <algorithm>
-#include <cstdio>
-#include <cstdlib>
+#include <cmath>
 #include <iostream>
-#include <map>
-#include <queue>
-#include <set>
-#include <stack>
 #include <string>
 #include <vector>
 using namespace std;
 
 namespace haizei {
-
 class IHashFunc {
    public:
     virtual int operator()(int) = 0;
@@ -37,10 +38,12 @@ class HashTable {
 };
 
 HashTable::HashTable(HashFunc_T func1, IHashFunc *func2, int hash_type)
-    : func1(func1), func2(func2), hash_type(hash_type) {
+    : hash_type(hash_type), func1(func1), func2(func2) {
     this->__size = 1000;
     this->data = new PII *[this->__size];
-    for (int i = 0; i < this->__size; i++) this->data[i] = nullptr;
+    for (int i = 0; i < this->__size; ++i) {
+        this->data[i] = nullptr;
+    }
 }
 
 HashTable::HashTable(HashFunc_T func) : HashTable(func, nullptr, 1) {}
@@ -68,8 +71,7 @@ int &HashTable::operator[](int x) {
     if (data[ind] == nullptr) data[ind] = new PII(x, 0);
     return data[ind]->second;
 }
-
-}  // end of namespace haizei
+}  // namespace haizei
 
 int hash1(int x) { return (x << 1) ^ (x << 3) ^ (x >> 5); }
 

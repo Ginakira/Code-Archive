@@ -51,5 +51,6 @@ int main() {
     // 没有返回值优化 会拷贝两次
     // 有返回值优化 不会调用拷贝
     A temp_c = retA();
+    temp_c.say(2333);
     return 0;
 }
