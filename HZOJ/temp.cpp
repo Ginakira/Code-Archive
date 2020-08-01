@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/07/29 23:15:35
+    Created Time: 2020/08/01 00:19:23
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -11,90 +11,32 @@
 #include <string>
 #include <vector>
 using namespace std;
-struct Data {
-    int a, b;
-    bool operator<(const Data &obj) const { return a * b < obj.a * obj.b; }
+
+struct A {
+    int x, y;
+    int echo() {
+        cout << "Hello world" << endl;
+        return 0;
+    }
 };
 
-vector<Data> arr;
-
-struct BigInt {
-    BigInt(int x) {
-        num.push_back(x);
-        process_digit();
-    }
-    BigInt(vector<int> &ret) : num(ret) {}
-
-    BigInt operator/(int x) {
-        int i = num.size(), temp = 0;
-        while (i && temp * 10 + num[i - 1] < x) {
-            temp = temp * 10 + num[i - 1];
-            i--;
-        }
-        if (i == 0) return BigInt(0);
-        vector<int> ret(i);
-        while (i) {
-            i--;
-            temp = temp * 10 + num[i];
-            ret[i] = temp / x;
-            temp %= x;
-        }
-        return BigInt(ret);
+class B {
+   public:
+    int echo() {
+        cout << "Hello world" << endl;
+        cout << x << ' ' << y << endl;
+        return 0;
     }
 
-    bool operator>(const BigInt &obj) {
-        if (num.size() - obj.num.size()) {
-            return num.size() > obj.num.size();
-        }
-        for (int i = num.size() - 1; i >= 0; --i) {
-            if (num[i] == obj.num[i]) continue;
-            return num[i] > obj.num[i];
-        }
-        return false;
-    }
-
-    void operator*=(int x) {
-        for (int i = 0; i < num.size(); ++i) {
-            num[i] *= x;
-        }
-        process_digit();
-    }
-
-    void process_digit() {
-        for (int i = 0; i < num.size(); ++i) {
-            if (num[i] < 10) continue;
-            if (i + 1 == num.size()) num.push_back(0);
-            num[i + 1] += num[i] / 10;
-            num[i] %= 10;
-        }
-        return;
-    }
-
-    vector<int> num;
+   private:
+    int x, y;
 };
-
-ostream &operator<<(ostream &out, const BigInt &obj) {
-    for (int i = obj.num.size() - 1; i >= 0; --i) {
-        out << obj.num[i];
-    }
-    return out;
-}
 
 int main() {
-    int n, a, b;
-    cin >> n;
-    for (int i = 0; i <= n; ++i) {
-        cin >> a >> b;
-        arr.push_back({a, b});
-    }
-    sort(arr.begin() + 1, arr.end());
-    BigInt p = arr[0].a, ans = 0;
-    for (int i = 1; i <= n; ++i) {
-        if (p / arr[i].b > ans) {
-            ans = p / arr[i].b;
-        }
-        p *= arr[i].a;
-    }
-    cout << ans << endl;
+    A a;
+    B b;
+    a.x = 3, a.y = 2;
+    cout << a.x << ' ' << a.y << endl;
+    b.echo();
     return 0;
 }
