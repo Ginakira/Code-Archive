@@ -19,6 +19,7 @@ class A {
         this->x = 0x01020304;
     }
     A(const A &a) { cout << "class A copy constructor : " << this << endl; }
+    void say() { cout << "Class A" << endl; }
     int x;
 };
 
@@ -38,6 +39,8 @@ class B : public A {
     // 可以看到输出的this地址一致，说明其头部存储的是父类对象的信息
     // 因为相关的对象从子类父类中 这样的设计可以使其实的位置无需改变
     // 在内存排布上 父类的信息在前面存储 子类的信息在后面存储
+    void func() { A::say(); }
+    void say() { cout << "Class B" << endl; }
     int y;
 };
 

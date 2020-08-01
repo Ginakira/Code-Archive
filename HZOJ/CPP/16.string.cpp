@@ -58,8 +58,14 @@ ostream &operator<<(ostream &out, const haizei::string &s) {
     return out;
 }
 
+// istream &operator>>(istream &in, const haizei::string &s) {
+//     char *temp = new char[10];
+//     in >> temp;
+// }
+
 int main() {
     haizei::string s1 = "Hello world", s2 = ", haizei", s3 = ", harbin.";
+    // cin >> s1;
     cout << s1 << endl;
     s1[3] = '6';
     cout << s1 << endl;
