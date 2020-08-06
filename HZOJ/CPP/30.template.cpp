@@ -34,6 +34,19 @@ auto add(T a, U b) -> decltype(a + b) {
     return a + b;
 }
 
+// 模板的特化形式
+template <>
+int add(int a, int b) {
+    cout << "add int : " << a << ", " << b << endl;
+    return a + b;
+}
+
+// 模板的偏特化形式
+template <typename T, typename U>
+auto add(T *a, U *b) -> decltype(*a + *b) {
+    return add(*a, *b);
+}
+
 template <typename T, typename U>
 auto max(T a, U b) -> decltype(a + b) {
     return a < b ? b : a;
@@ -51,6 +64,50 @@ class PrintAny {
     void operator()(const T &a) {
         cout << a << endl;
         return;
+    }
+};
+
+template <typename T>
+class FoolPrintAny {
+   public:
+    void operator()(const T &a) {
+        cout << a << endl;
+        return;
+    }
+};
+
+// 模板类的特化
+template <>
+class FoolPrintAny<int> {
+   public:
+    void operator()(const int &a) {
+        cout << "naughty : " << 2 * a << endl;
+        return;
+    }
+};
+
+// ARGS是类型包的名字
+template <typename T>
+void printAny(const T &a) {
+    cout << a << endl;
+    return;
+}
+
+template <typename T, typename... ARGS>
+void printAny(const T &a, ARGS... args) {
+    cout << a << " ";
+    printAny(args...);
+    return;
+}
+
+template <typename T, typename... ARGS>
+class Test;
+template <typename T, typename... ARGS>
+class Test<T(ARGS...)> {
+   public:
+    T operator()(typename ARG<ARGS...>::__type a,
+                 typename ARG<ARGS...>::__rest::__type b) {
+        return a + b;
     }
 };
 
@@ -81,5 +138,20 @@ int main() {
     print("Hello world");
     print(4.3);
     print(&a);
+
+    haizei::FoolPrintAny<string> f;
+    f(string("Hello world"));
+    haizei::FoolPrintAny<int> f_int;
+    f_int(233);
+
+    int n = 45, m = 67;
+    int *p = &n, *q = &m;
+    cout << haizei::add(n, m) << endl;
+    cout << haizei::add(p, q) << endl;
+
+    haizei::printAny(123, 34.5, "Hello world", &a);
+
+    haizei::Test<int(int, int)> f3;
+    cout << f3(3, 4) << endl;
     return 0;
 }
