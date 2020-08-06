@@ -41,6 +41,11 @@ void f(int &&x) {
     return;
 }
 
+int test_func(const int &&x) {
+    cout << x << endl;
+    return 0;
+}
+
 int main() {
     int a, b = 1, c = 3;
     a = b;
@@ -58,5 +63,10 @@ int main() {
     TEST(b + c, f);
     TEST(a++, f);
     TEST(++a, f);
+    // 右值绑定到左值引用上
+    test_func(123);
+    // 左值无法绑定到右值引用上
+    // 因为右值引用意味着这个值只是一个临时值 马上要被销毁了
+    // test_func(a);
     return 0;
 }
