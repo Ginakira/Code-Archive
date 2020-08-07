@@ -19,6 +19,12 @@ class Point {
     Point(const Point &obj) : x(obj.x), y(obj.y) {
         cout << "copy constructor" << endl;
     }
+    int operator()(int num) { return this->x + this->y + num; }
+    int operator[](string str) {
+        if (str == "x") return this->x;
+        if (str == "y") return this->y;
+        return 0;
+    }
     Point operator-(const Point &a) {
         Point ret;
         ret.x = this->x - a.x;
@@ -54,6 +60,7 @@ int main() {
     cout << c << endl;
     cout << d << endl;
     cout << e << endl;
-
+    cout << a(5) << endl;
+    cout << a["x"] << " " << a["y"] << endl;
     return 0;
 }
