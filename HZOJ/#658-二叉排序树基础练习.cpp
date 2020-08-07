@@ -24,6 +24,13 @@ Node *get_new_node(int val) {
     return node;
 }
 
+void inorder(Node *root, vector<int> &v) {
+    if (!root) return;
+    inorder(root->lchild, v);
+    v.push_back(root->val);
+    inorder(root->rchild, v);
+    return;
+}
 Node *insert(Node *root, int val) {
     if (root == NULL) return get_new_node(val);
     if (root->val == val) return root;
@@ -37,20 +44,20 @@ Node *insert(Node *root, int val) {
 
 int find_predecessor(Node *root, int val) {
     if (!root) return -1;
-    Node *node = root->lchild;
-    while (node->rchild) {
-        node = node->rchild;
-    }
-    return node->val;
+    vector<int> v;
+    inorder(root, v);
+    auto lower = lower_bound(v.begin(), v.end(), val);
+    if (lower == v.begin()) return -1;
+    return *(lower - 1);
 }
 
 int find_successor(Node *root, int val) {
     if (!root) return -1;
-    Node *node = root->rchild;
-    while (node->lchild) {
-        node = node->lchild;
-    }
-    return node->val;
+    vector<int> v;
+    inorder(root, v);
+    auto upper = upper_bound(v.begin(), v.end(), val);
+    if (upper == v.end()) return -1;
+    return *upper;
 }
 
 int main() {
