@@ -85,6 +85,20 @@ struct MaxClass {
     int operator()(int a, int b) { return a > b ? a : b; }
 };
 
+class FunctionCnt {
+   public:
+    FunctionCnt(function<int(int, int)> g) : g(g), __cnt(0) {}
+    int operator()(int a, int b) {
+        __cnt += 1;
+        return g(a, b);
+    }
+    int cnt() { return this->__cnt; }
+
+   private:
+    function<int(int, int)> g;
+    int __cnt;
+};
+
 int main() {
     MaxClass max;
     f(add);
@@ -93,5 +107,11 @@ int main() {
     haizei::function<int(int, int)> g2(max);
     cout << g1(3, 4) << endl;
     cout << g2(3, 4) << endl;
+
+    FunctionCnt add_cnt(add);
+    add_cnt(3, 7);
+    add_cnt(4, 5);
+    add_cnt(7, 9);
+    cout << add_cnt.cnt() << endl;
     return 0;
 }
