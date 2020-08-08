@@ -94,6 +94,17 @@ void printAny(const T &a) {
 }
 
 template <typename T, typename... ARGS>
+struct ARG {
+    typedef T __type;
+    typedef ARG<ARGS...> __rest;
+};
+
+template <typename T>
+struct ARG<T> {
+    typedef T __type;
+};
+
+template <typename T, typename... ARGS>
 void printAny(const T &a, ARGS... args) {
     cout << a << " ";
     printAny(args...);
