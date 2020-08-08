@@ -161,6 +161,66 @@ struct remove_reference<T &&> {
     typedef T type;
 };
 
+// 添加 const 限定
+template <typename T>
+struct add_const {
+    typedef const T type;
+};
+
+template <typename T>
+struct add_const<const T> {
+    typedef const T type;
+};
+
+// 转换成左值引用
+template <typename T>
+struct add_lvalue_reference {
+    typedef T &type;
+};
+
+template <typename T>
+struct add_lvalue_reference<T &> {
+    typedef T &type;
+};
+
+template <typename T>
+struct add_lvalue_reference<T &&> {
+    typedef T &type;
+};
+
+// 转换为右值引用
+template <typename T>
+struct add_rvalue_reference {
+    typedef T &type;
+};
+
+template <typename T>
+struct add_rvalue_reference<T &> {
+    typedef T &&type;
+};
+
+template <typename T>
+struct add_rvalue_reference<T &&> {
+    typedef T &&type;
+};
+
+// 去掉指针类型
+template <typename T>
+struct remove_pointer {
+    typedef T type;
+};
+
+template <typename T>
+struct remove_pointer<T *> {
+    typedef typename remove_pointer<T>::type type;
+};
+
+// move模板函数 强制转换为右值
+template <typename T>
+typename add_rvalue_reference<T>::type move(T &&a) {
+    return typename add_rvalue_reference<T>::type(a);
+}
+
 // 引用类型的推导
 // template <typename T>
 // T add2(T &a, T &b) {
@@ -168,10 +228,21 @@ struct remove_reference<T &&> {
 //     return c;
 // }
 
+// 测试函数
 template <typename T>
 typename remove_reference<T>::type add2(T &&a, T &&b) {
     typename remove_reference<T>::type c = a + b;
     return c;
+}
+
+void f(int &x) {
+    cout << "f function : left value" << endl;
+    return;
+}
+
+void f(int &&x) {
+    cout << "f function : right value" << endl;
+    return;
 }
 
 }  // namespace haizei
@@ -229,5 +300,9 @@ int main() {
     // 推导得到 int add2(int &, int &)
     cout << haizei::add2(inta, intb) << endl;
     cout << haizei::add2(123, 456) << endl;
+
+    haizei::f(n);
+    haizei::f(haizei::move(n));
+
     return 0;
 }
