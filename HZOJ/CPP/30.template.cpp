@@ -93,14 +93,19 @@ void printAny(const T &a) {
     return;
 }
 
-template <typename T, typename... ARGS>
+// 变参解析工具类
+template <int n, typename T, typename... ARGS>
 struct ARG {
+    typedef typename ARG<n - 1, ARGS...>::__type __type;
+};
+
+template <typename T, typename... ARGS>
+struct ARG<0, T, ARGS...> {
     typedef T __type;
-    typedef ARG<ARGS...> __rest;
 };
 
 template <typename T>
-struct ARG<T> {
+struct ARG<0, T> {
     typedef T __type;
 };
 
@@ -116,8 +121,8 @@ class Test;
 template <typename T, typename... ARGS>
 class Test<T(ARGS...)> {
    public:
-    T operator()(typename ARG<ARGS...>::__type a,
-                 typename ARG<ARGS...>::__rest::__type b) {
+    T operator()(typename ARG<0, ARGS...>::__type a,
+                 typename ARG<1, ARGS...>::__type b) {
         return a + b;
     }
 };
