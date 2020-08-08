@@ -134,9 +134,22 @@ class Test<T(ARGS...)> {
     }
 };
 
+// 模板函数作为参数 传递时的间接类型推导
+template <typename T, typename U>
+T test_param_func(U a) {
+    return T(a * 2);
+}
+
+void func2(int (*func)(double)) {
+    cout << func(2.3) << endl;
+    return;
+}
+
 }  // namespace haizei
 
 int main() {
+    haizei::func2(haizei::test_param_func);
+
     cout << haizei::add(3, 4) << endl;
     cout << haizei::add(3.1241, 1235.455) << endl;
     cout << haizei::add(2.3, 5) << endl;
