@@ -145,11 +145,38 @@ void func2(int (*func)(double)) {
     return;
 }
 
+// 去掉引用类型
+template <typename T>
+struct remove_reference {
+    typedef T type;
+};
+
+template <typename T>
+struct remove_reference<T &> {
+    typedef T type;
+};
+
+template <typename T>
+struct remove_reference<T &&> {
+    typedef T type;
+};
+
+// 引用类型的推导
+// template <typename T>
+// T add2(T &a, T &b) {
+//     T c = a = b;
+//     return c;
+// }
+
+template <typename T>
+typename remove_reference<T>::type add2(T &&a, T &&b) {
+    typename remove_reference<T>::type c = a + b;
+    return c;
+}
+
 }  // namespace haizei
 
 int main() {
-    haizei::func2(haizei::test_param_func);
-
     cout << haizei::add(3, 4) << endl;
     cout << haizei::add(3.1241, 1235.455) << endl;
     cout << haizei::add(2.3, 5) << endl;
@@ -195,5 +222,12 @@ int main() {
     cout << f4(1, 2, 3, 4) << endl;
     haizei::Test<int(int, int, int, int, int)> f5;
     cout << f5(1, 2, 3, 4, 5) << endl;
+
+    haizei::func2(haizei::test_param_func);
+
+    int inta = 123, intb = 456;
+    // 推导得到 int add2(int &, int &)
+    cout << haizei::add2(inta, intb) << endl;
+    cout << haizei::add2(123, 456) << endl;
     return 0;
 }
