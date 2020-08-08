@@ -121,9 +121,16 @@ class Test;
 template <typename T, typename... ARGS>
 class Test<T(ARGS...)> {
    public:
-    T operator()(typename ARG<0, ARGS...>::__type a,
-                 typename ARG<1, ARGS...>::__type b) {
-        return a + b;
+    T operator()(ARGS... args) { return add<T>(args...); }
+
+   private:
+    template <typename T1, typename U, typename... US>
+    T1 add(U a, US... args) {
+        return a + add<T1>(args...);
+    }
+    template <typename T1, typename U>
+    T1 add(U a) {
+        return a;
     }
 };
 
@@ -169,5 +176,11 @@ int main() {
 
     haizei::Test<int(int, int)> f3;
     cout << f3(3, 4) << endl;
+
+    // 累加求和
+    haizei::Test<int(int, int, int, int)> f4;
+    cout << f4(1, 2, 3, 4) << endl;
+    haizei::Test<int(int, int, int, int, int)> f5;
+    cout << f5(1, 2, 3, 4, 5) << endl;
     return 0;
 }
