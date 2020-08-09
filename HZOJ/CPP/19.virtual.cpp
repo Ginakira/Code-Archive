@@ -30,9 +30,23 @@ class C {
     virtual void run1() {}
 };
 
+class D : public C {};
+
+void output_raw_data(void *q, int n) {
+    unsigned char *p = (unsigned char *)q;
+    for (int i = 0; i < n; ++i) {
+        printf("%02X ", p[i]);
+    }
+    printf("\n");
+    return;
+}
+
 int main() {
     cout << sizeof(A) << endl;
     cout << sizeof(B) << endl;
     cout << sizeof(C) << endl;
+    D a, b;
+    output_raw_data(&a, sizeof(a));
+    output_raw_data(&b, sizeof(b));
     return 0;
 }
