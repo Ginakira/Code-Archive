@@ -18,6 +18,7 @@ template <typename RT, typename... PARAMS>
 class base {
    public:
     virtual RT operator()(PARAMS...) = 0;
+    virtual base<RT, PARAMS...> *getCopy() = 0;
     virtual ~base(){};
 };
 
@@ -27,6 +28,9 @@ class normal_func : public base<RT, PARAMS...> {
     typedef RT (*func_type)(PARAMS...);
     normal_func(func_type func) : ptr(func) {}
     RT operator()(PARAMS... args) override { return this->ptr(args...); }
+    virtual base<RT, PARAMS...> *getCopy() override {
+        return new normal_func<RT, PARAMS...>(ptr);
+    }
 
    private:
     func_type ptr;
@@ -38,6 +42,9 @@ class functor : public base<RT, PARAMS...> {
     typedef RT (*func_type)(PARAMS...);
     functor(C &func) : ptr(func) {}
     RT operator()(PARAMS... args) override { return this->ptr(args...); }
+    virtual base<RT, PARAMS...> *getCopy() override {
+        return new functor<C, RT, PARAMS...>(ptr);
+    }
 
    private:
     C &ptr;
@@ -48,17 +55,28 @@ class function;
 
 template <typename RT, typename... PARAMS>
 class function<RT(PARAMS...)> {
+    typedef normal_func<RT, PARAMS...> T1;
+
    public:
     function(RT (*func)(PARAMS...))
         : ptr(new normal_func<RT, PARAMS...>(func)) {}
     template <typename T>
-    function(T &&a)
+    function(T a)
         : ptr(new functor<typename remove_reference<T>::type, RT, PARAMS...>(
               a)) {}
 
+    function(const function &f) { this->ptr = f.ptr->getCopy(); }
+    function(function &&f) {
+        this->ptr = f.ptr;
+        f.ptr = nullptr;
+    }
     RT operator()(PARAMS... args) { return this->ptr->operator()(args...); }
 
-    ~function() { delete ptr; }
+    ~function() {
+        if (ptr != nullptr) {
+            delete ptr;
+        }
+    }
 
    private:
     base<RT, PARAMS...> *ptr;
@@ -81,25 +99,47 @@ void f(function<int(int, int)> g) {
 
 int add(int a, int b) { return a + b; }
 
+void print_expr(int a, int b, string caption) {
+    cout << caption << " : " << a << " + " << b << endl;
+    return;
+}
+
 struct MaxClass {
     int operator()(int a, int b) { return a > b ? a : b; }
 };
 
-class FunctionCnt {
+// 完善FunctionCnt
+template <typename RT, typename... PARAMS>
+class FunctionCnt;
+
+template <typename RT, typename... PARAMS>
+class FunctionCnt<RT(PARAMS...)> {
    public:
-    FunctionCnt(function<int(int, int)> g) : g(g), __cnt(0) {}
-    int operator()(int a, int b) {
+    FunctionCnt(function<RT(PARAMS...)> g) : g(g), __cnt(0) {}
+    RT operator()(PARAMS... params) {
         __cnt += 1;
-        return g(a, b);
+        return g(params...);
     }
     int cnt() { return this->__cnt; }
 
    private:
-    function<int(int, int)> g;
+    function<RT(PARAMS...)> g;
     int __cnt;
 };
 
+/*
+    此处，如果只将构造函数中改为haizei::function，会引发段错误，原因：
+    当我们的构造函数初始化列表调用g(g)的时候，会调用系统function的转换构造函数
+    也就是template< class F > function( F f ); 这里的f并非引用
+    所以又会调用一次haizei::function的拷贝构造函数，而我们并没有显式实现拷贝构造
+    所以调用赛是系统的默认拷贝构造函数，也就是进行了浅拷贝。
+    当系统function的转换构造执行结束后，局部变量f将会被析构，此时将执行delete
+   *ptr 这就会导致在正常调用时，ptr已经被销毁了，无法访问到，引发段错误
+*/
+
 int main() {
+    int n;
+    cout << typeid(n).hash_code() << endl;
     MaxClass max;
     f(add);
     f(max);
@@ -108,10 +148,14 @@ int main() {
     cout << g1(3, 4) << endl;
     cout << g2(3, 4) << endl;
 
-    FunctionCnt add_cnt(add);
+    FunctionCnt<int(int, int)> add_cnt(add);
     add_cnt(3, 7);
     add_cnt(4, 5);
     add_cnt(7, 9);
     cout << add_cnt.cnt() << endl;
+    FunctionCnt<void(int, int, string)> print_expr_cnt(print_expr);
+    print_expr_cnt(1, 2, "Add");
+    print_expr_cnt(3, 4, "Test");
+    cout << print_expr_cnt.cnt() << endl;
     return 0;
 }
