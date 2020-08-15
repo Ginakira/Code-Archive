@@ -9,6 +9,7 @@
 #include <cmath>
 #include <condition_variable>
 #include <iostream>
+#include <map>
 #include <mutex>
 #include <queue>
 #include <string>
@@ -34,11 +35,9 @@ class Task {
 
 class ThreadPool {
    public:
-    ThreadPool(int n = 5) : is_running(false), max_threads_num(n) {}
+    ThreadPool(int n = 5) : max_threads_num(n) {}
 
     void start() {
-        if (is_running) return;
-        is_running = true;
         for (int i = 0; i < max_threads_num; ++i) {
             threads.push_back(new thread(&ThreadPool::worker, this));
         }
@@ -46,9 +45,10 @@ class ThreadPool {
     }
 
     void worker() {
-        while (is_running) {
+        thread::id id = this_thread::get_id();
+        is_running[id] = true;
+        while (is_running[id]) {
             Task *t = this->getOneTask();
-            if (t == nullptr) break;
             (*t)();
             delete t;
         }
@@ -56,12 +56,9 @@ class ThreadPool {
     }
 
     void stop() {
-        if (!is_running) return;
-        do {
-            unique_lock<mutex> lock(m_mutex);
-            is_running = false;
-            m_cond.notify_all();
-        } while (0);
+        for (int i = 0; i < this->max_threads_num; ++i) {
+            this->addOneTask(&ThreadPool::stop_task, this);
+        }
         for (int i = 0; i < this->max_threads_num; ++i) {
             threads[i]->join();
             delete threads[i];
@@ -83,6 +80,11 @@ class ThreadPool {
     }
 
    private:
+    void stop_task() {
+        thread::id id = this_thread::get_id();
+        is_running[id] = false;
+        return;
+    }
     Task *getOneTask() {
         /** @explain:
             因为我们要操作临界区资源，进入临界区，所以要先进行抢占互斥锁。
@@ -96,21 +98,21 @@ class ThreadPool {
          * 则队列仍然是空的，此时继续进行操作就会发生错误
          * 所以应该使用while判断，直到队列非空
          */
-        while (is_running && task_queue.empty()) {
+        while (task_queue.empty()) {
             // 临时释放互斥锁 阻塞等待被通知(notify)
             // 得到通知后 抢占互斥锁  （食堂打饭）
             m_cond.wait(lock);
         }
-        if (is_running == false) return nullptr;
         Task *t = task_queue.front();
         task_queue.pop();
         return t;
     }
 
-    bool is_running;
     int max_threads_num;
     vector<thread *> threads;
     queue<Task *> task_queue;
+    map<thread::id, bool> is_running;
+
     std::mutex m_mutex;
     std::condition_variable m_cond;
 };
@@ -126,7 +128,7 @@ void thread_func2(int &n) {
 }
 
 void task_func(int x) {
-    cout << "task : func" << x << endl;
+    cout << "task : func" << endl;
     return;
 }
 
@@ -147,7 +149,11 @@ int main() {
     tp.addOneTask(task_func, 123);
     tp.addOneTask(task_func, 123);
     tp.addOneTask(task_func, 123);
-
+    tp.addOneTask(task_func, 123);
     tp.stop();
+    tp.addOneTask(task_func, 123);
+    tp.addOneTask(task_func, 123);
+    tp.addOneTask(task_func, 123);
+
     return 0;
 }
