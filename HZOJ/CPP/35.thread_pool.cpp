@@ -132,6 +132,24 @@ void task_func(int x) {
     return;
 }
 
+int cnt = 0;
+
+bool is_prime(int x) {
+    if (x <= 1) return false;
+    for (int i = 2; i * i <= x; ++i) {
+        if (x % i == 0) return false;
+    }
+    return true;
+}
+
+void count_prime(int l, int r) {
+    for (int i = l; i <= r; ++i) {
+        // 原子性的加操作
+        if (is_prime(i)) __sync_fetch_and_add(&cnt, 1);
+    }
+    return;
+}
+
 int main() {
     Task t1(thread_func1, 3, 4);
     Task t2(thread_func1, 5, 6);
@@ -145,15 +163,16 @@ int main() {
 
     ThreadPool tp(6);
     tp.start();
-
-    tp.addOneTask(task_func, 123);
-    tp.addOneTask(task_func, 123);
-    tp.addOneTask(task_func, 123);
-    tp.addOneTask(task_func, 123);
+    // 计算1000000以内素数的个数
+    clock_t begin_time = clock();
+    for (int i = 0, j = 1; i < 5; ++i, j += 200000) {
+        tp.addOneTask(count_prime, j, j + 200000 - 1);
+    }
     tp.stop();
-    tp.addOneTask(task_func, 123);
-    tp.addOneTask(task_func, 123);
-    tp.addOneTask(task_func, 123);
+    clock_t end_time = clock();
+    cout << cnt << endl;
+    cout << "Used time: " << double(end_time - begin_time) / CLOCKS_PER_SEC
+         << endl;
 
     return 0;
 }
