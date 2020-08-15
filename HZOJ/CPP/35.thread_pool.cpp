@@ -7,7 +7,10 @@
  ************************************************************/
 #include <algorithm>
 #include <cmath>
+#include <condition_variable>
 #include <iostream>
+#include <mutex>
+#include <queue>
 #include <string>
 #include <thread>
 #include <vector>
@@ -43,25 +46,73 @@ class ThreadPool {
     }
 
     void worker() {
-        cout << "worker : hello, I'm worker" << endl;
+        while (is_running) {
+            Task *t = this->getOneTask();
+            if (t == nullptr) break;
+            (*t)();
+            delete t;
+        }
         return;
     }
 
     void stop() {
         if (!is_running) return;
-        is_running = false;
+        do {
+            unique_lock<mutex> lock(m_mutex);
+            is_running = false;
+            m_cond.notify_all();
+        } while (0);
         for (int i = 0; i < this->max_threads_num; ++i) {
             threads[i]->join();
             delete threads[i];
         }
         threads.clear();
+        // do {
+        //     unique_lock<mutex> lock(m_mutex);
+        //     while (!task_queue.empty()) task_queue.pop();
+        // } while (0);
+        return;
+    }
+
+    template <typename T, typename... ARGS>
+    void addOneTask(T func, ARGS... args) {
+        unique_lock<mutex> lock(m_mutex);
+        this->task_queue.push(new Task(func, forward<ARGS>(args)...));
+        m_cond.notify_one();
         return;
     }
 
    private:
+    Task *getOneTask() {
+        /** @explain:
+            因为我们要操作临界区资源，进入临界区，所以要先进行抢占互斥锁。
+            加完锁后如果发现队列为空，则释放掉锁并等待一个条件变量的满足（notify）
+            如果队列非空，则对临街资源进行相关操作。操作完成后释放互斥锁
+        */
+        unique_lock<mutex> lock(m_mutex);
+        /**
+         * @tip: 为什么使用if不使用while会出现段错误？
+         * 使用if判断时，如果收到了信号但此时这个任务已经被其他线程取走
+         * 则队列仍然是空的，此时继续进行操作就会发生错误
+         * 所以应该使用while判断，直到队列非空
+         */
+        while (is_running && task_queue.empty()) {
+            // 临时释放互斥锁 阻塞等待被通知(notify)
+            // 得到通知后 抢占互斥锁  （食堂打饭）
+            m_cond.wait(lock);
+        }
+        if (is_running == false) return nullptr;
+        Task *t = task_queue.front();
+        task_queue.pop();
+        return t;
+    }
+
     bool is_running;
     int max_threads_num;
     vector<thread *> threads;
+    queue<Task *> task_queue;
+    std::mutex m_mutex;
+    std::condition_variable m_cond;
 };
 
 void thread_func1(int a, int b) {
@@ -71,6 +122,11 @@ void thread_func1(int a, int b) {
 
 void thread_func2(int &n) {
     n += 1;
+    return;
+}
+
+void task_func(int x) {
+    cout << "task : func" << x << endl;
     return;
 }
 
@@ -87,6 +143,11 @@ int main() {
 
     ThreadPool tp(6);
     tp.start();
+
+    tp.addOneTask(task_func, 123);
+    tp.addOneTask(task_func, 123);
+    tp.addOneTask(task_func, 123);
+
     tp.stop();
     return 0;
 }
