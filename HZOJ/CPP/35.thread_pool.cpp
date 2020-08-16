@@ -35,9 +35,11 @@ class Task {
 
 class ThreadPool {
    public:
-    ThreadPool(int n = 5) : max_threads_num(n) {}
+    ThreadPool(int n = 5) : running(false), max_threads_num(n) {}
 
     void start() {
+        if (running == true) return;
+        running = true;
         for (int i = 0; i < max_threads_num; ++i) {
             threads.push_back(new thread(&ThreadPool::worker, this));
         }
@@ -64,6 +66,7 @@ class ThreadPool {
             delete threads[i];
         }
         threads.clear();
+        running = false;
         // do {
         //     unique_lock<mutex> lock(m_mutex);
         //     while (!task_queue.empty()) task_queue.pop();
@@ -108,6 +111,7 @@ class ThreadPool {
         return t;
     }
 
+    bool running;
     int max_threads_num;
     vector<thread *> threads;
     queue<Task *> task_queue;
@@ -162,6 +166,13 @@ int main() {
     cout << n << endl;
 
     ThreadPool tp(6);
+    tp.start();
+    tp.addOneTask(thread_func1, 123, 456);
+    tp.addOneTask(thread_func1, 123, 456);
+    tp.addOneTask(thread_func1, 123, 456);
+    tp.addOneTask(thread_func1, 123, 456);
+    tp.addOneTask(thread_func1, 123, 456);
+    tp.stop();
     tp.start();
     // 计算1000000以内素数的个数
     clock_t begin_time = clock();
