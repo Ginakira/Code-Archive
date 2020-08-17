@@ -12,19 +12,25 @@
 #include <vector>
 using namespace std;
 
+int mul(int a, int b) { return a * b; }
+
+int add(int a, int b) { return a + b; }
+
 int main() {
-    auto a = [](int a, int b) -> double {
-        double c = 12.3;
-        if (rand() % 2) {
-            return c;
-        } else {
-            return a + b;
-        }
+    int n = 10000;
+    auto a = [&](int a, int b) { return a + b + n; };
+    n = 10000000;
+    auto b = [&n](int a, int b) { return a + b + n; };
+    auto c = [](function<int(int, int)> a, function<int(int, int)> b) {
+        return [=](int x) { return a(x, x) + b(x, x); };
     };
-    auto b = [](int a, int b) { return a + b; };
     cout << typeid(a).name() << endl;
     cout << typeid(b).name() << endl;
-    cout << a(123, 456) << endl;
-    cout << b(234, 435) << endl;
+    cout << a(1, 2) << endl;
+    cout << b(1, 2) << endl;
+    auto d = c(a, b);
+    cout << d(12) << endl;
+    auto e = c(add, mul);
+    cout << e(12) << endl;
     return 0;
 }
