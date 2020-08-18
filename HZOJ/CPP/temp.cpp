@@ -1,34 +1,39 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2020/08/13 10:12:39
-************************************************************/
-#include <algorithm>
-#include <cmath>
+#include <functional>
 #include <iostream>
-#include <string>
-#include <vector>
 using namespace std;
 
-class A {
-   public:
-    A(int* a) : num(a) {}
-    ~A() {
-        cout << "destructor" << endl;
-        delete num;
-    }
-    int* num;
+int add(int a, int b) { return a + b; }
+
+struct maxclass {
+    int operator()(int a, int b) { return a > b ? a : b; }
 };
 
-int* num = new int(2333);
+namespace haizei {
+
+template <typename RT, typename... PARAMS>
+class function {};
+template <typename RT, typename... PARAMS>
+class function<RT(PARAMS...)> {
+   public:
+    function(RT (*func)(PARAMS...)) : ptr(nullptr) {
+        cout << "normal function constr" << endl;
+    }
+    template <typename T>
+    function(T &&a) : ptr(nullptr) {
+        cout << "class object function constr" << endl;
+    }
+    ~function() { delete ptr; }
+
+   private:
+    int *ptr;
+};
+
+};  // namespace haizei
 
 int main() {
-    A* a = new A(num);
-    cout << num << endl;
-    cout << a->num << endl;
-    delete a;
-    cout << *num << endl;
+    maxclass max1;
+    haizei::function<int(int, int)> g1(add);
+    haizei::function<int(int, int)> g2(max1);
+    haizei::function<int(int, int)> g3(maxclass{});
     return 0;
 }
