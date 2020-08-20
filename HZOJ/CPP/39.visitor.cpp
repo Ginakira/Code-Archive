@@ -70,6 +70,16 @@ class AnimalCout : public Animal::IVisitor {
     virtual void visit(Bat *obj) { cout << "this is bat" << endl; }
 };
 
+class AnimalCount : public Animal::IVisitor {
+   public:
+    AnimalCount() : cat_count(0), dog_count(0), mouse_count(0), bat_count(0) {}
+    virtual void visit(Cat *obj) { cat_count += 1; }
+    virtual void visit(Dog *obj) { dog_count += 1; }
+    virtual void visit(Mouse *obj) { mouse_count += 1; }
+    virtual void visit(Bat *obj) { bat_count += 1; }
+    int cat_count, dog_count, mouse_count, bat_count;
+};
+
 int main() {
     srand(time(0));
     Animal *arr[10];
@@ -123,8 +133,15 @@ int main() {
     // }
 
     AnimalCout vis;
+    AnimalCount cnt;
     for (int i = 0; i < 10; ++i) {
         arr[i]->Accpet(&vis);
+        arr[i]->Accpet(&cnt);
     }
+
+    cout << "Cat : " << cnt.cat_count << endl;
+    cout << "Dog : " << cnt.dog_count << endl;
+    cout << "Mouse : " << cnt.mouse_count << endl;
+    cout << "Bat : " << cnt.bat_count << endl;
     return 0;
 }
