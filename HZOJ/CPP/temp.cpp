@@ -1,39 +1,36 @@
-#include <functional>
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/08/21 15:54:56
+************************************************************/
+#include <algorithm>
+#include <cmath>
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
-int add(int a, int b) { return a + b; }
-
-struct maxclass {
-    int operator()(int a, int b) { return a > b ? a : b; }
+struct A {
+    int data;
+    A(int data) : data{data} {}
 };
 
-namespace haizei {
-
-template <typename RT, typename... PARAMS>
-class function {};
-template <typename RT, typename... PARAMS>
-class function<RT(PARAMS...)> {
-   public:
-    function(RT (*func)(PARAMS...)) : ptr(nullptr) {
-        cout << "normal function constr" << endl;
-    }
-    template <typename T>
-    function(T &&a) : ptr(nullptr) {
-        cout << "class object function constr" << endl;
-    }
-    ~function() { delete ptr; }
-
-   private:
-    int *ptr;
+struct B : virtual A {
+    B() : A{1} { cout << data << endl; }
 };
 
-};  // namespace haizei
+struct C : A {
+    C() : A{2} { cout << data << endl; }
+};
+
+struct D : B, C {
+    D() : A{3} {}
+};
 
 int main() {
-    maxclass max1;
-    haizei::function<int(int, int)> g1(add);
-    haizei::function<int(int, int)> g2(max1);
-    haizei::function<int(int, int)> g3(maxclass{});
+    D d;
+    cout << d.data << endl;
     return 0;
 }
