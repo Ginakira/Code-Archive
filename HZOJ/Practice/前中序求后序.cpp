@@ -35,8 +35,9 @@ void func(int qs, int qe, int zs, int ze) {
 }
 
 int main() {
-    cin >> q >> z;
-    func(0, q.size() - 1, 0, z.size() - 1);
-    cout << endl;
+    while (cin >> q >> z) {
+        func(0, q.size() - 1, 0, z.size() - 1);
+        cout << endl;
+    }
     return 0;
 }
