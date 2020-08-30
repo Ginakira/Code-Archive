@@ -1,92 +1,53 @@
-#include <algorithm>
-#include <cstdio>
-#include <cstdlib>
+
+#include <stdio.h>
+
+#include <cstring>
 #include <iostream>
 #include <map>
-#include <queue>
-#include <set>
-#include <stack>
-#include <string>
 #include <vector>
 using namespace std;
 
-namespace haizei {
-
-class IHashFunc {
-   public:
-    virtual int operator()(int) = 0;
-};
-
-class HashTable {
-    typedef int (*HashFunc_T)(int);
-    typedef pair<int, int> PII;
-
-   public:
-    HashTable(HashFunc_T);
-    HashTable(IHashFunc &);
-    int &operator[](int);
-
-   private:
-    HashTable(HashFunc_T, IHashFunc *, int);
-    int hash_type;
-    HashFunc_T func1;
-    IHashFunc *func2;
-
-    int __size;
-    PII **data;
-};
-
-HashTable::HashTable(HashFunc_T func1, IHashFunc *func2, int hash_type)
-    : func1(func1), func2(func2), hash_type(hash_type) {
-    this->__size = 1000;
-    this->data = new PII *[this->__size];
-    for (int i = 0; i < this->__size; i++) this->data[i] = nullptr;
+void quick_sort(int* num, int l, int r) {
+    if (r < l) return;
+    int x = l, y = r, z = num[l];
+    while (x < y) {
+        while (x < y && num[y] >= z) y--;
+        if (x < y) num[x++] = num[y];
+        while (x < y && num[x] <= z) x++;
+        if (x < y) num[y++] = num[x];
+    }
+    num[x] = z;
+    quick_sort(num, l, x - 1);
+    quick_sort(num, x + 1, r);
+    return;
 }
 
-HashTable::HashTable(HashFunc_T func) : HashTable(func, nullptr, 1) {}
-
-HashTable::HashTable(IHashFunc &func) : HashTable(nullptr, &func, 2) {}
-
-int &HashTable::operator[](int x) {
-    int hash = 0;
-    switch (hash_type) {
-        case 1:
-            hash = func1(x);
-            break;
-        case 2:
-            hash = (*func2)(x);
-            break;
+void quicksort(vector<int>& num, int l, int r) {
+    if (r < l) return;
+    int x = l, y = r, z = num[l];
+    while (x < y) {
+        while (x < y && num[y] >= z) y--;
+        if (x < y) num[x++] = num[y];
+        while (x < y && num[x] <= z) x++;
+        if (x < y) num[y--] = num[x];
     }
-    if (hash < 0) hash &= 0x7fffffff;
-    int ind = hash % __size, t = 1;
-    while (data[ind] && data[ind]->first != x) {
-        ind += t * t;
-        if (ind < 0) ind = ind & 0x7fffffff;
-        ind %= __size;
-        t += 1;
-    }
-    if (data[ind] == nullptr) data[ind] = new PII(x, 0);
-    return data[ind]->second;
+    num[x] = z;
+    quicksort(num, l, x - 1);
+    quicksort(num, x + 1, r);
+    return;
 }
-
-}  // end of namespace haizei
-
-int hash1(int x) { return (x << 1) ^ (x << 3) ^ (x >> 5); }
-
-class MyHashFunc : public haizei::IHashFunc {
-   public:
-    int operator()(int x) override { return (x << 1) ^ (x << 3) ^ (x >> 5); }
-};
 
 int main() {
-    MyHashFunc hash2;
-    haizei::HashTable h1(hash1);
-    haizei::HashTable h2(hash2);
-    h1[123] = 345;
-    h2[123] = 678;
-    cout << h1[123] << endl;
-    cout << h2[123] << endl;
-    cout << h1[789] << endl;
-    cout << h2[1000000] << endl;
+    vector<int> num(7);
+    num = {1, 3, 4, 6, 9, 5, 2};
+    int arr[7] = {1, 3, 4, 6, 9, 5, 2};
+    for (int i = 0; i < 7; i++) {
+        // cin >> arr[i];
+    }
+    quicksort(num, 0, 6);
+    for (int i = 0; i < 7; i++) {
+        cout << num[i] << " ";
+    }
+    cout << endl;
     return 0;
 }
