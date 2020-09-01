@@ -46,7 +46,7 @@ int main() {
     }
     quicksort(num, 0, 6);
     for (int i = 0; i < 7; i++) {
-        cout << num[i] << ' ';
+        cout << num[i] << " ";
     }
     cout << endl;
     return 0;
