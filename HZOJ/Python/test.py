@@ -12,6 +12,6 @@ valid.append(params["days"] | params["plan_id"])
 print(valid)
 
 result = params["plan_id"] | params["show_all"]
-print(result)
+print("result:" + result)
 
 print(result in valid)
