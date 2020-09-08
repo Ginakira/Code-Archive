@@ -1,9 +1,9 @@
 /************************************************************
-    File Name : 65A.cpp
+    File Name : 231A.cpp
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/09/07 23:08:42
+    Created Time: 2020/09/07 23:14:32
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -13,17 +13,13 @@
 using namespace std;
 
 int main() {
-    int n;
+    int n, ans = 0;
     cin >> n;
     for (int i = 0; i < n; ++i) {
-        string s;
-        cin >> s;
-        int len = s.size();
-        if (len <= 10) {
-            cout << s << endl;
-            continue;
-        }
-        cout << s[0] << len - 2 << s[len - 1] << endl;
+        int a, b, c;
+        cin >> a >> b >> c;
+        if (a + b + c >= 2) ans++;
     }
+    cout << ans << endl;
     return 0;
 }
