@@ -34,6 +34,7 @@ int main() {
             }
         }
     }
+    cout << endl;
     cout << maxLen << endl;
     cout << maxEnd << endl;
     cout << s1.substr(maxEnd - maxLen + 1, maxLen) << endl;
