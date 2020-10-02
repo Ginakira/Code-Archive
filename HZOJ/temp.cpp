@@ -17,6 +17,6 @@ using namespace std;
 int main() {
     int m = 1, n = 1;
     m&& n&& fprintf(stderr, "%d", n);
-    sleep(4);
+    sleep(5);
     return 0;
 }
