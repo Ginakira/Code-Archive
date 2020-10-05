@@ -3,10 +3,8 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/10/02 19:20:18
+    Created Time: 2020/10/05 16:36:43
 ************************************************************/
-#include <unistd.h>
-
 #include <algorithm>
 #include <cmath>
 #include <iostream>
@@ -15,8 +13,12 @@
 using namespace std;
 
 int main() {
-    int m = 1, n = 1;
-    m&& n&& fprintf(stderr, "%d", n);
-    sleep(3);
+    char str[] = "this-is-a-string-seperate-by-dash";
+    printf("%s\n", str);
+    char *tok = NULL;
+    tok = strtok(str, "-!~=+@");
+    do {
+        printf("%s\n", tok);
+    } while ((tok = strtok(NULL, "-!~=+@")) != NULL);
     return 0;
 }
