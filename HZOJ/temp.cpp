@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/10/05 16:36:43
+    Created Time: 2020/10/05 16:43:08
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -13,12 +13,14 @@
 using namespace std;
 
 int main() {
-    char str[] = "this-is-a-string-seperate-by-dash";
-    printf("%s\n", str);
+    char str[] =
+        "I love you so much, Ms.Ginger.\nMy love is like a flame burning in my "
+        "heart, making it difficult for me to think about anyone but "
+        "you.\nPlease accept my love.\n\nWith love,\nMr.Garlic";
     char *tok = NULL;
-    tok = strtok(str, "-!~=+@");
+    tok = strtok(str, "\t\n\r\n \"\',.");
     do {
         printf("%s\n", tok);
-    } while ((tok = strtok(NULL, "-!~=+@")) != NULL);
+    } while ((tok = strtok(NULL, "\t\n\r\n \"\',.")) != NULL);
     return 0;
 }
