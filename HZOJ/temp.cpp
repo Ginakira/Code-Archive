@@ -67,7 +67,7 @@ LinkedList delete_node(LinkedList head, int index) {
 
     while (current_node->next != NULL && count < index - 1) {
         current_node = current_node->next;
-        count++
+        count++;
     }
     if (count == index - 1 && current_node->next != NULL) {
         Node *delete_node = current_node->next;
