@@ -16,7 +16,7 @@ int main() {
     int num1 = 0x616263;
     int num2 = 0x61626364;
     printf("%s\n", (char *)(&num2 + 1));
-    printf("%p\n", &num1);
-    printf("%p\n", &num2);
+    // printf("%p\n", &num1);
+    // printf("%p\n", &num2);
     return 0;
 }
