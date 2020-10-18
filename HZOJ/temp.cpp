@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2020/10/13 22:19:36
+    Created Time: 2020/11/04 17:15:21
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -14,13 +14,7 @@
 using namespace std;
 
 int main() {
-    char str[50];
-    while (scanf("%[^\n]\n", str) != EOF) {
-        printf("==============\n");
-        for (int i = 0; i < 10; ++i) {
-            printf("%d ", (int)str[i]);
-        }
-        printf("\n==============\n");
-    }
+    double a = 3.59;
+    printf("%.2g\n", a);
     return 0;
 }
