@@ -14,7 +14,7 @@
 using namespace std;
 
 int main() {
-    double a = 3.59;
+    double a = 3.666666;
     printf("%.2g\n", a);
     return 0;
 }
