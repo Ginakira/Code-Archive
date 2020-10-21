@@ -32,12 +32,7 @@ void calc(int cur_i, int cur_j) {
         if (new_i < 0 || new_i >= n || new_j < 0 || new_j >= m) {
             continue;
         }
-        if (grid[new_i][new_j] == '*') {
-            cnt++;
-        }
     }
-    ans[cur_i][cur_j] = cnt + '0';
-    return;
 }
 
 int main() {
@@ -55,7 +50,8 @@ int main() {
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < m; ++j) {
-            cout << ans[i][j];
+            j&& cout << " ";
+            cout << ans[i];
         }
         cout << endl;
     }
