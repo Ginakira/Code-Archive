@@ -1,130 +1,63 @@
-#include <stdio.h>
-#include <stdlib.h>
-
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/11/02 16:10:41
+************************************************************/
+#include <algorithm>
 #include <cmath>
-#include <iomanip>
 #include <iostream>
-
+#include <string>
+#include <vector>
 using namespace std;
+#define MAX_N 100
 
-typedef long long LL;
-const int N = 1000;
-const double wucha = 1e-6;  //误差
-const int MAX_count = 500;
+int dir[8][2] = {{1, 0},  {-1, 0}, {0, 1}, {0, -1},
+                 {1, -1}, {-1, 1}, {1, 1}, {-1, -1}};
 
-double A[N][N];
-double b[N];
-double curx[N];
-double lastx[N];
-int n, cnt;
-double W;
+char grid[MAX_N + 5][MAX_N + 5];
+char ans[MAX_N + 5][MAX_N + 5];
 
-void init() {
-    printf("输入未知数个数：");
-    cin >> n;
-    printf("输入方程组矩阵A：\n");
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            cin >> A[i][j];
+int n, m;
+
+void calc(int cur_i, int cur_j) {
+    if (grid[cur_i][cur_j] == '*') {
+        ans[cur_i][cur_j] = '*';
+        return;
+    }
+    int cnt = 0;
+    for (int i = 0; i < 8; ++i) {
+        int new_i = cur_i + dir[i][0], new_j = cur_j + dir[i][1];
+        if (new_i < 0 || new_i >= n || new_j < 0 || new_j >= m) {
+            continue;
+        }
+        if (grid[new_i][new_j] == '*') {
+            cnt++;
         }
     }
-    printf("输入b向量：\n");
-    for (int i = 1; i <= n; i++) {
-        cin >> b[i];
-    }
-    cout << endl;
-}
-
-void init_x() {
-    cout << "请对x赋初值：" << endl;
-    for (int i = 1; i <= n; i++) {
-        cin >> curx[i];
-    }
-}
-
-bool judge() {
-    double sum = 0;
-    for (int i = 1; i <= n; i++) {
-        sum += (curx[i] - lastx[i]) * (curx[i] - lastx[i]);
-    }
-    sum = sqrt(sum);
-    if (sum <= wucha)
-        return 1;
-    else
-        return 0;
-}
-
-void output() {
-    cout << "迭代次数为：" << cnt << endl;
-    cout << "近似解为：";
-    for (int i = 1; i <= n; i++) {
-        cout << fixed << setprecision(15) << curx[i] << " ";
-    }
-    cout << endl << endl;
-}
-
-void Jacobi() {  // x初值都设置为0
-    cout << "雅可比迭代法：" << endl;
-    init_x();
-    int flag = 0;
-    double sum;
-    for (int k = 1; k < MAX_count; k++) {
-        for (int i = 1; i <= n; i++) {
-            lastx[i] = curx[i];
-        }
-
-        for (int i = 1; i <= n; i++) {
-            sum = 0;
-            for (int j = 1; j <= n; j++) {
-                if (i == j) continue;
-                sum += A[i][j] * lastx[j];
-            }
-            curx[i] = (b[i] - sum) / A[i][i];
-        }
-        if (judge()) {
-            flag = 1;
-            cnt = k;
-            output();
-            break;
-        }
-    }
-    if (flag == 0) cout << "error！" << endl << endl;
-}
-
-void gauss_seidel() {
-    cout << "高斯—赛德尔迭代法：" << endl;
-    init_x();
-    int flag = 0;
-    double sum;
-    double t;
-    for (int k = 1; k < MAX_count; k++) {
-        double e = 0;
-        for (int i = 1; i <= n; i++) {
-            t = curx[i];
-            sum = 0;
-            for (int j = 1; j <= n; j++) {
-                if (i == j) continue;
-                sum += A[i][j] * curx[j];
-            }
-            curx[i] = (b[i] - sum) / A[i][i];
-            if (fabs(curx[i] - t) <= e) {
-            } else {
-                e = fabs(curx[i] - t);
-            }
-        }
-        if (e < wucha) {
-            flag = 1;
-            cnt = k;
-            output();
-            break;
-        }
-    }
-    if (flag == 0) cout << "error！" << endl << endl;
+    ans[cur_i][cur_j] = cnt + '0';
+    return;
 }
 
 int main() {
-    init();
-    Jacobi();
-    gauss_seidel();
+    cin >> n >> m;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cin >> grid[i][j];
+        }
+    }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            calc(i, j);
+        }
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            cout << ans[i][j];
+        }
+        cout << endl;
+    }
     return 0;
 }
