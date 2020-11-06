@@ -1,6 +1,8 @@
 // 1356. 根据数字二进制下 1 的数目排序
 #include <algorithm>
+#include <bitset>
 #include <vector>
+using std::bitset;
 using std::sort;
 using std::vector;
 
@@ -29,7 +31,7 @@ class Solution {
 };
 
 // bitset
-class Solution {
+class Solution2 {
    public:
     vector<int> sortByBits(vector<int>& arr) {
         sort(arr.begin(), arr.end(), [&](int a, int b) {
