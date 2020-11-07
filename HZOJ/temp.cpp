@@ -13,8 +13,14 @@
 using namespace std;
 
 int main() {
-    int n;
-    cin >> n;
-    cout << (n & (n - 1)) << endl;
+    int num = 3, cnt = 0;
+    while (num) {
+        if (num & 1) {
+            cnt++;
+        }
+        num >>= 1;
+        cout << "\033[32mCount one digit\033[0m" << endl;
+    }
+    cout << cnt << endl;
     return 0;
 }
