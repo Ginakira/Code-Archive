@@ -1,4 +1,5 @@
 // 岛屿数量
+#include <algorithm>
 #include <vector>
 using namespace std;
 
