@@ -6,12 +6,13 @@ using std::vector;
 class Solution {
    public:
     int maxProfit(vector<int>& prices) {
-        int ans = 0, len = prices.size();
-        for (int i = 0; i < len - 1; ++i) {
-            if (prices[i] < prices[i + 1]) {
-                ans += prices[i + 1] - prices[i];
+        int n = prices.size(), maxProfit = 0;
+        for (int i = 1; i < n; ++i) {
+            int diff = prices[i] - prices[i - 1];
+            if (diff > 0) {
+                maxProfit += diff;
             }
         }
-        return ans;
+        return maxProfit;
     }
 };
