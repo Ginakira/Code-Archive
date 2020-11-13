@@ -1,4 +1,5 @@
 // 存在重复元素
+#include <algorithm>
 #include <unordered_set>
 #include <vector>
 using namespace std;
