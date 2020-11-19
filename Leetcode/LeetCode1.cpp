@@ -1,5 +1,6 @@
 // 两数之和
 #include <map>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -43,10 +44,13 @@ class Solution2 {
 class Solution3 {
    public:
     vector<int> twoSum(vector<int>& nums, int target) {
-        map<int, int> mp;
-        for (int i = 0; i < nums.size(); ++i) {
-            int complement = target - nums[i];
-            if (mp.count(complement)) return {i, mp[complement]};
+        int n = nums.size();
+        unordered_map<int, int> mp;
+        for (int i = 0; i < n; ++i) {
+            int remain = target - nums[i];
+            if (mp.count(remain)) {
+                return vector<int>{i, mp[remain]};
+            }
             mp[nums[i]] = i;
         }
         return {};
