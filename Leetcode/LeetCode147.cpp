@@ -13,7 +13,8 @@ class Solution {
    public:
     ListNode* insertionSortList(ListNode* head) {
         if (!head || !head->next) return NULL;
-        ListNode *ret = new ListNode(-1), *unsorted = head->next, *p, *q;
+        ListNode *ret = new ListNode(-0x3f3f3f3f), *unsorted = head->next, *p,
+                 *q;
         ret->next = head, head->next = NULL;
         while (unsorted) {
             q = unsorted->next;
@@ -33,7 +34,8 @@ class Solution2 {
    public:
     ListNode* insertionSortList(ListNode* head) {
         if (!head) return NULL;
-        ListNode *ret = new ListNode(-1), *unsorted = head->next, *p, *q, *pre;
+        ListNode *ret = new ListNode(-0x3f3f3f3f), *unsorted = head->next, *p,
+                 *q, *pre;
         ret->next = head, head->next = NULL, pre = ret;
         while (unsorted) {
             q = unsorted->next;
