@@ -6,7 +6,7 @@ class Solution {
    public:
     int firstUniqChar(string s) {
         int code[256] = {0};
-        for (char c : s) code[c]++;
+        for (char &c : s) code[c]++;
         for (int i = 0; s[i]; ++i) {
             if (code[s[i]] == 1) return i;
         }
