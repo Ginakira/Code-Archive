@@ -47,7 +47,7 @@ int main() {
     }
     vector<double> Y2 = ImprovedEuler(x0, y0, h, N + 1);
 
-    cout << "改进欧拉公式的计算结果为：  " << endl;
+    cout << "改进欧拉公式的计算结果为： " << endl;
     for (int i = 0; i < N + 1; i++) {
         cout << x0 + i * h << "     " << Y2[i] << endl;
     }
