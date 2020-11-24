@@ -10,7 +10,7 @@ struct TreeNode {
 };
 
 // 暴力递归 56ms
-class Solution {
+class Solution1 {
    public:
     int countNodes(TreeNode *root) {
         if (!root) return 0;
