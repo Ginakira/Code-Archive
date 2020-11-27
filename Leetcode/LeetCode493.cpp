@@ -2,7 +2,9 @@
 #include <vector>
 using namespace std;
 
-class Solution {
+// 解法1：归并排序过程中利用其性质统计翻转对
+// 每次分的两部分都满足左半部分的下标小于右半部分的下标
+class Solution1 {
    public:
     int reversePairsRecursive(vector<int>& nums, int left, int right) {
         if (left == right) {
