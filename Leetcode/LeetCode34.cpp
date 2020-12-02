@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-// 解法1: 两次二分 （二分变形的0001111和11110000问题）
+// 解法1: 两次二分 二分变形的0001111和11110000问题
 class Solution {
    public:
     int findFirstIndex(vector<int> &nums, int target) {
