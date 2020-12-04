@@ -39,3 +39,41 @@ class Solution1 {
         return true;
     }
 };
+
+// Solution 2: 哈希 + 贪心 300ms
+// 对于一个数x，将其加入以x - 1为结尾的子序列，一定比其单独新建一个子序列更优
+// cnt[i]存储原数组中数字i出现的次数，tail[i]存储以i为结尾的【符合题意的】连续子序列个数
+// 对于cnt[i] > 0的每一个数字 i 分为三种情况：
+// 1. tail[i - 1] > 0，即为存在以i -
+// 1为结尾的符合题意的连续子序列，则将i加入到这个子序列中，则此时tail[i -
+// 1]减一，tail[i]加一
+// 2. tail[i - 1] <= 0，即不存在以i -
+// 1为结尾的符合题意的连续子序列，则以i为开头，构造一个长度为3的连续子序列（满足题目的最低要求所以是长度为3），如果能构造（也就是cnt[i
+// + 1]、cnt[i + 2]均大于0)，则tail[i + 2]加一，cnt各项减一
+// 3.
+// 前两个条件均不满足，说明这个数字无法加入到其他子序列，也不能以它为开头构造新的子序列，返回false
+class Solution2 {
+   public:
+    bool isPossible(vector<int>& nums) {
+        unordered_map<int, int> cnt, tail;
+        for (auto& num : nums) {
+            cnt[num]++;
+        }
+
+        for (auto& num : nums) {
+            if (cnt[num] <= 0) continue;
+            if (tail[num - 1] > 0) {
+                --cnt[num];
+                --tail[num - 1];
+                ++tail[num];
+            } else if (cnt[num + 1] > 0 && cnt[num + 2] > 0) {
+                --cnt[num], --cnt[num + 1], --cnt[num + 2];
+                ++tail[num + 2];
+            } else {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
