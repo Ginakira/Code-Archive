@@ -14,20 +14,21 @@ class Solution {
         return {};
     }
 
-    bool check() {
+    bool check() {  // 检查当前的状态是否合法
         if (ans.size() < 3) return true;
         return (long long)ans.back() ==
                (long long)ans[ans.size() - 2] + (long long)ans[ans.size() - 3];
     }
 
     bool dfs(string &s, int ind) {
-        if (ind >= s.size()) {
+        if (ind >= s.size()) {  // 递归出口
             return ans.size() > 2;
         }
-        if (s[ind] == '0') {
+        if (s[ind] == '0') {  // 如果开头这一位是0，那么只能其自己组成一个数
             ans.push_back(0);
-            if (check() && dfs(s, ind + 1)) return true;
-            ans.pop_back();
+            if (check() && dfs(s, ind + 1))
+                return true;  // 如果当前状态合法且后续能找到答案
+            ans.pop_back();   // 回溯
             return false;
         }
 
