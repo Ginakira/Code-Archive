@@ -2,7 +2,7 @@
 #include <vector>
 using namespace std;
 
-// Solution1: 贪心
+// Solution1: 贪心 24ms
 // 记录收到的钱数，每次优先从大面额的钱开始找零
 class Solution {
    public:
