@@ -3,7 +3,7 @@
 #include <vector>
 using namespace std;
 
-// Solution1: 纯模拟 1800ms
+// Solution1: 标记 + 模拟 1800ms
 // 优先ban掉后面的第一个敌方议员 到末尾了就从头ban
 class Solution {
    public:
