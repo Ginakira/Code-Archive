@@ -1,7 +1,34 @@
 // LeetCode 649 Dota2参议院
+#include <queue>
 #include <string>
 #include <vector>
 using namespace std;
+
+// Solution2: 思想同下 使用队列 20ms
+class Solution2 {
+   public:
+    string predictPartyVictory(string senate) {
+        int n = senate.size();
+        queue<int> radiant, dire;
+        for (int i = 0; i < n; ++i) {
+            if (senate[i] == 'R')
+                radiant.push(i);
+            else
+                dire.push(i);
+        }
+
+        while (!radiant.empty() && !dire.empty()) {
+            if (radiant.front() < dire.front()) {
+                radiant.push(radiant.front() + n);
+            } else {
+                dire.push(dire.front() + n);
+            }
+            radiant.pop();
+            dire.pop();
+        }
+        return radiant.empty() ? "Dire" : "Radiant";
+    }
+};
 
 // Solution1: 标记 + 模拟 1800ms
 // 优先ban掉后面的第一个敌方议员 到末尾了就从头ban
