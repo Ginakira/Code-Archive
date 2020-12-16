@@ -1,5 +1,6 @@
 // 单词规律
 #include <iostream>
+#include <sstream>
 #include <unordered_map>
 using namespace std;
 
@@ -31,5 +32,30 @@ class Solution {
         }
         if (s[ind]) return false;
         return true;
+    }
+};
+
+// 更简洁的写法
+class Solution2 {
+   public:
+    bool wordPattern(string pattern, string s) {
+        unordered_map<string, char> smap;
+        unordered_map<char, string> pmap;
+        stringstream ss(s);
+        int ind = 0;
+        string cur;
+        while (ss >> cur) {
+            if (ind >= pattern.size()) return false;
+            if (smap.find(cur) == smap.end() &&
+                pmap.find(pattern[ind]) == pmap.end()) {
+                smap[cur] = pattern[ind];
+                pmap[pattern[ind]] = cur;
+            } else {
+                if (smap[cur] != pattern[ind] || pmap[pattern[ind]] != cur)
+                    return false;
+            }
+            ind++;
+        }
+        return ind == pattern.size();
     }
 };
