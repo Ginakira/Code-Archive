@@ -1,55 +1,41 @@
 #include <iostream>
-#include <string>
-#include <vector>
 using namespace std;
 
-double f(double x, double y) { return y - (2 * x) / y; }
-//欧拉公式
-vector<double> Euler(double x0, double y0, double h, int N) {
-    vector<double> Y(N, 0);
-    double x = x0;
-    Y[0] = y0;
-    for (int n = 1; n < N; n++) {
-        Y[n] = Y[n - 1] + h * f(x, Y[n - 1]);
-        x += h;
+int n, m, sx, sy;
+char mmap[105][105];
+int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+int func(int x, int y) {
+    for (int i = 0; i < 4; i++) {
+        int xx = x + dir[i][0];
+        int yy = y + dir[i][1];
+        if (mmap[xx][yy] == 'T') {
+            return 1;
+        }
+        if (mmap[xx][yy] == '.') {
+            mmap[xx][yy] = '#';
+            if (func(xx, yy) == 1) {
+                return 1;
+            }
+        }
     }
-    return Y;
-}
-//改进欧拉公式
-vector<double> ImprovedEuler(double x0, double y0, double h, int N) {
-    vector<double> Y(N, 0);
-    Y[0] = y0;
-    double x = x0;
-    double p = 0;
-    double c = 0;
-    for (int n = 1; n < N; n++) {
-        p = Y[n - 1] + h * f(x, Y[n - 1]);
-        x += h;
-        c = Y[n - 1] + h * f(x, p);
-        Y[n] = (p + c) / 2;
-    }
-    return Y;
+    return 0;
 }
 
 int main() {
-    cout << "请输入步长 h 和要计算的函数值的个数 N ： " << endl;
-    double h;
-    int N;
-    cin >> h >> N;
-    cout << "请输入初始函数点（x0，y0）：" << endl;
-    double x0;
-    double y0;
-    cin >> x0 >> y0;
-    vector<double> Y1 = Euler(x0, y0, h, N + 1);
-    cout << "欧拉公式的计算结果为：  " << endl;
-    for (int i = 0; i < N + 1; i++) {
-        cout << x0 + i * h << "     " << Y1[i] << endl;
+    cin >> n >> m;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= m; j++) {
+            cin >> mmap[i][j];
+            if (mmap[i][j] == 'S') {
+                sx = i, sy = j;
+            }
+        }
     }
-    vector<double> Y2 = ImprovedEuler(x0, y0, h, N + 1);
-
-    cout << "改进欧拉公式的计算结果为：  " << endl;
-    for (int i = 0; i < N + 1; i++) {
-        cout << x0 + i * h << "     " << Y2[i] << endl;
+    if (func(sx, sy) == 1) {
+        cout << "YES" << endl;
+    } else {
+        cout << "NO" << endl;
     }
     return 0;
 }
