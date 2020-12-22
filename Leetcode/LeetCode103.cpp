@@ -10,6 +10,7 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+// Solution1: 先递归按层存储所有二叉树节点 然后翻转下标奇数层
 class Solution {
    public:
     vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
