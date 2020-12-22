@@ -23,7 +23,7 @@ class Solution {
     void pushNodes(vector<vector<int>> &nodes, TreeNode *root, int depth) {
         if (!root) return;
         if (nodes.size() <= depth) nodes.emplace_back();
-        if (depth % 2) {
+        if (depth & 1) {
             nodes[depth].insert(nodes[depth].begin(), root->val);
         } else {
             nodes[depth].emplace_back(root->val);
