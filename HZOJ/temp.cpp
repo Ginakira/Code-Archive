@@ -24,7 +24,7 @@ int main() {
             cout << n << endl;
             break;
         }
-        cout << n << endl;
+        cout << sum << ' ' << n << endl;
     }
     return 0;
 }
