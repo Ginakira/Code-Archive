@@ -1,30 +1,20 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2020/12/25 21:45:51
-************************************************************/
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+int leapyear(int y) {
+    if ((y % 100 != 0 && y % 4 == 0) || y % 400 == 0) {
+        return 1;
+    }
+    return 0;
+}
+int day[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 int main() {
-    int square_number[100] = {0};
-    for (int i = 1; i <= 64; ++i) {
-        square_number[i] = i * i;
-    }
-    long long sum = 0;
-    for (int i = 1, n = 1; i <= 64; ++i) {
-        while (sum < n * n + n) sum += square_number[i], ++n;
-        if (sum == n * n + n) {
-            cout << n << endl;
-            break;
-        }
-        cout << sum << ' ' << n << endl;
+    int y, m, d;
+    scanf("%d%d%d", &y, &m, &d);
+    if (leapyear(y) == 1) day[2] = 29;
+    if (m > 0 && m <= 12 && d > 0 && d <= day[m]) {
+        printf("YES");
+    } else {
+        printf("NO");
     }
     return 0;
 }
