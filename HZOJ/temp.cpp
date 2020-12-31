@@ -1,20 +1,19 @@
-#include <stdio.h>
-int leapyear(int y) {
-    if ((y % 100 != 0 && y % 4 == 0) || y % 400 == 0) {
-        return 1;
-    }
-    return 0;
-}
-int day[13] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2020/12/31 13:44:09
+************************************************************/
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
 
 int main() {
-    int y, m, d;
-    scanf("%d%d%d", &y, &m, &d);
-    if (leapyear(y) == 1) day[2] = 29;
-    if (m > 0 && m <= 12 && d > 0 && d <= day[m]) {
-        printf("YES");
-    } else {
-        printf("NO");
-    }
+    const char *dict[] = {"abcd", "sdfdsfd", "dhfjsfh", "hdejfks"};
+    printf("%s\n", dict[2]);
     return 0;
 }
