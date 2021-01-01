@@ -16,17 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    customdialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    widget.cpp
 
 HEADERS += \
-    mainwindow.h
+    customdialog.h \
+    widget.h
 
 FORMS += \
-    mainwindow.ui
-
-TRANSLATIONS += \
-    test_zh_CN.ts
+    customdialog.ui \
+    widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

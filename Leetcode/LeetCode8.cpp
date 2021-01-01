@@ -38,24 +38,24 @@ class Solution {
     }
 };
 
-// Haizei
+// Haizei 0ms
 class Solution2 {
    public:
-    int myAtoi(string str) {
-        int flag = 1, num = 0, i = 0, pre_max = INT_MAX / 10, d = INT_MAX % 10;
-        while (str[i] == ' ') ++i;
-        if (str[i] == '-')
-            flag = -1, ++i;
-        else if (str[i] == '+')
-            flag = 1, ++i;
-        while (str[i]) {
-            if (str[i] < '0' || str[i] > '9') break;
-            if (num > pre_max || (num == pre_max && (str[i] - '0') > d)) {
+    int myAtoi(string s) {
+        int pre_max = INT_MAX / 10, pre_d = INT_MAX % 10;
+        int ind = 0, flag = 1, res = 0;
+        while (s[ind] == ' ') ++ind;
+        if (s[ind] == '-' || s[ind] == '+') {
+            flag = s[ind] == '-' ? -1 : 1;
+            ++ind;
+        }
+        while (isdigit(s[ind])) {
+            if (res > pre_max || (res == pre_max && pre_d < s[ind] - '0')) {
                 return flag == 1 ? INT_MAX : INT_MIN;
             }
-            num = num * 10 + (str[i] - '0');
-            ++i;
+            res *= 10;
+            res += s[ind++] - '0';
         }
-        return flag * num;
+        return res * flag;
     }
 };
