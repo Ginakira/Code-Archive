@@ -33,6 +33,15 @@ public:
         btnWindow = new QPushButton(Widget);
         btnWindow->setObjectName(QString::fromUtf8("btnWindow"));
         btnWindow->setGeometry(QRect(40, 60, 151, 32));
+        btnWindow->setStyleSheet(QString::fromUtf8("#btnWindow {\n"
+"    background: rgb(0, 172, 255);\n"
+"    color: #fff;\n"
+"    border-radius: 4px;\n"
+"}\n"
+"\n"
+"#btnWindow:hover {\n"
+"	background: rgb(0, 2, 3);\n"
+"}"));
         btnApp = new QPushButton(Widget);
         btnApp->setObjectName(QString::fromUtf8("btnApp"));
         btnApp->setGeometry(QRect(40, 100, 151, 32));

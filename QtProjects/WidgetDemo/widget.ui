@@ -22,6 +22,17 @@
      <height>32</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">#btnWindow {
+    background: rgb(0, 172, 255);
+    color: #fff;
+    border-radius: 4px;
+}
+
+#btnWindow:hover {
+	background: rgb(0, 2, 3);
+}</string>
+   </property>
    <property name="text">
     <string>弹出窗口模态对话框</string>
    </property>
