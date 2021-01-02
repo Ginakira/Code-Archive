@@ -23,6 +23,23 @@ class Solution {
     }
 };
 
+class Solution1o2 {
+   public:
+    bool isPalindrome(ListNode *head) {
+        vector<int> v;
+        ListNode *p = head;
+        while (p != nullptr) {
+            v.emplace_back(p->val);
+            p = p->next;
+        }
+        int n = v.size();
+        for (int i = 0, j = n - 1; i < n / 2; ++i, --j) {
+            if (v[i] != v[j]) return false;
+        }
+        return true;
+    }
+};
+
 //解法2: 将链表的后一半原地翻转 进行比较
 int get_length(struct ListNode *head) {
     int n = 0;
