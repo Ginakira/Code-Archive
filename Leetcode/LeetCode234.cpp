@@ -1,4 +1,5 @@
 // 回文链表
+#include <algorithm>
 #include <vector>
 using namespace std;
 
