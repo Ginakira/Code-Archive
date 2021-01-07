@@ -17,5 +17,6 @@ class MainWindow : public QMainWindow
 
    private:
     Ui::MainWindow *ui;
+    void initStatisticLabel();
 };
 #endif // MAINWINDOW_H
