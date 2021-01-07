@@ -94,22 +94,5 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>moveUpButton</sender>
-   <signal>clicked()</signal>
-   <receiver>fundStatLabel</receiver>
-   <slot>clear()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>97</x>
-     <y>543</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>57</x>
-     <y>42</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

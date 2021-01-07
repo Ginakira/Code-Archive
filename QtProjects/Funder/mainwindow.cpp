@@ -1,4 +1,7 @@
 #include "mainwindow.h"
+#include <QJsonDocument>
+#include <QNetworkReply>
+#include "NetWorker.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -9,10 +12,31 @@ MainWindow::MainWindow(QWidget *parent)
     initStatisticLabel();
 }
 
-void MainWindow::initStatisticLabel() {}
+void MainWindow::initStatisticLabel() {
+    NetWorker *netWorker = NetWorker::instance();
+
+    QRegExp rxlen("^jsonpgz\\((.*)\\)");
+
+    netWorker->get(QString("http://fundgz.1234567.com.cn/js/161725.js"));
+    connect(netWorker, &NetWorker::finished, this, [=](QNetworkReply *reply) {
+        auto res = reply->readAll();
+        rxlen.indexIn(res);
+        auto json = rxlen.cap(1);
+        QJsonDocument jsonDocument = QJsonDocument::fromJson(json.toUtf8());
+        QVariantMap result = jsonDocument.toVariant().toMap();
+
+        QString name = result["name"].toString();
+        QString estimatedValue = result["gsz"].toString();
+        double estimatedGrowthRate = result["gszzl"].toDouble();
+        QString styleSheet =
+            estimatedGrowthRate > 0 ? "color: red" : "color: green";
+
+        ui->fundStatLabel->setText(name + " " + estimatedValue);
+        ui->fundStatLabel->setStyleSheet(styleSheet);
+    });
+}
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-

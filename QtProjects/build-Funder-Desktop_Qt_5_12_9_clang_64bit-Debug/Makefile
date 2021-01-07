@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX           = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -mmacosx-version-min=10.12 -Wall -W -fPIC $(DEFINES)
-INCPATH       = -I../Funder -I. -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/Headers -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib
+INCPATH       = -I../Funder -I. -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/Headers -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers -I../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/System/Library/Frameworks/OpenGL.framework/Headers -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/System/Library/Frameworks/AGL.framework/Headers -I. -I../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib
 QMAKE         = /Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -40,7 +40,7 @@ DISTNAME      = Funder1.0.0
 DISTDIR = /Users/sakata/Documents/Code/QtProjects/build-Funder-Desktop_Qt_5_12_9_clang_64bit-Debug/.tmp/Funder1.0.0
 LINK          = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
 LFLAGS        = -stdlib=libc++ -headerpad_max_install_names $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -mmacosx-version-min=10.12 -Wl,-rpath,@executable_path/../Frameworks -Wl,-rpath,/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib
-LIBS          = $(SUBLIBS) -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib -framework QtWidgets -framework QtGui -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
+LIBS          = $(SUBLIBS) -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib -framework QtWidgets -framework QtGui -framework QtNetwork -framework QtCore -framework DiskArbitration -framework IOKit -framework OpenGL -framework AGL   
 AR            = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar cq
 RANLIB        = /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib -s
 SED           = sed
@@ -52,10 +52,14 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../Funder/main.cpp \
-		../Funder/mainwindow.cpp moc_mainwindow.cpp
-OBJECTS       = main.o \
+SOURCES       = ../Funder/NetWorker.cpp \
+		../Funder/main.cpp \
+		../Funder/mainwindow.cpp moc_NetWorker.cpp \
+		moc_mainwindow.cpp
+OBJECTS       = NetWorker.o \
+		main.o \
 		mainwindow.o \
+		moc_NetWorker.o \
 		moc_mainwindow.o
 DIST          = ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/qdevice.pri \
@@ -222,6 +226,7 @@ DIST          = ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_pre.prf 
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_post.prf \
+		../Funder/.qmake.stash \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/toolchain.prf \
@@ -249,7 +254,9 @@ DIST          = ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_pre.prf 
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/exceptions.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/yacc.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/lex.prf \
-		../Funder/Funder.pro ../Funder/mainwindow.h ../Funder/main.cpp \
+		../Funder/Funder.pro ../Funder/NetWorker.h \
+		../Funder/mainwindow.h ../Funder/NetWorker.cpp \
+		../Funder/main.cpp \
 		../Funder/mainwindow.cpp
 QMAKE_TARGET  = Funder
 DESTDIR       = 
@@ -438,6 +445,7 @@ Makefile: ../Funder/Funder.pro ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-cl
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/qt_config.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/toolchain.prf \
@@ -468,6 +476,7 @@ Makefile: ../Funder/Funder.pro ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-cl
 		../Funder/Funder.pro \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/QtWidgets.prl \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/QtGui.prl \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/QtNetwork.prl \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/QtCore.prl
 	$(QMAKE) -o Makefile ../Funder/Funder.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_pre.prf:
@@ -635,6 +644,7 @@ Makefile: ../Funder/Funder.pro ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-cl
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/qt_config.prf:
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/toolchain.prf:
@@ -665,6 +675,7 @@ Makefile: ../Funder/Funder.pro ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/macx-cl
 ../Funder/Funder.pro:
 ../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/QtWidgets.prl:
 ../../../Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/QtGui.prl:
+../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/QtNetwork.prl:
 ../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/QtCore.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Funder/Funder.pro -spec macx-clang CONFIG+=debug CONFIG+=x86_64 CONFIG+=qml_debug
@@ -696,8 +707,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Funder/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Funder/main.cpp ../Funder/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Funder/NetWorker.h ../Funder/mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Funder/NetWorker.cpp ../Funder/main.cpp ../Funder/mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Funder/mainwindow.ui $(DISTDIR)/
 
 
@@ -708,6 +719,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r Funder.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -732,15 +744,22 @@ compiler_moc_predefs_clean:
 moc_predefs.h: ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/data/dummy.cpp
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ -pipe -stdlib=libc++ -g -std=gnu++11 $(EXPORT_ARCH_ARGS) -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk -mmacosx-version-min=10.12 -Wall -W -dM -E -o moc_predefs.h ../../../Qt5.12.9/5.12.9/clang_64/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp
+compiler_moc_header_make_all: moc_NetWorker.cpp moc_mainwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp
+	-$(DEL_FILE) moc_NetWorker.cpp moc_mainwindow.cpp
+moc_NetWorker.cpp: ../Funder/NetWorker.h \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		moc_predefs.h \
+		../../../Qt5.12.9/5.12.9/clang_64/bin/moc
+	/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/bin/moc $(DEFINES) --include /Users/sakata/Documents/Code/QtProjects/build-Funder-Desktop_Qt_5_12_9_clang_64bit-Debug/moc_predefs.h -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang -I/Users/sakata/Documents/Code/QtProjects/Funder -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib ../Funder/NetWorker.h -o moc_NetWorker.cpp
+
 moc_mainwindow.cpp: ../Funder/mainwindow.h \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
 		moc_predefs.h \
 		../../../Qt5.12.9/5.12.9/clang_64/bin/moc
-	/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/bin/moc $(DEFINES) --include /Users/sakata/Documents/Code/QtProjects/build-Funder-Desktop_Qt_5_12_9_clang_64bit-Debug/moc_predefs.h -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang -I/Users/sakata/Documents/Code/QtProjects/Funder -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib ../Funder/mainwindow.h -o moc_mainwindow.cpp
+	/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/bin/moc $(DEFINES) --include /Users/sakata/Documents/Code/QtProjects/build-Funder-Desktop_Qt_5_12_9_clang_64bit-Debug/moc_predefs.h -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/mkspecs/macx-clang -I/Users/sakata/Documents/Code/QtProjects/Funder -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtGui.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers -I/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/12.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.0.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/sakata/Documents/Qt5.12.9/5.12.9/clang_64/lib ../Funder/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -765,6 +784,13 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
+NetWorker.o: ../Funder/NetWorker.cpp ../Funder/NetWorker.h \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers/QNetworkAccessManager \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers/qnetworkaccessmanager.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o NetWorker.o ../Funder/NetWorker.cpp
+
 main.o: ../Funder/main.cpp ../Funder/mainwindow.h \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
@@ -775,8 +801,16 @@ main.o: ../Funder/main.cpp ../Funder/mainwindow.h \
 mainwindow.o: ../Funder/mainwindow.cpp ../Funder/mainwindow.h \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt5.12.9/5.12.9/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers/QNetworkReply \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtNetwork.framework/Headers/qnetworkreply.h \
+		../Funder/NetWorker.h \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/QObject \
+		../../../Qt5.12.9/5.12.9/clang_64/lib/QtCore.framework/Headers/qobject.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Funder/mainwindow.cpp
+
+moc_NetWorker.o: moc_NetWorker.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_NetWorker.o moc_NetWorker.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

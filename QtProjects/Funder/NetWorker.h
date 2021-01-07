@@ -1,9 +1,8 @@
 #ifndef NETWORKER_H
 #define NETWORKER_H
 
+#include <QNetworkReply>
 #include <QObject>
-
-class QNetworkReply;
 
 class NetWorker : public QObject {
     Q_OBJECT
