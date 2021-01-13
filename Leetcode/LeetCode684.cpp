@@ -4,34 +4,39 @@ using namespace std;
 
 // 裸并查集
 class Solution {
-   public:
-    struct UnionSet {
-        int* fa;
-        UnionSet(int n) {
-            fa = new int[n + 1];
-            for (int i = 0; i <= n; i++) {
-                fa[i] = i;
-            }
-            return;
+   private:
+    struct UnoinSet {
+        int *father;
+
+        UnoinSet(int n) {
+            father = new int[n];
+            for (int i = 0; i < n; ++i) father[i] = i;
         }
-        int get(int x) { return (fa[x] = (x - fa[x] ? get(fa[x]) : x)); }
+
+        int find(int x) {
+            return x == father[x] ? x : father[x] = find(father[x]);
+        }
+
         int merge(int a, int b) {
-            if (get(a) == get(b)) return 0;
-            fa[get(a)] = get(b);
+            int ra = find(a), rb = find(b);
+            if (ra == rb) return 0;
+            father[rb] = ra;
             return 1;
         }
+
+        ~UnoinSet() { delete[] father; }
     };
 
-    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
-        UnionSet u(edges.size());
+   public:
+    vector<int> findRedundantConnection(vector<vector<int>> &edges) {
+        UnoinSet u(edges.size() + 5);
         vector<int> ret;
-        for (int i = 0; i < edges.size(); i++) {
-            int a = edges[i][0];
-            int b = edges[i][1];
-            if (u.merge(a, b)) continue;
-            ret.push_back(a);
-            ret.push_back(b);
-            break;
+        for (const auto &edge : edges) {
+            if (!u.merge(edge[0], edge[1])) {
+                ret.emplace_back(edge[0]);
+                ret.emplace_back(edge[1]);
+                break;
+            }
         }
         return ret;
     }
