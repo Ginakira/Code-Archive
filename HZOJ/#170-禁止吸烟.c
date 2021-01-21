@@ -30,7 +30,6 @@ void solve() {
 int main() {
     int n;
     scanf("%d", &n);
-    char c[n][5000];
     while (n--) {
         solve();
     }
