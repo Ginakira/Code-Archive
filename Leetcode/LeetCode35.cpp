@@ -56,3 +56,20 @@ class Solution4 {
         return l;
     }
 };
+
+class Solution5 {
+   public:
+    int searchInsert(vector<int>& nums, int target) {
+        int n = nums.size();
+        int left = 0, right = n, mid;
+        while (left < right) {
+            mid = (left + right) >> 1;
+            if (nums[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+};
