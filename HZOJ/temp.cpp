@@ -1,39 +1,29 @@
-/*************************************************************************
-        > File Name: MAX宏.cpp
-        > Author: wangjianduo
-        > Mail: 448000069@qq.com
-        > Created Time: 2021年01月18日 星期一 22时45分56秒
- ************************************************************************/
+#include <stdio.h>
 
-#include <cstdio>
-#include <iostream>
-using namespace std;
-
-#define MAX(a, b)             \
-    ({                        \
-        __typeof(a) _a = (a); \
-        __typeof(b) _b = (b); \
-        _a > _b ? _a : _b;    \
-    })
-
-#define p(a) \
-    { printf("%s = %d\n", #a, a); }
+struct person {
+    int n;
+    char a;
+    char arr[1000];
+    int b;
+};
 
 int main() {
-    p(MAX(2, 3));
-    p(5 + MAX(2, 3));
-    p(MAX(2, MAX(3, 4)));
-    p(MAX(2, 3 > 4 ? 3 : 4));
-    int a = 7;
-    p(MAX(a++, 6));
-    p(a);
-    int k1 = 0, k2 = 0;
-    // printf("%d\n", k++);
-    // printf("%d\n", (k++));
-    int tk1, tk2;
-    tk1 = k1++;
-    tk2 = (k2++);
-    cout << tk1 << endl;
-    cout << tk2 << endl;
+    int cnt = 0, flag = 0;
+    double count = 0;
+    struct person p;
+    scanf("%d", &p.n);
+    for (int i = 0; i < p.n; i++) {
+        scanf(" %c", &p.a);
+        if (p.a == 'C') {
+            scanf("%s", p.arr);
+            flag++;
+        } else if (p.a == 'N') {
+            scanf("%d", &p.b);
+            count += p.b;
+        }
+        // printf("%c %s flag=%d\n", p.a, p.arr, flag);
+    }
+    printf("%d %1.lf\n", flag, count / (p.n - flag));
+
     return 0;
 }
