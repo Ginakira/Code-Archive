@@ -3,6 +3,7 @@
 #include <vector>
 using namespace std;
 
+// 并查集优先合并权值小的边，如果起点终点连通则停止
 class UnionFind {
    private:
     vector<int> father;
