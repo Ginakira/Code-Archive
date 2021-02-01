@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 
+// 在中序中找根，根据下标计算左子树有多少个节点，右子树有多少个节点
 struct TreeNode {
     int val;
     TreeNode *left;
