@@ -1,7 +1,9 @@
 // LeetCode 1423 可获得的最大点数
-#include <vector>
 #include <numeric>
+#include <vector>
 using namespace std;
+
+// 将题看作是从卡牌中删除n - k个元素使得剩余元素最大 滑动窗口
 class Solution {
    public:
     int maxScore(vector<int>& cardPoints, int k) {
