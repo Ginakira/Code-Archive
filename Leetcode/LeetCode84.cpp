@@ -1,5 +1,5 @@
 // 柱状图中最大的矩形
-#include <algorithm>
+#include <stack>
 #include <vector>
 using namespace std;
 
@@ -34,6 +34,46 @@ class Solution {
         int ans = 0;
         for (int i = 1; i <= n; ++i) {
             ans = max(ans, h[i] * (r[i] - l[i] - 1));
+        }
+        return ans;
+    }
+};
+
+// C++容器
+class Solution2 {
+   public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n = heights.size();
+        heights.insert(heights.begin(), -1);
+        heights.emplace_back(-1);
+        vector<int> left(n + 2), right(n + 2);
+        stack<int> normal_stk, reverse_stk;
+        // Build decreasing stack, from left to right
+        normal_stk.push(0);
+        for (int i = 1; i <= n; ++i) {
+            while (!normal_stk.empty() &&
+                   heights[i] <= heights[normal_stk.top()]) {
+                normal_stk.pop();
+            }
+            // The first lower height on its left
+            left[i] = normal_stk.top();
+            normal_stk.push(i);
+        }
+        // Build decreasing stack, from right to left
+        reverse_stk.push(n + 1);
+        for (int i = n; i > 0; --i) {
+            while (!reverse_stk.empty() &&
+                   heights[i] <= heights[reverse_stk.top()]) {
+                reverse_stk.pop();
+            }
+            // The first lower height on its right
+            right[i] = reverse_stk.top();
+            reverse_stk.push(i);
+        }
+        // Calculate final answer
+        int ans = 0;
+        for (int i = 1; i <= n; ++i) {
+            ans = max(ans, (right[i] - left[i] - 1) * heights[i]);
         }
         return ans;
     }
