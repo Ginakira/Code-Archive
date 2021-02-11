@@ -1,4 +1,5 @@
 // 数据流中的第K大元素
+#include <cstdlib>
 #include <queue>
 #include <set>
 #include <vector>
@@ -8,20 +9,25 @@ using namespace std;
 //优先队列的尺寸始终保持为k 这样队首元素就正好是第k大的元素
 class KthLargest {
    public:
-    int size_k;
-    priority_queue<int, vector<int>, greater<int>> q;
-    KthLargest(int k, vector<int> &nums) {
-        size_k = k;
-        for (auto &i : nums) {
-            add(i);
+    KthLargest(int _k, vector<int> &nums) : k(_k) {
+        for (const int &num : nums) {
+            this->add(num);
         }
     }
 
     int add(int val) {
-        q.push(val);
-        if (q.size() > size_k) q.pop();
-        return q.top();
+        if (heap.size() < k || val > heap.top()) {
+            heap.push(val);
+        }
+        if (heap.size() > k) {
+            heap.pop();
+        }
+        return heap.top();
     }
+
+   private:
+    int k;
+    priority_queue<int, vector<int>, greater<int>> heap;
 };
 
 //解法2: 使用STL-set中的multiset，自动维护一个递增的序列
