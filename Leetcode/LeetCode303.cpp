@@ -4,19 +4,19 @@ using namespace std;
 
 // 前缀和
 class NumArray {
-   private:
-    vector<int> prefixSum{0};
-
    public:
     NumArray(vector<int>& nums) {
-        int sum = 0;
-        for (int& num : nums) {
-            sum += num;
-            prefixSum.emplace_back(sum);
+        int n = nums.size();
+        pre_sum.resize(n + 1, 0);
+        for (int i = 0; i < n; ++i) {
+            pre_sum[i + 1] = pre_sum[i] + nums[i];
         }
     }
 
-    int sumRange(int i, int j) { return prefixSum[j + 1] - prefixSum[i]; }
+    int sumRange(int i, int j) { return pre_sum[j + 1] - pre_sum[i]; }
+
+   private:
+    vector<int> pre_sum;
 };
 
 /**
