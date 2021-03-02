@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2021/02/19 20:43:38
+    Created Time: 2021/03/01 19:30:59
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -12,19 +12,10 @@
 #include <vector>
 using namespace std;
 
-class Base {
-   public:
-    void foo(int a) { cout << "Base Functin: int" << endl; }
-    void foo(int a, double b) { cout << "Base Function: int, double" << endl; }
-};
-
-class Sub : public Base {
-   public:
-    void foo(int a) { cout << "Sub Function: int" << endl; }
-};
-
 int main() {
-    Sub obj;
-    obj.foo(2);
+    int foo(int, int);
+    foo(1, 2);
     return 0;
 }
+
+int foo(int x, int y) { return x + y; }
