@@ -1,4 +1,5 @@
 // 用栈实现队列
+#include <cstdlib>
 #include <stack>
 using namespace std;
 

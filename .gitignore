@@ -9,7 +9,7 @@ UniversityCourses/
 hexo-Blog/
 FlutterDev/
 MSP/
-Qt5/
+Qt5.15.2/
 MachineLearning/venv/
 
 *.out
