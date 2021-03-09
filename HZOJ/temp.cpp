@@ -3,7 +3,7 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2021/03/04 20:39:12
+    Created Time: 2021/03/09 12:52:39
 ************************************************************/
 #include <algorithm>
 #include <cmath>
@@ -13,8 +13,16 @@
 using namespace std;
 
 int main() {
-    string s = "hey";
-    string new_s(s, 0, 5);
-    cout << new_s << endl;
+    int x = 1, a = 0, b = 0;
+    switch (x) {
+        case 0:
+            b++;
+        case 1:
+            a++;
+            break;
+        case 2:
+            a++, b++;
+    }
+    cout << a << ' ' << b << endl;
     return 0;
 }

@@ -19,3 +19,19 @@ class Solution {
         return ret;
     }
 };
+
+// 直接使用string代替栈
+class Solution2 {
+   public:
+    string removeDuplicates(string S) {
+        string ret;
+        for (char &c : S) {
+            if (ret.size() && ret.back() == c) {
+                ret.pop_back();
+                continue;
+            }
+            ret.push_back(c);
+        }
+        return ret;
+    }
+};
