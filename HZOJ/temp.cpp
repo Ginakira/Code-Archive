@@ -1,22 +1,20 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2021/03/09 20:50:39
-************************************************************/
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
 int main() {
-    int a = 1, b = 1;
-    a = a ^ b;
-    b = a ^ b;
-    a = a ^ b;
-    cout << a << ' ' << b << endl;
+    int pid;
+    for (int i = 1; i <= 5; i++) {
+        if ((pid = fork()) < 0) perror("fork");
+        if (pid == 0) {
+            printf("I'm a child\n");
+            return 0;
+        }
+    }
+    // wait(NULL);
+    for (int i = 0; i < 5; ++i) {
+        wait(NULL);
+    }
+    printf("I'm parent\n");
     return 0;
 }
