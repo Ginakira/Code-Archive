@@ -1,20 +1,29 @@
-#include <stdio.h>
-#include <sys/wait.h>
-#include <unistd.h>
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2021/03/22 10:52:06
+************************************************************/
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+template <int n>
+struct Sum {
+    static const int SUM;
+};
+
+template <int n>
+const int Sum<n>::SUM = n + Sum<n - 1>::SUM;
+
+template <>
+const int Sum<1>::SUM = 1;
 
 int main() {
-    int pid;
-    for (int i = 1; i <= 5; i++) {
-        if ((pid = fork()) < 0) perror("fork");
-        if (pid == 0) {
-            printf("I'm a child\n");
-            return 0;
-        }
-    }
-    // wait(NULL);
-    for (int i = 0; i < 5; ++i) {
-        wait(NULL);
-    }
-    printf("I'm parent\n");
+    cout << Sum<100>::SUM << endl;
     return 0;
 }

@@ -6,31 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QApplication
-qapplication.h
-/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtCore.framework/Headers/QProcess
+qprocess.h
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtCore.framework/Headers/qprocess.h
+
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtCore.framework/Headers/qprocess.h
+QtCore/qiodevice.h
+-
+QtCore/qstringlist.h
+-
+QtCore/qshareddata.h
+-
+functional
+-
 
 /Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QMainWindow
 qmainwindow.h
 /Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h
 
-/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
-QtWidgets/qtwidgetsglobal.h
--
-QtCore/qcoreapplication.h
--
-QtGui/qwindowdefs.h
--
-QtCore/qpoint.h
--
-QtCore/qsize.h
--
-QtGui/qcursor.h
--
-QtWidgets/qdesktopwidget.h
--
-QtGui/qguiapplication.h
--
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/QMessageBox
+qmessagebox.h
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h
 
 /Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h
 QtWidgets/qtwidgetsglobal.h
@@ -40,46 +36,42 @@ QtWidgets/qwidget.h
 QtWidgets/qtabwidget.h
 -
 
-/Users/sakata/Documents/Code/QtProjects/Toolman/main.cpp
-mainwindow.h
-/Users/sakata/Documents/Code/QtProjects/Toolman/mainwindow.h
-QApplication
+/Users/sakata/Documents/Code/Qt5.15.2/5.15.2/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h
+QtWidgets/qtwidgetsglobal.h
+-
+QtWidgets/qdialog.h
 -
 
 /Users/sakata/Documents/Code/QtProjects/Toolman/mainwindow.cpp
 mainwindow.h
 /Users/sakata/Documents/Code/QtProjects/Toolman/mainwindow.h
+QMessageBox
+-
 ./ui_mainwindow.h
 /Users/sakata/Documents/Code/QtProjects/Toolman/ui_mainwindow.h
 
 /Users/sakata/Documents/Code/QtProjects/Toolman/mainwindow.h
 QMainWindow
 -
-
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/Toolman_autogen/EWIEGA46WW/moc_mainwindow.cpp
-memory
+QProcess
 -
-../../../Toolman/mainwindow.h
-/Users/sakata/Documents/Code/QtProjects/Toolman/mainwindow.h
-QtCore/qbytearray.h
--
-QtCore/qmetatype.h
--
-
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/Toolman_autogen/mocs_compilation.cpp
-EWIEGA46WW/moc_mainwindow.cpp
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/Toolman_autogen/EWIEGA46WW/moc_mainwindow.cpp
 
 Toolman_autogen/include/ui_mainwindow.h
 QtCore/QVariant
 -
 QtWidgets/QApplication
 -
+QtWidgets/QHBoxLayout
+-
+QtWidgets/QLineEdit
+-
 QtWidgets/QMainWindow
 -
-QtWidgets/QMenuBar
+QtWidgets/QPushButton
 -
-QtWidgets/QStatusBar
+QtWidgets/QTextBrowser
+-
+QtWidgets/QVBoxLayout
 -
 QtWidgets/QWidget
 -
