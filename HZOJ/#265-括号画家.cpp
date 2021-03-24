@@ -19,6 +19,7 @@ unordered_map<char, char> match = {{'[', ']'}, {'(', ')'}, {'{', '}'}};
 inline bool is_right(char c) { return c == ']' || c == ')' || c == '}'; }
 
 int main() {
-    
+    int n;
+    cin >> n;
     return 0;
 }
