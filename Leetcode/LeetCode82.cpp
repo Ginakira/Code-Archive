@@ -6,6 +6,7 @@ struct ListNode {
     int val;
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
 };
 
 // 解法1: 先遍历一遍 使用哈希map计数 然后使用通常方法删除重复节点 12ms
@@ -51,5 +52,27 @@ class Solution2 {
             }
         }
         return dummy->next;
+    }
+};
+
+class Solution3 {
+   public:
+    ListNode *deleteDuplicates(ListNode *head) {
+        if (head == nullptr) return nullptr;
+        ListNode dummy(0, head);
+        ListNode *d_node = &dummy, *cur = d_node;
+        while (cur->next != nullptr && cur->next->next != nullptr) {
+            if (cur->next->val == cur->next->next->val) {
+                int target = cur->next->val;
+                while (cur->next != nullptr && cur->next->val == target) {
+                    ListNode *d_node = cur->next;
+                    cur->next = cur->next->next;
+                    delete d_node;
+                }
+            } else {
+                cur = cur->next;
+            }
+        }
+        return d_node->next;
     }
 };
