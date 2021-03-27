@@ -1,5 +1,4 @@
 // LeetCode 61 旋转链表
-
 struct ListNode {
     int val;
     ListNode* next;
