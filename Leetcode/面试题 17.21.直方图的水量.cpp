@@ -42,3 +42,25 @@ class Solution2 {
         return ans;
     }
 };
+
+// 双指针
+class Solution3 {
+   public:
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int left = 0, right = n - 1;
+        int ans = 0, left_max = 0, right_max = 0;
+        while (left < right) {
+            left_max = max(left_max, height[left]);
+            right_max = max(right_max, height[right]);
+            if (height[left] < height[right]) {
+                ans += left_max - height[left];
+                ++left;
+            } else {
+                ans += right_max - height[right];
+                --right;
+            }
+        }
+        return ans;
+    }
+};
