@@ -1,26 +1,33 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2021/03/28 22:42:16
-************************************************************/
-#include <algorithm>
-#include <cmath>
+/*************************************************************************
+        > File Name: 2.cpp
+        > Author: wangjianduo
+        > Mail: 448000069@qq.com
+        > Created Time: 2021年04月02日 星期五 12时33分54秒
+ ************************************************************************/
+
+#include <cstdio>
 #include <iostream>
+#include <queue>
 #include <string>
-#include <vector>
 using namespace std;
 
-class refClass {
-   private:
-    double &ref;
-
-   public:
-    refClass(double var) : ref(var) {}
-};
+queue<int> q;
+string s;
+long long cnt = 1, ans;
 
 int main() {
-    cout << sizeof(refClass) << endl;
+    while (cin >> s) {
+        if (s == "push") {
+            int n;
+            cin >> n;
+            q.push(n);
+        }
+        if (s == "pop") {
+            ans += q.front() * cnt;
+            cnt++;
+            q.pop();
+        }
+    }
+    cout << ans << endl;
     return 0;
 }
