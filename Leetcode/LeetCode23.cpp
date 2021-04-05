@@ -6,6 +6,7 @@ using namespace std;
 struct ListNode {
     int val;
     ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(NULL) {}
 };
 
@@ -33,24 +34,42 @@ class Solution {
 };
 
 // 使用优先队列将节点入队 重载比较规则 所有头结点入队后构造链表 并将其next入队
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution2 {
-   public:
-    struct cmp {
-        bool operator()(ListNode *a, ListNode *b) { return a->val > b->val; }
+   private:
+    struct Status {
+        int val;
+        ListNode *ptr;
+        bool operator<(const Status &rhs) const { return val > rhs.val; }
     };
+
+   public:
     ListNode *mergeKLists(vector<ListNode *> &lists) {
-        if (lists.size() == 0) return nullptr;
-        priority_queue<ListNode *, vector<ListNode *>, cmp> q;
-        ListNode *ret = new ListNode(-1), *p = ret;
-        for (auto &i : lists) {
-            if (i) q.push(i);
+        priority_queue<Status> q;
+        for (auto node : lists) {
+            if (node != nullptr) {
+                q.push({node->val, node});
+            }
         }
+        ListNode head, *current = &head;
         while (!q.empty()) {
-            ListNode *tmp = q.top();
-            p->next = tmp, p = p->next;
-            if (tmp->next) q.push(tmp->next);
+            auto f = q.top();
             q.pop();
+            current->next = f.ptr;
+            current = current->next;
+            if (f.ptr->next != nullptr) {
+                q.push({f.ptr->next->val, f.ptr->next});
+            }
         }
-        return ret->next;
+        return head.next;
     }
 };
