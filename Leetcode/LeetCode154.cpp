@@ -15,7 +15,7 @@ class Solution {
                 left = mid + 1;
             } else {
                 // 如果nums[mid]和nums[right]相等，则可以忽略nums[right]，右边界收缩一位
-                // 因为哪怕nums[right]就是答案，也有nums[mid]“作为备用”留在搜索区域内
+                // 因为哪怕nums[right]就是答案，也有nums[mid] “作为备用”留在搜索区域内
                 --right;
             }
         }
