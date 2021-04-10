@@ -1,5 +1,6 @@
 // LeetCode 263 丑数
-
+#include <iostream>
+using namespace std;
 class Solution {
    public:
     bool isUgly(int num) {
