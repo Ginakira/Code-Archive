@@ -1,4 +1,4 @@
-// LeetCode 263 丑数
+// LeetCode 263  丑数
 #include <iostream>
 using namespace std;
 class Solution {
