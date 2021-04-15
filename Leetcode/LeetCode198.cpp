@@ -19,3 +19,17 @@ class Solution {
         return ans;
     }
 };
+
+class Solution2 {
+   public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        int ans = 0, pre = 0, ppre = 0;
+        pre = nums[0], ans = pre;
+        for (int i = 1; i < n; ++i) {
+            ans = max(nums[i] + ppre, pre);
+            ppre = pre, pre = ans;
+        }
+        return ans;
+    }
+};
