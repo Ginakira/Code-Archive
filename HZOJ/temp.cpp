@@ -1,33 +1,32 @@
-/*************************************************************************
-        > File Name: 2.cpp
-        > Author: wangjianduo
-        > Mail: 448000069@qq.com
-        > Created Time: 2021年04月02日 星期五 12时33分54秒
- ************************************************************************/
-
-#include <cstdio>
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2021/04/17 22:20:13
+************************************************************/
+#include <algorithm>
+#include <cmath>
 #include <iostream>
-#include <queue>
 #include <string>
+#include <vector>
 using namespace std;
 
-queue<int> q;
-string s;
-long long cnt = 1, ans;
+typedef struct {
+    int a[2];
+    double d;
+} struct_t;
+
+double fun(int i) {
+    volatile struct_t s;
+    s.d = 3.14;
+    s.a[i] = 1073741824;
+    return s.d;
+}
 
 int main() {
-    while (cin >> s) {
-        if (s == "push") {
-            int n;
-            cin >> n;
-            q.push(n);
-        }
-        if (s == "pop") {
-            ans += q.front() * cnt;
-            cnt++;
-            q.pop();
-        }
+    for (int i = 0; i < 10; ++i) {
+        printf("fun(%d) = %lf\n", i, fun(i));
     }
-    cout << ans << endl;
     return 0;
 }
