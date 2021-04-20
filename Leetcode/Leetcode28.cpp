@@ -24,19 +24,22 @@ class Solution {
     }
 };
 
-// 朴素匹配
+// 双指针朴素匹配
 class Solution2 {
    public:
     int strStr(string haystack, string needle) {
-        if (needle.empty()) return 0;
-        int pa = 0, pb = 0;
-        while (pa < haystack.size() && pb < needle.size()) {
-            if (haystack[pa] != needle[pb]) {
-                pa -= pb - 1, pb = 0;
+        int haystack_len = haystack.size(), needle_len = needle.size();
+        if (needle_len == 0) return 0;
+        int haystack_p = 0, needle_p = 0;
+        while (haystack_p < haystack_len && needle_p < needle_len) {
+            if (haystack[haystack_p] != needle[needle_p]) {
+                haystack_p -= needle_p - 1;
+                needle_p = 0;
                 continue;
             }
-            ++pa, ++pb;
+            ++haystack_p;
+            ++needle_p;
         }
-        return pb == needle.size() ? pa - pb : -1;
+        return needle_p == needle_len ? haystack_p - needle_p : -1;
     }
 };
