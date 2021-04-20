@@ -9,13 +9,13 @@ class Solution {
         int ind[256];
         for (int i = 0; i < 256; ++i) ind[i] = needle.size() + 1;
         for (int i = 0; needle[i]; ++i) {
-            ind[needle[i]] = needle.size() - i;
+            ind[(int)needle[i]] = needle.size() - i;
         }
         for (int i = 0, I = haystack.size() - needle.size(); i <= I;) {
             int j = 0;
             for (; needle[j]; ++j) {
                 if (haystack[i + j] == needle[j]) continue;
-                i += ind[haystack[i + needle.size()]];
+                i += ind[(int)haystack[i + needle.size()]];
                 break;
             }
             if (needle[j] == 0) return i;
