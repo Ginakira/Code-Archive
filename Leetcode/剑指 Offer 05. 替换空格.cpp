@@ -42,3 +42,16 @@ class Solution2 {
         return s;
     }
 };
+
+// STL
+class Solution3 {
+   public:
+    string replaceSpace(string s) {
+        auto pos = s.find(' ');
+        while (pos != string::npos) {
+            s.replace(pos, 1, "%20");
+            pos = s.find(' ');
+        }
+        return s;
+    }
+};
