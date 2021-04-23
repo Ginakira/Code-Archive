@@ -1,10 +1,48 @@
 // LeetCode 363 矩形区域不超过K的最大数值和
 #include <climits>
+#include <set>
 #include <vector>
 using namespace std;
 
-// 二维前缀和预处理 388ms
+// 二分 + 集合
+// 通常做法是我们枚举上下左右边界，但这样会造成过多的重复计算
+// 所以我们只枚举矩形的上下边界，并计算出该边界内每列的元素和
+// 则原问题转换成了如下一维问题：
+// 给定一个整数数组和一个整数 k，计算该数组的最大区间和，要求区间和不超过 k
+// 这样我们在枚举上下边界的时候，可以维护每列的元素和col_sum
+// 我们要做的是在col_sum上寻找一个满足要求（小于等于k）的最大的区间和
+// 此时可以使用前缀和来进行查找Sr-Sl的满足要求的最大值
+// 但因为元素中可能含有负值，前缀和不一定是递增的，所以我们需要枚举右边界Sr，再去已经处理过的前缀和中满足要求的最小的Sl（因为要保证Sr-Sl尽可能地大）
+// 要求为Sr-Sl<=k，可化为Sl>=Sr-k，所以要找第一个值大于或等于Sr-k的Sl，保证Sr-Sl尽可能大
 class Solution {
+   public:
+    int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
+        int ans = INT_MIN;
+        int n = matrix.size(), m = matrix[0].size();
+        for (int i = 0; i < n; ++i) {  // 枚举上边界
+            vector<int> col_sum(m);
+            for (int j = i; j < n; ++j) {      // 枚举下边界
+                for (int k = 0; k < m; ++k) {  // 更新每列元素和
+                    col_sum[k] += matrix[j][k];
+                }
+                int pre_sum = 0;
+                set<int> pre_sum_set{0};
+                for (int& num : col_sum) {
+                    pre_sum += num;
+                    auto sl = pre_sum_set.lower_bound(pre_sum - k);
+                    if (sl != pre_sum_set.end()) {
+                        ans = max(ans, pre_sum - *sl);
+                    }
+                    pre_sum_set.insert(pre_sum);
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+// 二维前缀和预处理 388ms 使用vector 1500ms
+class Solution2 {
    public:
     int maxSumSubmatrix(vector<vector<int>>& matrix, int k) {
         int sum[110][110];
