@@ -10,6 +10,7 @@ class Solution {
     bool check(vector<int> &weights, int days, int capacity) {
         int current_days = 1, today_remain = capacity;
         for (int &weight : weights) {
+            if (current_days > days) return false;
             if (today_remain < weight) {
                 ++current_days;
                 today_remain = capacity;
