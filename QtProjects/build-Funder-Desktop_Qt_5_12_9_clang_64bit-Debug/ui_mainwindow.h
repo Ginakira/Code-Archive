@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.12.9
+** Created by: Qt User Interface Compiler version 6.0.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -123,14 +123,14 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", nullptr));
-        fundStatLabel->setText(QApplication::translate("MainWindow", "TextLabel", nullptr));
-        moveUpButton->setText(QApplication::translate("MainWindow", "\344\270\212\347\247\273", nullptr));
-        pushButton_6->setText(QApplication::translate("MainWindow", "\344\270\213\347\247\273", nullptr));
-        addButton->setText(QApplication::translate("MainWindow", "\346\226\260\345\242\236", nullptr));
-        editButton->setText(QApplication::translate("MainWindow", "\344\277\256\346\224\271", nullptr));
-        deleteButton->setText(QApplication::translate("MainWindow", "\345\210\240\351\231\244", nullptr));
-        refreshButton->setText(QApplication::translate("MainWindow", "\345\210\267\346\226\260\346\225\260\346\215\256", nullptr));
+        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
+        fundStatLabel->setText(QCoreApplication::translate("MainWindow", "TextLabel", nullptr));
+        moveUpButton->setText(QCoreApplication::translate("MainWindow", "\344\270\212\347\247\273", nullptr));
+        pushButton_6->setText(QCoreApplication::translate("MainWindow", "\344\270\213\347\247\273", nullptr));
+        addButton->setText(QCoreApplication::translate("MainWindow", "\346\226\260\345\242\236", nullptr));
+        editButton->setText(QCoreApplication::translate("MainWindow", "\344\277\256\346\224\271", nullptr));
+        deleteButton->setText(QCoreApplication::translate("MainWindow", "\345\210\240\351\231\244", nullptr));
+        refreshButton->setText(QCoreApplication::translate("MainWindow", "\345\210\267\346\226\260\346\225\260\346\215\256", nullptr));
     } // retranslateUi
 
 };

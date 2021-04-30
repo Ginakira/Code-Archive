@@ -1,4 +1,0 @@
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/CMakeFiles/rebuild_cache.dir
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/CMakeFiles/edit_cache.dir
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/CMakeFiles/Toolman.dir
-/Users/sakata/Documents/Code/QtProjects/build-Toolman-Desktop_Qt_5_15_2_clang_64bit-Debug/CMakeFiles/Toolman_autogen.dir

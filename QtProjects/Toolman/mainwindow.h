@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <QProcess>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,16 +16,9 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
    private slots:
-    void on_readoutput();
-
-    void on_readerror();
-
-    void on_pushButton_clicked();
-
-    void on_lineEdit_returnPressed();
+    void on_urlLineEdit_textChanged(const QString &text);
 
    private:
     Ui::MainWindow *ui;
-    QProcess *cmd;
 };
 #endif // MAINWINDOW_H

@@ -15,13 +15,12 @@ MainWindow::MainWindow(QWidget *parent)
 void MainWindow::initStatisticLabel() {
     NetWorker *netWorker = NetWorker::instance();
 
-    QRegExp rxlen("^jsonpgz\\((.*)\\)");
+    QRegularExpression rxlen("^jsonpgz\\((.*)\\)");
 
     netWorker->get(QString("http://fundgz.1234567.com.cn/js/161725.js"));
     connect(netWorker, &NetWorker::finished, this, [=](QNetworkReply *reply) {
         auto res = reply->readAll();
-        rxlen.indexIn(res);
-        auto json = rxlen.cap(1);
+        auto json = rxlen.match(res).captured(1);
         QJsonDocument jsonDocument = QJsonDocument::fromJson(json.toUtf8());
         QVariantMap result = jsonDocument.toVariant().toMap();
 
