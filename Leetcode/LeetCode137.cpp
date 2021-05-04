@@ -4,7 +4,7 @@
 #include <vector>
 using namespace std;
 
-// map 8ms 9.8MB
+// map
 class Solution {
    public:
     int singleNumber(vector<int>& nums) {
@@ -19,7 +19,7 @@ class Solution {
     }
 };
 
-// 分别确定每一个二进制位 8ms 9.2MB
+// 分别确定每一个二进制位
 class Solution2 {
    public:
     int singleNumber(vector<int>& nums) {
