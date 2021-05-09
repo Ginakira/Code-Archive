@@ -1,29 +1,26 @@
+#include <algorithm>
 #include <iostream>
-#include <string>
+#include <vector>
 using namespace std;
 
-string conversion(int m, string a, int n) {
-    int l = a.length(), k;
-    string b = "";
-    for (int i = 0; i < l;) {  //塞入数字
-        k = 0;
-        //求商求余
-        for (int j = i; j < l; j++) {
-            int t = (k * m + a[j] - '0') % n;
-            a[j] = (k * m + a[j] - '0') / n + '0';
-            k = t;
-        }
-        b += char(k + '0');
-        while (a[i] == '0') i++;
-    }
-    reverse(b.begin(), b.end());  //反过来
-    return b;
-}
 int main() {
-    string a, b;
-    while (cin >> a) {
-        b = conversion(10, a, 2);
-        cout << b << endl;
+    vector<int> value(26);
+    for (int i = 0; i < 26; ++i) {
+        cin >> value[i];
     }
+    string s, t;
+    cin >> s >> t;
+    int s_len = s.size(), t_len = t.size();
+    vector<vector<int>> dp(s_len, vector<int>(t_len));
+    for (int i = 0; i < s_len; ++i) {
+        for (int j = 0; j < t_len; ++j) {
+            if (s[i] == t[j]) {
+                dp[i][j] = 2 * value[s[i] - 'a'];
+            } else if (i >= 1 && j >= 1) {
+                dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+    }
+    cout << dp[s_len - 1][t_len - 1] << endl;
     return 0;
 }
