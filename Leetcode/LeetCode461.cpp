@@ -12,3 +12,16 @@ class Solution {
         return cnt;
     }
 };
+
+// Brian Kernighan 算法
+class Solution2 {
+   public:
+    int hammingDistance(int x, int y) {
+        int result = x ^ y, distance = 0;
+        while (result) {
+            result &= result - 1;
+            ++distance;
+        }
+        return distance;
+    }
+};
