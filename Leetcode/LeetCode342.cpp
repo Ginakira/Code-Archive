@@ -11,7 +11,7 @@ class Solution {
 };
 
 // 位运算
-class Solution2 {
+class Solution3 {
    public:
     bool isPowerOfFour(int n) {
         return (n > 0) && !(n & (n - 1)) && (n & 0x55555555);
