@@ -29,8 +29,8 @@ class Solution {
 class Solution2 {
    public:
     ListNode *removeElements(ListNode *head, int val) {
-        ListNode *yummy = new ListNode(0), *p;
-        yummy->next = head, p = yummy;
+        ListNode *dummy = new ListNode(0), *p;
+        dummy->next = head, p = dummy;
         while (p->next) {
             if (p->next->val == val) {
                 ListNode *delNode = p->next;
@@ -40,6 +40,6 @@ class Solution2 {
                 p = p->next;
             }
         }
-        return yummy->next;
+        return dummy->next;
     }
 };
