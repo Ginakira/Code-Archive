@@ -7,15 +7,19 @@ using namespace std;
 class Solution {
    public:
     int lastStoneWeight(vector<int>& stones) {
-        priority_queue<int> heap;
-        for (const int& stone : stones) heap.push(stone);
-        while (heap.size() > 1) {
-            int x, y;
-            y = heap.top(), heap.pop();
-            x = heap.top(), heap.pop();
-            if (x != y) heap.push(y - x);
+        priority_queue<int> q;
+        for (int stone : stones) {
+            q.push(stone);
         }
-        return heap.empty() ? 0 : heap.top();
+        while (q.size() > 1) {
+            int stone_a = q.top();
+            q.pop();
+            int stone_b = q.top();
+            q.pop();
+            if (stone_a != stone_b) {
+                q.push(stone_a - stone_b);
+            }
+        }
+        return (q.empty() ? 0 : q.top());
     }
 };
-
