@@ -27,3 +27,21 @@ class Solution {
         return ans == INT_MAX ? -1 : ans;
     }
 };
+
+// 动态规划 dp[i]为总金额为i时的方案数，计算每个状态时遍历所有硬币为末尾的情况取最小值
+class Solution2 {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        int n = coins.size();
+        vector<int> dp(amount + 1, amount + 1);
+        dp[0] = 0;
+        for (int i = 1; i <= amount; ++i) {
+            for (int j = 0; j < n ; ++j) {
+                if (coins[j] <= i) {
+                    dp[i] = min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+};
