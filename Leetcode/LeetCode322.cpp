@@ -28,7 +28,7 @@ class Solution {
     }
 };
 
-// 动态规划 dp[i]为总金额为i时的方案数，计算每个状态时遍历所有硬币为末尾的情况取最小值
+// 动态规划 dp[i]为总金额为i时的最少硬币个数，计算每个状态时遍历所有硬币为末尾的情况取最小值
 class Solution2 {
 public:
     int coinChange(vector<int>& coins, int amount) {
