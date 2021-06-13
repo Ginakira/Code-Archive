@@ -11,12 +11,15 @@ class Solution {
     int guessNumber(int n) {
         int left = 1, right = n, mid;
         while (left < right) {
-            mid = left + ((right - left) >> 1);
-            if (!guess(mid)) return mid;
-            if (guess(mid) == 1)
+            mid = left + (right - left) / 2;
+            int ret = guess(mid);
+            if (ret == 0) {
+                return mid;
+            } else if (ret == 1) {
                 left = mid + 1;
-            else
+            } else {
                 right = mid - 1;
+            }
         }
         return left;
     }
