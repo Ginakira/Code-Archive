@@ -28,10 +28,11 @@ class Solution2 {
         while (left < right) {
             // OVERFLOW: mid = (left + right) >> 1;
             mid = left + ((right - left) >> 1);
-            if (isBadVersion(mid))
+            if (isBadVersion(mid)) {
                 right = mid;
-            else
+            } else {
                 left = mid + 1;
+            }
         }
         return left;
     }
