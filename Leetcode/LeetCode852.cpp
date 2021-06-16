@@ -14,7 +14,7 @@ class Solution {
     }
 };
 
-// O(log n) 二分
+// O(logN) 二分
 class Solution2 {
    public:
     int peakIndexInMountainArray(vector<int>& arr) {
