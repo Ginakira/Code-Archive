@@ -8,7 +8,7 @@
 using namespace std;
 
 // 动态规划 区间DP
-// dp[i][j]代表[i,j]区间的石子中先手与后手分数的最大差值
+// dp[i][j]代表[i,j]区间的石子中先手与后手分数最大差值
 class Solution {
    public:
     bool stoneGame(vector<int>& piles) {
