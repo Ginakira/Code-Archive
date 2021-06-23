@@ -6,7 +6,7 @@
 #include <vector>
 using namespace std;
 
-// 枚举判断斜率 + 哈希表
+// 枚举 判断斜率 + 哈希表
 class Solution {
    public:
     int maxPoints(vector<vector<int>>& points) {
