@@ -19,3 +19,16 @@ class Solution {
         return s;
     }
 };
+
+// 看作是0-25的26进制，将1映射为0，2映射为1....，递归计算时余数应加回来
+class Solution2 {
+   public:
+    string convertToTitle(int columnNumber) {
+        --columnNumber;
+        if (columnNumber < 26) {
+            return string(1, 'A' + columnNumber);
+        }
+        return convertToTitle(columnNumber / 26) +
+               convertToTitle(columnNumber % 26 + 1);
+    }
+};
