@@ -32,7 +32,7 @@ public:
                 max_num = max(max_num, diff - (nums2[i] - vec[j - 1]));
             }
         }
-        // 计算过程中取模，所以最终可能max_num可能会大于sum，所以先加个MOD再取模
+        // 计算过程中取模，所以最终可能max_num可能会大于sum，所以先加个MOD再进行取模
         return (sum - max_num + MOD) % MOD;
     }
 };
