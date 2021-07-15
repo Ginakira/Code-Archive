@@ -16,3 +16,10 @@ class Solution {
     }
 };
 
+// STL
+class Solution2{
+public:
+    int search(vector<int>& nums, int target) {
+        return count(nums.begin(), nums.end(), target);
+    }
+};
