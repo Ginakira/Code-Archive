@@ -1,4 +1,5 @@
 // 剑指 Offer 53 - I.在排序数组中查找数字 I
+#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -17,8 +18,8 @@ class Solution {
 };
 
 // STL
-class Solution2{
-public:
+class Solution2 {
+   public:
     int search(vector<int>& nums, int target) {
         return count(nums.begin(), nums.end(), target);
     }

@@ -3,22 +3,20 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2021/06/11 17:27:16
+    Created Time: 2021/07/16 09:42:27
 ************************************************************/
 #include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 using namespace std;
 
-template <typename T = int>
-class Foo {
-   public:
-    vector<T> data;
-};
-
-int main() { 
-    Foo f;
-    Foo<string> f2;
-    return 0; }
+int main() {
+    stringstream ss;
+    ss << 1 << " " << 2;
+    ss << 3;
+    cout << ss.str();
+    return 0;
+}
