@@ -5,39 +5,44 @@ using namespace std;
 
 // 暴力法 递归生成所有括号序列并判断有效
 class Solution {
-   public:
-    bool is_valid(const string &str) {
-        int match = 0;
-        for (char c : str) {
+   private:
+    vector<string> result;
+
+    bool check(const string &s) {
+        int cnt = 0;
+        for (char c : s) {
             if (c == '(') {
-                match++;
-            } else {
-                match--;
-                if (match < 0) return false;
+                ++cnt;
+            } else if (c == ')') {
+                --cnt;
             }
+            if (cnt < 0) return false;
         }
-        return match == 0;
+        return cnt == 0;
     }
 
-    void generate_brackets(string &current, int n, vector<string> &results) {
-        if (current.size() == n) {
-            if (is_valid(current)) results.push_back(current);
+    void backtrace(string &s, int n) {
+        if (s.size() == n * 2) {
+            if (check(s)) {
+                result.emplace_back(s);
+            }
             return;
         }
-        current += '(';
-        generate_brackets(current, n, results);
-        current.pop_back();
-        current += ')';
-        generate_brackets(current, n, results);
-        current.pop_back();
+        s.push_back('(');
+        backtrace(s, n);
+        s.pop_back();
+
+        s.push_back(')');
+        backtrace(s, n);
+        s.pop_back();
         return;
     }
 
+   public:
     vector<string> generateParenthesis(int n) {
-        vector<string> results;
-        string current = "";
-        generate_brackets(current, n << 1, results);
-        return results;
+        string s;
+        backtrace(s, n);
+        return result;
     }
 };
 
