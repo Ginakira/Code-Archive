@@ -48,18 +48,24 @@ class Solution {
 
 // 剪枝 + DFS
 class Solution2 {
-   public:
-    void dfs(string current, int l, int r, int n, vector<string> &results) {
-        if (r > l || l > n || r > n) return;
-        if (l == n && r == n) results.push_back(current);
-        dfs(current + '(', l + 1, r, n, results);
-        dfs(current + ')', l, r + 1, n, results);
+   private:
+    vector<string> result;
+
+    void dfs(string s, int left_used, int right_used, int n) {
+        if (right_used > left_used || left_used > n || right_used > n) {
+            return;
+        }
+        if (left_used == n && right_used == n) {
+            result.emplace_back(s);
+        }
+        dfs(s + "(", left_used + 1, right_used, n);
+        dfs(s + ")", left_used, right_used + 1, n);
         return;
     }
 
+   public:
     vector<string> generateParenthesis(int n) {
-        vector<string> results;
-        dfs("", 0, 0, n, results);
-        return results;
+        dfs("", 0, 0, n);
+        return result;
     }
 };
