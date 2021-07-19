@@ -33,7 +33,7 @@ class Solution2 {
         sort(nums.begin(), nums.end());
         long long total = 0;  // 窗口内数值变换成nums[r]需要的操作次数
         int ans = 1;          // 最高频次
-        int l = 0, r = 1, n = nums.size();
+        int l = 0, n = nums.size();
 
         for (int r = 1; r < n; ++r) {
             total += (long long)(nums[r] - nums[r - 1]) * (r - l);
