@@ -1,4 +1,4 @@
-// LeetCode 94 二叉树的中序遍历
+// LeetCode 144 二叉树的前序遍历
 
 #include <algorithm>
 #include <numeric>
@@ -19,16 +19,17 @@ struct TreeNode {
 
 class Solution {
    public:
-    vector<int> inorderTraversal(TreeNode *root) {
+    vector<int> preorderTraversal(TreeNode *root) {
         vector<int> result;
-
-        function<void(TreeNode *)> inorder = [&](TreeNode *root) -> void {
-            if (!root) return;
-            inorder(root->left);
+        function<void(TreeNode *)> preorder = [&](TreeNode *root) -> void {
+            if (root == nullptr) {
+                return;
+            }
             result.emplace_back(root->val);
-            inorder(root->right);
+            preorder(root->left);
+            preorder(root->right);
         };
-        inorder(root);
+        preorder(root);
         return result;
     }
 };
