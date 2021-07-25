@@ -25,7 +25,7 @@ class Solution {
     }
 };
 
-// 转化为最长严格上升子序列（超时），并进行二分优化，同LC300-S2
+// 转化为最长严格上升子序列（超时），并进行二分优化，同LC300-Solution2
 class Solution2 {
    public:
     int minOperations(vector<int>& target, vector<int>& arr) {
