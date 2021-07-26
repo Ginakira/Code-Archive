@@ -20,3 +20,35 @@ class Solution {
         return *max_element(dp.begin(), dp.end());
     }
 };
+
+// 解法2：二分优化 dp[i]代表长度为i的严格递增子序列末尾的数字是多少
+class Solution2 {
+   public:
+    int lengthOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        if (n == 0) return 0;
+
+        vector<int> dp(n + 1);
+        int len = 1;
+        dp[len] = nums[0];
+
+        for (int i = 1; i < n; ++i) {
+            if (nums[i] > dp[len]) {
+                dp[++len] = nums[i];
+            } else {
+                int left = 1, right = len, mid;
+                while (left < right) {
+                    mid = left + (right - left) / 2;
+                    if (dp[mid] >= nums[i]) {
+                        right = mid;
+                    } else {
+                        left = mid + 1;
+                    }
+                }
+                dp[left] = nums[i];
+            }
+        }
+
+        return len;
+    }
+};
