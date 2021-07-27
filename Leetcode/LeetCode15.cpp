@@ -3,34 +3,39 @@
 #include <vector>
 using namespace std;
 
-// 排序后使用双指针
+// 排序后使用双指针 固定第一位 转化为对第一位的两数之和
 class Solution {
    public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         int n = nums.size();
-        vector<vector<int>> ret;
+        if (n < 3) return {};
         sort(nums.begin(), nums.end());
+        vector<vector<int>> ans;
         for (int first = 0; first < n; ++first) {
             if (first > 0 && nums[first] == nums[first - 1]) {
                 continue;
             }
+            if (nums[first] > 0) continue;
+
+            int second = first + 1, third = n - 1;
             int target = -nums[first];
-            int third = n - 1;
-            for (int second = first + 1; second < n; ++second) {
-                if (second > first + 1 && nums[second] == nums[second - 1]) {
-                    continue;
-                }
-                while (second < third && nums[third] + nums[second] > target) {
+            while (second < third) {
+                int sum = nums[second] + nums[third];
+                if (sum < target) {
+                    ++second;
+                } else if (sum > target) {
                     --third;
-                }
-                if (second == third) {
-                    break;
-                }
-                if (nums[second] + nums[third] == target) {
-                    ret.push_back({nums[first], nums[second], nums[third]});
+                } else {
+                    ans.emplace_back(
+                        vector<int>{nums[first], nums[second], nums[third]});
+                    ++second, --third;
+                    while (second < third && nums[second] == nums[second - 1])
+                        ++second;
+                    while (second < third && nums[third] == nums[third + 1])
+                        --third;
                 }
             }
         }
-        return ret;
+        return ans;
     }
 };
