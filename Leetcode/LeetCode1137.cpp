@@ -22,3 +22,21 @@ class Solution {
    private:
     vector<int> memory;
 };
+
+// 滚动数组
+class Solution2 {
+   public:
+    int tribonacci(int n) {
+        int nums[3]{0, 1, 1};
+        if (n < 3) {
+            return nums[n];
+        }
+        for (int i = 3; i <= n; ++i) {
+            int num = nums[0] + nums[1] + nums[2];
+            nums[0] = nums[1];
+            nums[1] = nums[2];
+            nums[2] = num;
+        }
+        return nums[2];
+    }
+};
