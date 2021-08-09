@@ -49,3 +49,28 @@ class Solution2 {
 
     bool isValidBST(TreeNode *root) { return helper(root, LONG_MIN, LONG_MAX); }
 };
+
+// Solution3: 判断前驱节点和后继结点
+class Solution3 {
+   public:
+    bool isValidBST(TreeNode *root) {
+        if (root == nullptr) return true;
+        if (!isValidBST(root->left) || !isValidBST(root->right)) {
+            return false;
+        }
+
+        if (root->left) {
+            TreeNode *pre = root->left;
+            while (pre->right != nullptr) pre = pre->right;
+            if (pre->val >= root->val) return false;
+        }
+
+        if (root->right) {
+            TreeNode *next = root->right;
+            while (next->left != nullptr) next = next->left;
+            if (next->val <= root->val) return false;
+        }
+
+        return true;
+    }
+};
