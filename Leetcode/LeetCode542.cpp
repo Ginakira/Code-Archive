@@ -1,46 +1,41 @@
 // 每日一题 01矩阵
 #include <queue>
+#include <tuple>
 #include <vector>
 using namespace std;
 
 // 多源BFS
 class Solution {
-   private:
-    int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    struct Node {
-        int x, y, step;
-    };
-
    public:
-    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
-        queue<Node> q;
-        int rows = matrix.size(), cols = matrix[0].size();
-        vector<vector<int>> ans(rows, vector<int>(cols, 0));
-        vector<vector<bool>> vis(rows, vector<bool>(cols, 0));
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        const int dirs[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        int n = mat.size(), m = mat[0].size();
+        vector<vector<int>> result(n, vector<int>(m, 0));
+        vector<vector<int>> seen(n, vector<int>(m, 0));
+        queue<tuple<int, int, int>> q;
 
-        for (int i = 0; i < rows; ++i) {
-            for (int j = 0; j < cols; ++j) {
-                if (matrix[i][j]) continue;
-                q.push({i, j, 0});
-                vis[i][j] = true;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (mat[i][j] == 0) {
+                    q.emplace(i, j, 0);
+                    seen[i][j] = true;
+                }
             }
         }
 
-        Node temp;
         while (!q.empty()) {
-            temp = q.front();
+            auto [x, y, step] = q.front();
             q.pop();
-            int x = temp.x, y = temp.y, step = temp.step;
-            for (int i = 0; i < 4; ++i) {
-                int tx = x + dir[i][0], ty = y + dir[i][1];
-                if (tx < 0 || tx >= rows || ty < 0 || ty >= cols || vis[tx][ty])
+            for (auto& dir : dirs) {
+                int tx = x + dir[0], ty = y + dir[1];
+                if (tx < 0 || tx >= n || ty < 0 || ty >= m || seen[tx][ty]) {
                     continue;
-                q.push({tx, ty, step + 1});
-                ans[tx][ty] = step + 1;
-                vis[tx][ty] = true;
+                }
+                q.emplace(tx, ty, step + 1);
+                result[tx][ty] = step + 1;
+                seen[tx][ty] = true;
             }
         }
-
-        return ans;
+        return result;
     }
 };
