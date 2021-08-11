@@ -1,4 +1,5 @@
 // 剑指 Offer 06. 从尾到头打印链表
+#include <algorithm>
 #include <stack>
 #include <vector>
 using namespace std;
@@ -40,5 +41,19 @@ class Solution2 {
             stk.pop();
         }
         return ret;
+    }
+};
+
+// deque
+class Solution3 {
+   public:
+    vector<int> reversePrint(ListNode* head) {
+        deque<int> result;
+        ListNode* cur = head;
+        while (cur != nullptr) {
+            result.push_front(cur->val);
+            cur = cur->next;
+        }
+        return vector<int>(result.begin(), result.end());
     }
 };
