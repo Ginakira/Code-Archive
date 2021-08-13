@@ -8,15 +8,23 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
 using namespace std;
 
+template <typename T>
+bool foo(T arg) {
+    return true;
+}
+
+template <>
+bool foo(float arg) {
+    return false;
+}
+
 int main() {
-    stringstream ss;
-    ss << 1 << " " << 2;
-    ss << 3;
-    cout << ss.str();
+    cout << foo(1) << endl;
+    cout << foo(1.0f) << endl;
     return 0;
 }
