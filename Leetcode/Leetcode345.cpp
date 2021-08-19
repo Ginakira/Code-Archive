@@ -27,3 +27,25 @@ class Solution {
         return s;
     }
 };
+
+// 双指针
+class Solution2 {
+   public:
+    string reverseVowels(string s) {
+        int n = s.size();
+        auto is_vowel = [](char c) {
+            if (c >= 'A' && c <= 'Z') c += 32;
+            return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+        };
+
+        int left = 0, right = n - 1;
+        while (left < right) {
+            while (left < n && !is_vowel(s[left])) ++left;
+            while (right >= 0 && !is_vowel(s[right])) --right;
+            if (left >= right) break;
+            swap(s[left], s[right]);
+            ++left, --right;
+        }
+        return s;
+    }
+};
