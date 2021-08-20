@@ -21,3 +21,29 @@ class Solution {
         return s;
     }
 };
+
+// 不借助STL
+class Solution2 {
+   private:
+    void reverse_helper(string &s, int start, int end) {
+        if (start >= end) return;
+        while (start < end) {
+            swap(s[start], s[end]);
+            ++start, --end;
+        }
+    }
+
+   public:
+    string reverseStr(string s, int k) {
+        int n = s.size(), cur = 0;
+        while (cur < n) {
+            if (n - cur < k) {
+                reverse_helper(s, cur, n - 1);
+                break;
+            }
+            reverse_helper(s, cur, cur + k - 1);
+            cur += 2 * k;
+        }
+        return s;
+    }
+};
