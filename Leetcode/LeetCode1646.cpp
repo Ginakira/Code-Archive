@@ -1,0 +1,26 @@
+// LeetCode 1646 获取生成数组中的最大值
+
+#include <algorithm>
+#include <numeric>
+#include <string>
+#include <unordered_map>
+#include <vector>
+using namespace std;
+
+class Solution {
+   public:
+    int getMaximumGenerated(int n) {
+        if (n == 0) return 0;
+        vector<int> nums(n + 1);
+        nums[0] = 0, nums[1] = 1;
+        int max_num = 1;
+        for (int i = 1; i <= n / 2; ++i) {
+            nums[2 * i] = nums[i];
+            if (2 * i + 1 <= n) {
+                nums[2 * i + 1] = nums[i] + nums[i + 1];
+                max_num = max(nums[2 * i + 1], max_num);
+            }
+        }
+        return max_num;
+    }
+};
