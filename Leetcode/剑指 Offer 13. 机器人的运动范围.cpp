@@ -10,40 +10,34 @@ using namespace std;
 // BFS
 class Solution {
    private:
-    int dir[4][2] = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    vector<vector<int>> seen;
+    const int dirs[2][2]{{0, 1}, {1, 0}};
 
-    bool canEnter(int x, int y, int k) {
+    int can_enter(int x, int y, int k) {
         int sum = 0;
-        while (x) {
-            sum += x % 10;
-            x /= 10;
-        }
-        while (y) {
-            sum += y % 10;
-            y /= 10;
-        }
+        while (x) sum += x % 10, x /= 10;
+        while (y) sum += y % 10, y /= 10;
         return sum <= k;
     }
 
    public:
     int movingCount(int m, int n, int k) {
+        vector<vector<int>> seen(m, vector<int>(n, false));
+        queue<tuple<int, int>> q;
+        q.emplace(0, 0);
+        seen[0][0] = true;
         int count = 0;
-        seen.resize(m, vector<int>(n, false));
-        queue<pair<int, int>> q;
-        q.push({0, 0});
         while (!q.empty()) {
             auto [x, y] = q.front();
             q.pop();
-            if (x < 0 || x >= m || y < 0 || y >= n || seen[x][y] ||
-                !canEnter(x, y, k)) {
-                continue;
-            }
             ++count;
             seen[x][y] = true;
-            for (int i = 0; i < 4; ++i) {
-                int nx = x + dir[i][0], ny = y + dir[i][1];
-                q.push({nx, ny});
+            for (auto &dir : dirs) {
+                int tx = x + dir[0], ty = y + dir[1];
+                if (tx < 0 || tx >= m || ty < 0 || ty >= n || seen[tx][ty] ||
+                    !can_enter(tx, ty, k))
+                    continue;
+                seen[tx][ty] = true;
+                q.emplace(tx, ty);
             }
         }
         return count;
