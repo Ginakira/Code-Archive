@@ -49,3 +49,36 @@ class Solution2 {
         return 0;
     }
 };
+
+class Solution3 {
+   private:
+    int get_next_revision_number(const string &version, int &ind) {
+        int ver = 0;
+        while (ind < version.size()) {
+            if (version[ind] == '.') {
+                ++ind;
+                break;
+            }
+            ver *= 10;
+            ver += version[ind] - '0';
+            ++ind;
+        }
+        return ver;
+    }
+
+   public:
+    int compareVersion(string version1, string version2) {
+        int na = version1.size(), nb = version2.size();
+        int ind_a = 0, ind_b = 0;
+        while (ind_a < na || ind_b < nb) {
+            int va = get_next_revision_number(version1, ind_a);
+            int vb = get_next_revision_number(version2, ind_b);
+            if (va < vb) {
+                return -1;
+            } else if (va > vb) {
+                return 1;
+            }
+        }
+        return 0;
+    }
+};
