@@ -12,6 +12,7 @@ MSP/
 Qt/
 QtProjects/
 MachineLearning/venv/
+Rust/
 
 *.out
 HZOJ/Python/requests-spider/tieba/images/
