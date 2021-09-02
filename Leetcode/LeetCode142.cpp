@@ -29,3 +29,24 @@ struct ListNode *detectCycle(struct ListNode *head) {
     }
     return p;
 }
+
+class Solution2 {
+   public:
+    ListNode *detectCycle(ListNode *head) {
+        if (head == nullptr) return nullptr;
+        ListNode *slow = head, *fast = head;
+        do {
+            if (fast == nullptr || fast->next == nullptr) return nullptr;
+            slow = slow->next;
+            fast = fast->next->next;
+        } while (fast != slow);
+        if (slow != fast) return nullptr;
+
+        fast = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
+    }
+};
