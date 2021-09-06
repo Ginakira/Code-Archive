@@ -20,3 +20,26 @@ class Solution {
         return N % 2 == 0 ? result * result : result * result * x;
     }
 };
+
+// 迭代快速幂 二进制拆分
+class Solution2 {
+   private:
+    double quick_pow(double x, long long n) {
+        double ans = 1;
+        double base = x;
+        while (n > 0) {
+            if (n & 1) {
+                ans *= base;
+            }
+            base *= base;
+            n >>= 1;
+        }
+        return ans;
+    }
+
+   public:
+    double myPow(double x, int n) {
+        long long N = n;
+        return N >= 0 ? quick_pow(x, N) : 1.0 / quick_pow(x, -N);
+    }
+};
