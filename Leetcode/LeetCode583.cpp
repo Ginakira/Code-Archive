@@ -32,7 +32,7 @@ class Solution {
 };
 
 // 最长公共子序列
-class Solution {
+class Solution2 {
    public:
     int minDistance(string word1, string word2) {
         int n = word1.size(), m = word2.size();
