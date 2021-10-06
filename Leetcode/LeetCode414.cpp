@@ -1,4 +1,6 @@
 // LeetCode 414 第三大的数
+#include <climits>
+#include <limits>
 #include <set>
 #include <vector>
 using namespace std;
@@ -17,8 +19,24 @@ class Solution {
 class Solution2 {
    public:
     int thirdMax(vector<int>& nums) {
-        long m1 = LONG_MIN, m2 = LONG_MIN, m3 = LONG_MIN;
-        for (int& num : nums) {
+        set<int, greater<int>> st(nums.begin(), nums.end());
+        auto it = st.begin();
+        if (st.size() < 3) {
+            return *st.begin();
+        }
+        for (int i = 1; i < 3; ++i) {
+            ++it;
+        }
+        return *it;
+    }
+};
+
+class Solution3 {
+   public:
+    int thirdMax(vector<int>& nums) {
+        const long INF = numeric_limits<long>::min();
+        long m1 = INF, m2 = INF, m3 = INF;
+        for (const int& num : nums) {
             if (num == m1 || num == m2 || num == m3) continue;
             if (num > m1) {
                 m3 = m2, m2 = m1, m1 = num;
@@ -28,6 +46,6 @@ class Solution2 {
                 m3 = num;
             }
         }
-        return m3 == LONG_MIN ? m1 : m3;
+        return m3 == INF ? m1 : m3;
     }
 };
