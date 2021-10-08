@@ -12,12 +12,9 @@ class Solution {
     vector<string> findRepeatedDnaSequences(string s) {
         int n = s.size();
         unordered_map<string, int> mp;
-        string cur = s.substr(0, 10);
         vector<string> ans;
-        mp[cur]++;
-        for (int i = 10; i < n; ++i) {
-            cur.erase(0, 1);
-            cur.push_back(s[i]);
+        for (int i = 0; i <= n - 10; ++i) {
+            string cur = s.substr(i, 10);
             if (mp[cur] == 1) {
                 ans.push_back(cur);
             }
