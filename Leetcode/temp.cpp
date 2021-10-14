@@ -1,29 +1,31 @@
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2021/10/11 22:39:41
+************************************************************/
+#include <algorithm>
+#include <cmath>
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
-template <typename T, typename L>
-void foo(T v, L l) {
-    cout << "type ?, value " << v << ", size of letter " << sizeof(l)
-         << ", letter " << l << endl;
-}
+class A {
+   public:
+    A() { cout << "A constructor\n"; }
+    virtual ~A() { cout << "A destructor\n"; }
+};
 
-template <typename T, typename L>
-void foo(float v, L l) {
-    cout << "type float, value " << v << ", size of letter " << sizeof(l)
-         << ", letter " << l << endl;
-}
-
-template <typename T, typename L>
-void foo(double v, L l) {
-    cout << "type double, value " << v << ", size of letter " << sizeof(l)
-         << ", letter " << l << endl;
-}
+class B : public A {
+   public:
+    B() { cout << "B constructor\n"; }
+    ~B() override { cout << "B destructor\n"; }
+};
 
 int main() {
-    float f = 2;
-    double d = 3;
-    char l = 'a';
-    foo<float>(f, l);
-    foo<double>(d, l);
+    A *b = new B;
+    delete b;
     return 0;
 }
