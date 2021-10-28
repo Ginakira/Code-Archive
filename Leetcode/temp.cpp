@@ -1,31 +1,32 @@
-/************************************************************
-    File Name : temp.cpp
-    Author: Ginakira
-    Mail: ginakira@outlook.com
-    Github: https://github.com/Ginakira
-    Created Time: 2021/10/11 22:39:41
-************************************************************/
 #include <algorithm>
-#include <cmath>
+#include <chrono>
+#include <future>
 #include <iostream>
-#include <string>
-#include <vector>
+#include <thread>
 using namespace std;
+using namespace std::chrono;
 
-class A {
-   public:
-    A() { cout << "A constructor\n"; }
-    virtual ~A() { cout << "A destructor\n"; }
-};
-
-class B : public A {
-   public:
-    B() { cout << "B constructor\n"; }
-    ~B() override { cout << "B destructor\n"; }
-};
+int foo(int num) {
+    cout << "Thread start sleep for 5s...\n";
+    this_thread::sleep_for(seconds(5));
+    return num * 100;
+}
 
 int main() {
-    A *b = new B;
-    delete b;
+    packaged_task<int(int)> pt(foo);
+    auto fu = async(bind(foo, 10));
+
+    thread t(move(pt), 10);
+    cout << "Main before get value from prom\n";
+    int ret = 0;
+    ret = fu.get();
+    if (ret) {
+        cout << "Got value: " << ret << "\n";
+    } else {
+        cout << "Not got\n";
+    }
+    t.join();
+    cout << "After join\n";
+
     return 0;
 }
