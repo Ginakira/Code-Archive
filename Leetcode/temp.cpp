@@ -1,32 +1,26 @@
+/************************************************************
+    File Name : temp.cpp
+    Author: Ginakira
+    Mail: ginakira@outlook.com
+    Github: https://github.com/Ginakira
+    Created Time: 2021/11/01 00:20:10
+************************************************************/
 #include <algorithm>
-#include <chrono>
-#include <future>
+#include <cmath>
 #include <iostream>
-#include <thread>
+#include <string>
+#include <vector>
 using namespace std;
-using namespace std::chrono;
-
-int foo(int num) {
-    cout << "Thread start sleep for 5s...\n";
-    this_thread::sleep_for(seconds(5));
-    return num * 100;
-}
 
 int main() {
-    packaged_task<int(int)> pt(foo);
-    auto fu = async(bind(foo, 10));
-
-    thread t(move(pt), 10);
-    cout << "Main before get value from prom\n";
-    int ret = 0;
-    ret = fu.get();
-    if (ret) {
-        cout << "Got value: " << ret << "\n";
-    } else {
-        cout << "Not got\n";
-    }
-    t.join();
-    cout << "After join\n";
-
+    vector<int> vec;
+    cout << vec.capacity() << endl;
+    vec.reserve(100);
+    cout << vec.capacity() << endl;
+    vec.reserve(5);
+    cout << vec.capacity() << endl;
+    // vector<int>(vec).swap(vec);
+    vec.shrink_to_fit();
+    cout << vec.capacity() << endl;
     return 0;
 }
