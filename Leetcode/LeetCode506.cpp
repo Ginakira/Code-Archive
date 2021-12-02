@@ -26,3 +26,30 @@ class Solution {
         return ans;
     }
 };
+
+// 排序
+class Solution2 {
+   private:
+    const vector<string> medals{"Gold Medal", "Silver Medal", "Bronze Medal"};
+
+   public:
+    vector<string> findRelativeRanks(vector<int>& score) {
+        vector<tuple<int, int>> sorted_score;
+        for (int i = 0; i < score.size(); ++i) {
+            sorted_score.emplace_back(score[i], i);
+        }
+        sort(sorted_score.begin(), sorted_score.end(),
+             greater<tuple<int, int>>());
+
+        vector<string> ans(score.size());
+        for (int i = 0; i < sorted_score.size(); ++i) {
+            auto [val, seq] = sorted_score[i];
+            if (i < 3) {
+                ans[seq] = medals[i];
+            } else {
+                ans[seq] = to_string(i + 1);
+            }
+        }
+        return ans;
+    }
+};
