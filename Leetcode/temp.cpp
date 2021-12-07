@@ -3,24 +3,45 @@
     Author: Ginakira
     Mail: ginakira@outlook.com
     Github: https://github.com/Ginakira
-    Created Time: 2021/11/01 00:20:10
+    Created Time: 2021/12/06 23:26:26
 ************************************************************/
-#include <algorithm>
-#include <cmath>
-#include <iostream>
-#include <string>
-#include <vector>
-using namespace std;
+#include <stdio.h>
+
+#define MAX_N 200
+#define MAX_M 200
+
+
 
 int main() {
-    vector<int> vec;
-    cout << vec.capacity() << endl;
-    vec.reserve(100);
-    cout << vec.capacity() << endl;
-    vec.reserve(5);
-    cout << vec.capacity() << endl;
-    // vector<int>(vec).swap(vec);
-    vec.shrink_to_fit();
-    cout << vec.capacity() << endl;
+    int n, m;
+    scanf("%d %d", &n, &m);
+    int origin[MAX_N][MAX_M];
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            scanf("%d", &origin[i][j]);
+        }
+    }
+
+    // Transform
+    int transformed[MAX_N][MAX_M];
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            transformed[i][j] = origin[j][i];
+        }
+        for (int j = 0; j < n / 2; ++j) {
+            int temp = transformed[i][j];
+            transformed[i][j] = transformed[i][n - j - 1];
+            transformed[i][n - j - 1] = temp;
+        }
+    }
+
+    // Output
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j) {
+            j&& printf(" ");
+            printf("%d", transformed[i][j]);
+        }
+        printf("\n");
+    }
     return 0;
 }
