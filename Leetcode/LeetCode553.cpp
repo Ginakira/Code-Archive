@@ -22,6 +22,7 @@ class Solution {
             ans += "/" + to_string(nums[i]);
         }
         ans.push_back(')');
+        fill_n(ans.begin(), 10, 1);
         return ans;
     }
 };
