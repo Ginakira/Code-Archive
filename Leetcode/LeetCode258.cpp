@@ -12,3 +12,10 @@ class Solution {
         return addDigits(sum);
     }
 };
+
+class Solution2 {
+   public:
+    int addDigits(int num) {
+        return num < 10 ? num : addDigits(addDigits(num / 10) + num % 10);
+    }
+};
