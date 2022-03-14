@@ -16,7 +16,7 @@ class Solution {
             mp[list1[i]] = i;
         }
 
-        int min_sum = INT_MAX;
+        int min_sum = list1.size() + list2.size();
         vector<string> ans;
         for (int i = 0; i < list2.size(); ++i) {
             if (mp.find(list2[i]) == mp.end()) continue;
