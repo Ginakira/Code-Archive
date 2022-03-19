@@ -20,16 +20,14 @@ struct TreeNode {
 class Solution {
    public:
     string tree2str(TreeNode *root) {
-        if (root == nullptr) {
-            return "";
+        if (root == nullptr) return {};
+        string result = to_string(root->val);
+        if (root->left || root->right) {
+            result += "(" + tree2str(root->left) + ")";
         }
-
-        if (root->left == nullptr && root->right == nullptr) {
-            return to_string(root->val);
-        } else if (root->right == nullptr) {
-            return to_string(root->val) + "(" + tree2str(root->left) + ")";
+        if (root->right) {
+            result += "(" + tree2str(root->right) + ")";
         }
-        return to_string(root->val) + "(" + tree2str(root->left) + ")(" +
-               tree2str(root->right) + ")";
+        return result;
     }
 };
