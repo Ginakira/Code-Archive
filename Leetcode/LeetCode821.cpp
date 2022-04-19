@@ -1,6 +1,7 @@
 // LeetCode 821 字符的最短距离
 
 #include <algorithm>
+#include <climits>
 #include <numeric>
 #include <string>
 #include <unordered_map>
