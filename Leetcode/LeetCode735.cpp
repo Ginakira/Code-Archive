@@ -29,3 +29,23 @@ class Solution {
         return ans;
     }
 };
+
+class Solution2 {
+   public:
+    vector<int> asteroidCollision(vector<int>& asteroids) {
+        vector<int> ans;
+        for (int asteroid : asteroids) {
+            bool alive = true;
+            while (alive && !ans.empty() && asteroid < 0 && ans.back() > 0) {
+                alive = ans.back() < -asteroid;
+                if (ans.back() <= -asteroid) {
+                    ans.pop_back();
+                }
+            }
+            if (alive) {
+                ans.emplace_back(asteroid);
+            }
+        }
+        return ans;
+    }
+};
