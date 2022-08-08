@@ -2,7 +2,9 @@
 
 #include <algorithm>
 #include <numeric>
+#include <stack>
 #include <string>
+#include <tuple>
 #include <unordered_map>
 #include <vector>
 using namespace std;
