@@ -29,3 +29,26 @@ class Solution {
         return num;
     }
 };
+
+class Solution2 {
+   public:
+    int maximumSwap(int num) {
+        string s = to_string(num);
+        int ind_a = 0, ind_b = 0;
+        int max_ind = s.size() - 1;
+        for (int i = s.size() - 1; i >= 0; --i) {
+            if (s[i] > s[max_ind]) {
+                max_ind = i;
+            } else if (s[i] < s[max_ind]) {
+                ind_a = i;
+                ind_b = max_ind;
+            }
+        }
+        if (ind_b > 0) {
+            swap(s[ind_a], s[ind_b]);
+            return stoi(s);
+        } else {
+            return num;
+        }
+    }
+};
