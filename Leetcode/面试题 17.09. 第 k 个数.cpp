@@ -1,10 +1,12 @@
 // 面试题 17.09. 第 k 个数
 
 #include <algorithm>
+#include <array>
 #include <numeric>
 #include <queue>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 using namespace std;
 
