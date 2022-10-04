@@ -11,19 +11,18 @@ using namespace std;
 class Solution {
    public:
     int minAddToMakeValid(string s) {
-        stack<char> stk;
-        int invalid_right = 0;
+        int invalid_right = 0, remain_left = 0;
         for (char ch : s) {
             if (ch == '(') {
-                stk.push(ch);
+                ++remain_left;
                 continue;
             }
-            if (!stk.empty()) {
-                stk.pop();
+            if (remain_left > 0) {
+                --remain_left;
                 continue;
             }
             ++invalid_right;
         }
-        return invalid_right + stk.size();
+        return invalid_right + remain_left;
     }
 };
