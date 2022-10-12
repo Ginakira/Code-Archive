@@ -1,4 +1,4 @@
-// 最长回文子串
+// LeetCode 5 最长回文子串
 #include <iostream>
 #include <string>
 using namespace std;
