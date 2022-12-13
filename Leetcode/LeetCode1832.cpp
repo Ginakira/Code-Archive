@@ -1,10 +1,10 @@
 // LeetCOde 1832 判断句子是否为全字母句
 
 #include <algorithm>
+#include <bitset>
 #include <numeric>
 #include <string>
 #include <unordered_map>
-#include <vector>
 using namespace std;
 
 class Solution {
