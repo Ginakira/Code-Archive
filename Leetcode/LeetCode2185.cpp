@@ -15,7 +15,7 @@ class Solution {
         return count_if(words.begin(), words.end(),
                         [prefv, pref_n](const string& word) {
                             string_view wordv{word};
-                            return wordv.substr(0, pref_n) == prefv;
+                            return wordv.compare(0, pref_n, prefv) == 0;
                         });
     }
 };
