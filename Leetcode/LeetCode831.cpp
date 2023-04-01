@@ -1,7 +1,9 @@
 // LeetCode 831 隐藏个人信息
 
 #include <algorithm>
+#include <array>
 #include <numeric>
+#include <regex>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -47,5 +49,24 @@ class Solution {
             return process_phone_number(s);
         }
         return {};
+    }
+};
+
+class Solution2 {
+   private:
+    std::array<std::string, 4> prefix{"", "+*-", "+**-", "+***-"};
+
+   public:
+    string maskPII(string s) {
+        string ans;
+        auto at_ind = s.find('@');
+        if (at_ind != string::npos) {
+            transform(s.begin(), s.end(), s.begin(), ::tolower);
+            ans += s.substr(0, 1) + "*****" + s.substr(at_ind - 1);
+        } else {
+            s = regex_replace(s, regex("[^0-9]"), "");
+            ans += prefix[s.size() - 10] + "***-***-" + s.substr(s.size() - 4);
+        }
+        return ans;
     }
 };
