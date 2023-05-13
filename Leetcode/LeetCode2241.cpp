@@ -26,3 +26,18 @@ class Solution {
         return ans;
     }
 };
+
+class Solution2 {
+   public:
+    int findMaxK(vector<int>& nums) {
+        int ans = -1;
+        unordered_set<int> us;
+        for (int num : nums) {
+            if (us.count(-num)) {
+                ans = max(ans, abs(num));
+            }
+            us.insert(num);
+        }
+        return ans;
+    }
+};
