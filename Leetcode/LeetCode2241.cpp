@@ -31,13 +31,31 @@ class Solution2 {
    public:
     int findMaxK(vector<int>& nums) {
         int ans = -1;
-        unordered_set<int> us;
+        std::array<bool, 2001> mark{{false}};
         for (int num : nums) {
-            if (us.count(-num)) {
+            if (mark[-num + 1000]) {
                 ans = max(ans, abs(num));
             }
-            us.insert(num);
+            mark[num + 1000] = true;
         }
         return ans;
+    }
+};
+
+class Solution3 {
+   public:
+    int findMaxK(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        int n = nums.size(), l = 0, r = n - 1;
+        while (l < r) {
+            while (l < r && -nums[l] < nums[r]) {
+                --r;
+            }
+            if (-nums[l] == nums[r]) {
+                return nums[r];
+            }
+            ++l;
+        }
+        return -1;
     }
 };
