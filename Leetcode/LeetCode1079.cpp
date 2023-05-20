@@ -14,6 +14,37 @@ using namespace std;
 
 class Solution {
    private:
+    void backtrack(const string &tiles, int n, unordered_set<string> &results,
+                   vector<bool> &vis, string &cur, int index) {
+        if (index >= n || results.count(cur) || vis[index]) {
+            return;
+        }
+        vis[index] = true;
+        cur.push_back(tiles[index]);
+        for (int i = 0; i < n; ++i) {
+            backtrack(tiles, n, results, vis, cur, i);
+        }
+        results.insert(cur);
+        cur.pop_back();
+        vis[index] = false;
+    }
+
+   public:
+    int numTilePossibilities(string tiles) {
+        int n = tiles.size();
+        unordered_set<string> results;
+        vector<bool> vis(n, false);
+        string cur = "";
+
+        for (int i = 0; i < n; ++i) {
+            backtrack(tiles, n, results, vis, cur, i);
+        }
+        return results.size();
+    }
+};
+
+class Solution2 {
+   private:
     int dfs(unordered_map<char, int> &cnt, unordered_set<char> &tile,
             int remain) {
         if (remain == 0) {
