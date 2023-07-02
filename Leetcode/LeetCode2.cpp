@@ -28,3 +28,28 @@ class Solution {
         return head.next;
     }
 };
+class Solution2 {
+   public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *p1 = l1, *p2 = l2;
+        ListNode* p = new ListNode(0);
+        ListNode* ans = p;
+        while (p1 || p2) {
+            if (p1) {
+                p->val += p1->val;
+            }
+            if (p2) {
+                p->val += p2->val;
+            }
+            int carry = p->val / 10;
+            p->val %= 10;
+            if (carry || (p1 && p1->next) || (p2 && p2->next)) {
+                p->next = new ListNode(carry);
+            }
+            p1 = p1 ? p1->next : nullptr;
+            p2 = p2 ? p2->next : nullptr;
+            p = p->next;
+        }
+        return ans;
+    }
+};
