@@ -3,7 +3,7 @@
 import os.path
 
 punctuation_map = {
-    '，': '', # DELETE
+    '，': '\n', # ENTER
     '。': '.',
     '！': '!',
     '？': '?',
