@@ -32,3 +32,33 @@ class Solution {
         return true;
     }
 };
+
+class Solution2 {
+   public:
+    bool lemonadeChange(vector<int>& bills) {
+        int five_cnt = 0, ten_cnt = 0;
+        for (auto& bill : bills) {
+            switch (bill) {
+                case 5: {
+                    ++five_cnt;
+                } break;
+                case 10: {
+                    ++ten_cnt;
+                    --five_cnt;
+                } break;
+                case 20: {
+                    --five_cnt;
+                    if (ten_cnt) {
+                        --ten_cnt;
+                    } else {
+                        five_cnt -= 2;
+                    }
+                } break;
+            }
+            if (five_cnt < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+};
