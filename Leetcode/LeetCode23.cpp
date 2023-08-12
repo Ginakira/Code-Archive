@@ -7,7 +7,7 @@ struct ListNode {
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(NULL) {}
+    ListNode(int x) : val(x), next(nullptr) {}
 };
 
 // 暴力法 使用优先队列遍历原链表同时入队 然后遍历队列生成新链表 32ms
@@ -71,5 +71,42 @@ class Solution2 {
             }
         }
         return head.next;
+    }
+};
+
+// 分治合并
+class Solution3 {
+   private:
+    ListNode *mergeTwoList(ListNode *la, ListNode *lb) {
+        ListNode node, *dummy = &node;
+        ListNode *pa = la, *pb = lb, *p = dummy;
+        while (pa || pb) {
+            if (!pb || (pa && pa->val <= pb->val)) {
+                p->next = pa;
+                pa = pa->next;
+            } else {
+                p->next = pb;
+                pb = pb->next;
+            }
+            p = p->next;
+        }
+        return dummy->next;
+    }
+
+    ListNode *mergeKLists(vector<ListNode *> &lists, int start, int end) {
+        if (start == end) {
+            return lists[start];
+        }
+        if (start > end) {
+            return nullptr;
+        }
+        int mid = start + (end - start) / 2;
+        return mergeTwoList(mergeKLists(lists, start, mid),
+                            mergeKLists(lists, mid + 1, end));
+    }
+
+   public:
+    ListNode *mergeKLists(vector<ListNode *> &lists) {
+        return mergeKLists(lists, 0, lists.size() - 1);
     }
 };
