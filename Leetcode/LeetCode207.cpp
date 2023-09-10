@@ -5,38 +5,35 @@ using namespace std;
 
 // 基于BFS的拓扑排序，同LC210
 class Solution {
-   private:
-    vector<vector<int>> edges;
-    vector<int> indeg;
-
    public:
     bool canFinish(int numCourses, vector<vector<int>> &prerequisites) {
-        edges.resize(numCourses);
-        indeg.resize(numCourses);
-        for (const auto &info : prerequisites) {
-            edges[info[1]].push_back(info[0]);
-            ++indeg[info[0]];
-        }
-        queue<int> q;
-        for (int i = 0; i < numCourses; ++i) {
-            if (indeg[i] == 0) {
-                q.push(i);
-            }
+        vector<int> in_degree(numCourses, 0);
+        vector<vector<int>> edges(numCourses);
+        for (auto &pre : prerequisites) {
+            int u = pre[1], v = pre[0];
+            edges[u].emplace_back(v);
+            ++in_degree[v];
         }
 
-        vector<int> ret;
+        queue<int> q;
+        for (int i = 0; auto &d : in_degree) {
+            if (d == 0) {
+                q.emplace(i);
+            }
+            ++i;
+        }
+
+        int cnt = 0;
         while (!q.empty()) {
-            int u = q.front();
-            for (auto &v : edges[u]) {
-                --indeg[v];
-                if (indeg[v] == 0) {
-                    q.push(v);
+            auto i = q.front();
+            q.pop();
+            ++cnt;
+            for (auto &e : edges[i]) {
+                if (--in_degree[e] == 0) {
+                    q.emplace(e);
                 }
             }
-            ret.push_back(u);
-            q.pop();
         }
-        if (ret.size() != numCourses) return false;
-        return true;
+        return cnt == numCourses;
     }
 };
