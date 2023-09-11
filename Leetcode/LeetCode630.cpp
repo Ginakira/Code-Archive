@@ -1,4 +1,4 @@
-// LeetCode 630 课程表II
+// LeetCode 630 课程表III
 
 #include <algorithm>
 #include <array>
