@@ -20,3 +20,22 @@ class Solution {
         return n <= cnt;
     }
 };
+
+class Solution2 {
+   public:
+    bool canPlaceFlowers(vector<int>& flowerbed, int n) {
+        for (int i = 0; n > 0 && i < flowerbed.size();) {
+            if (flowerbed[i]) {
+                i += 2;
+                continue;
+            }
+            if (i == flowerbed.size() - 1 || flowerbed[i + 1] == 0) {
+                --n;
+                i += 2;
+            } else {
+                i += 3;
+            }
+        }
+        return n <= 0;
+    }
+};
