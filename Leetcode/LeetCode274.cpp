@@ -2,13 +2,13 @@
 
 #include <algorithm>
 #include <numeric>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
 class Solution {
-public:
+   public:
     int hIndex(vector<int>& citations) {
         int n = citations.size();
         sort(citations.begin(), citations.end());
@@ -18,5 +18,20 @@ public:
             --i;
         }
         return h;
+    }
+};
+
+class Solution2 {
+   public:
+    int hIndex(vector<int>& citations) {
+        int n = citations.size();
+        sort(citations.begin(), citations.end());
+        for (int i = 0; i < n; ++i) {
+            int remain = n - i;
+            if (citations[i] >= remain) {
+                return remain;
+            }
+        }
+        return 0;
     }
 };

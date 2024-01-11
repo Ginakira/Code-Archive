@@ -1,6 +1,7 @@
 // LeetCode 260 只出现一次的数字III
 #include <algorithm>
 #include <climits>
+#include <limits>
 #include <numeric>
 #include <string>
 #include <unordered_map>
@@ -29,20 +30,19 @@ class Solution {
 class Solution2 {
    public:
     vector<int> singleNumber(vector<int>& nums) {
-        int xor_num = 0;
+        int xor_result =
+            std::accumulate(nums.begin(), nums.end(), 0, std::bit_xor<int>());
+        int lowbit = xor_result == numeric_limits<int>::min()
+                         ? xor_result
+                         : xor_result & (-xor_result);
+        int type1 = 0, type0 = 0;
         for (int num : nums) {
-            xor_num ^= num;
-        }
-
-        int last_1_bit = xor_num == INT_MIN ? xor_num : xor_num & (-xor_num);
-        int type_1 = 0, type_0 = 0;
-        for (int num : nums) {
-            if (num & last_1_bit) {
-                type_1 ^= num;
+            if (num & lowbit) {
+                type1 ^= num;
             } else {
-                type_0 ^= num;
+                type0 ^= num;
             }
         }
-        return {type_1, type_0};
+        return {type1, type0};
     }
 };
