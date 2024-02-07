@@ -14,6 +14,42 @@ struct TreeNode {
         : val(x), left(left), right(right) {}
 };
 
+class Solution_BFS_2024 {
+   public:
+    bool isCousins(TreeNode *root, int x, int y) {
+        if (!root) {
+            return false;
+        }
+        queue<pair<TreeNode *, TreeNode *>> q;
+        TreeNode *xfa = nullptr, *yfa = nullptr;
+        q.emplace(root, nullptr);
+        while (!q.empty()) {
+            int n = q.size();
+            for (int i = 0; i < n; ++i) {
+                auto [node, fa] = q.front();
+                q.pop();
+                if (node->val == x) {
+                    xfa = fa;
+                } else if (node->val == y) {
+                    yfa = fa;
+                }
+                if (node->left) {
+                    q.emplace(node->left, node);
+                }
+                if (node->right) {
+                    q.emplace(node->right, node);
+                }
+            }
+            if (xfa && yfa) {
+                return xfa != yfa;
+            } else if (xfa || yfa) {
+                return false;
+            }
+        }
+        return false;
+    }
+};
+
 // BFS
 class Solution {
    private:
