@@ -65,3 +65,26 @@ class Solution2 {
         return slots == 0;
     }
 };
+
+class Solution3 {
+   public:
+    bool isValidSerialization(string preorder) {
+        stringstream ss(preorder);
+        string cur;
+        stack<int> stk;
+        stk.emplace(1);
+        while (getline(ss, cur, ',')) {
+            if (stk.empty()) {
+                return false;
+            }
+            --stk.top();
+            if (stk.top() == 0) {
+                stk.pop();
+            }
+            if (cur[0] != '#') {
+                stk.push(2);
+            }
+        }
+        return stk.empty();
+    }
+};
