@@ -10,6 +10,8 @@ class Solution {
         if (target == 0) {
             ans.emplace_back(path);
             return;
+        } else if (target < 0) {
+            return;
         }
         for (int i = index; i < candidates.size(); ++i) {
             if (target < candidates[i]) return;
