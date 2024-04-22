@@ -1,4 +1,5 @@
 // LeetCode 377 组合总和IV
+#include <limits>
 #include <vector>
 using namespace std;
 
@@ -10,7 +11,8 @@ class Solution {
         dp[0] = 1;
         for (int i = 1; i <= target; ++i) {
             for (int num : nums) {
-                if (num <= i && dp[i - num] < INT_MAX - dp[i]) {
+                if (num <= i &&
+                    dp[i - num] < std::numeric_limits<int>::max() - dp[i]) {
                     dp[i] += dp[i - num];
                 }
             }
