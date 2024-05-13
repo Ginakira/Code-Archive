@@ -1,4 +1,5 @@
 // 腐烂的橘子
+#include <array>
 #include <queue>
 #include <vector>
 using namespace std;
@@ -46,5 +47,47 @@ class Solution {
         }
 
         return time;
+    }
+};
+
+class Solution2 {
+   public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        int n = grid.size(), m = grid[0].size();
+        int fresh_cnt = 0;
+        queue<tuple<int, int>> q;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == 1) {
+                    ++fresh_cnt;
+                } else if (grid[i][j] == 2) {
+                    q.emplace(i, j);
+                }
+            }
+        }
+        int steps = 0;
+        static constexpr array<array<int, 2>, 4> dirs = {
+            {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}};
+        while (!q.empty()) {
+            ++steps;
+            int qn = q.size();
+            for (int _ = 0; _ < qn; ++_) {
+                auto [i, j] = q.front();
+                q.pop();
+                for (auto [dx, dy] : dirs) {
+                    int nx = i + dx;
+                    int ny = j + dy;
+                    if (nx < 0 || nx >= n || ny < 0 || ny >= m) {
+                        continue;
+                    }
+                    if (grid[nx][ny] == 1) {
+                        --fresh_cnt;
+                        grid[nx][ny] = 2;
+                        q.emplace(nx, ny);
+                    }
+                }
+            }
+        }
+        return fresh_cnt == 0 ? max(0, steps - 1) : -1;
     }
 };
