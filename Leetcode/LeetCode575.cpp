@@ -8,12 +8,9 @@
 using namespace std;
 
 class Solution {
-   public:
+public:
     int distributeCandies(vector<int>& candyType) {
-        unordered_set<int> st;
-        for (const int& type : candyType) {
-            st.insert(type);
-        }
-        return min(st.size(), candyType.size() / 2);
+        unordered_set<int> us(candyType.begin(), candyType.end());
+        return min(candyType.size() / 2, us.size());
     }
 };
