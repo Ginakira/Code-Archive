@@ -8,20 +8,17 @@
 using namespace std;
 
 class Solution {
-   public:
+public:
     int numRescueBoats(vector<int>& people, int limit) {
         int n = people.size();
-        sort(people.rbegin(), people.rend());
-        int count = 0;
-        int left = 0, right = n - 1;
-        while (left <= right) {
-            if (people[left] + people[right] <= limit) {
-                --right;
+        ranges::sort(people, std::greater());
+        int res = 0;
+        for (int l = 0, r = n - 1; l <= r; ++l) {
+            if (people[l] + people[r] <= limit) {
+                --r;
             }
-            ++left;
-            ++count;
+            ++res;
         }
-
-        return count;
+        return res;
     }
 };
