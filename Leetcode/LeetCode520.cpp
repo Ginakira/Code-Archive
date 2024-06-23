@@ -32,3 +32,27 @@ class Solution2 {
                         [](char ch) { return (bool)islower(ch); })));
     }
 };
+
+
+class Solution3 {
+public:
+    bool detectCapitalUse(string word) {
+        std::array<function<bool(const std::string &)>, 3> filters = {
+            [](const std::string &word) -> bool {
+                return ranges::all_of(word, ::isupper);
+            },
+            [](const std::string &word) -> bool{
+                return ranges::all_of(word, ::islower);
+            },
+            [](const std::string &word) -> bool {
+                return std::isupper(word[0]) && ranges::all_of(word.substr(1), ::islower);
+            },
+        };
+        for (auto &filter : filters) {
+            if (filter(word)) {
+                return true;
+            }
+        }
+        return false;
+    }
+};
