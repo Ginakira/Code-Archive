@@ -27,17 +27,18 @@ class Solution {
 // 如果当前元素不符合单调性，那么我们就弹栈直到符合单调性
 // 弹出的这些元素的答案就是当前的这位数字
 class Solution2 {
-   public:
+public:
     vector<int> nextGreaterElements(vector<int>& nums) {
+        stack<int> stk;
         int n = nums.size();
         vector<int> ans(n, -1);
-        stack<int> stk;
         for (int i = 0; i < n * 2 - 1; ++i) {
-            while (!stk.empty() && nums[stk.top()] < nums[i % n]) {
-                ans[stk.top()] = nums[i % n];
+            int idx = i % n;
+            while (!stk.empty() && nums[stk.top()] < nums[idx])  {
+                ans[stk.top()] = nums[idx];
                 stk.pop();
             }
-            stk.push(i % n);
+            stk.push(idx);
         }
         return ans;
     }
