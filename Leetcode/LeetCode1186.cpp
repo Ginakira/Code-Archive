@@ -13,14 +13,14 @@
 using namespace std;
 
 class Solution {
-   public:
+public:
     int maximumSum(vector<int>& arr) {
         int n = arr.size();
-        int dp_0 = arr[0], dp_1 = 0, ans = arr[0];
+        int dp0 = arr[0], dp1 = 0, ans = arr[0];
         for (int i = 1; i < n; ++i) {
-            dp_1 = max(dp_1 + arr[i], dp_0);
-            dp_0 = max(dp_0, 0) + arr[i];
-            ans = max({ans, dp_0, dp_1});
+            dp1 = max(dp1 + arr[i], dp0);
+            dp0 = max(dp0, 0) + arr[i];
+            ans = max({ans, dp0, dp1});
         }
         return ans;
     }
