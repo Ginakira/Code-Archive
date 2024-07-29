@@ -2,8 +2,8 @@
 
 #include <algorithm>
 #include <numeric>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
@@ -39,5 +39,26 @@ class Solution {
             }
         }
         return accumulate(scores.begin(), scores.end(), 0);
+    }
+};
+
+class Solution2 {
+   public:
+    int calPoints(vector<string>& operations) {
+        vector<int> records;
+        records.reserve(operations.size());
+        for (string op : operations) {
+            if (op[0] == 'C') {
+                records.pop_back();
+            } else if (op[0] == 'D') {
+                records.emplace_back(records.back() * 2);
+            } else if (op[0] == '+') {
+                records.emplace_back(records[records.size() - 1] +
+                                     records[records.size() - 2]);
+            } else {
+                records.emplace_back(stoi(op));
+            }
+        }
+        return accumulate(records.begin(), records.end(), 0);
     }
 };
