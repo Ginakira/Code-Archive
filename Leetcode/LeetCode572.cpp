@@ -46,3 +46,27 @@ class Solution {
         return false;
     }
 };
+
+class Solution2 {
+private:
+    bool is_same(TreeNode* a, TreeNode* b) {
+        if (!a && !b) {
+            return true;
+        } else if (!a || !b) {
+            return false;
+        }
+        if (a->val != b->val) {
+            return false;
+        }
+        return is_same(a->left, b->left) && is_same(a->right, b->right);
+    }
+
+public:
+    bool isSubtree(TreeNode* root, TreeNode* subRoot) {
+        if (!root) {
+            return !subRoot;
+        }
+        return is_same(root, subRoot) || isSubtree(root->left, subRoot) ||
+               isSubtree(root->right, subRoot);
+    }
+};
