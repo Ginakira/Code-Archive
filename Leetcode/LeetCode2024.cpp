@@ -30,3 +30,23 @@ class Solution {
                    maxConsecutiveAnswers(answerKey, 'F', k));
     }
 };
+
+
+class Solution2 {
+public:
+    int maxConsecutiveAnswers(string answerKey, int k) {
+        auto helper = [&](char target) {
+            int n = answerKey.size();
+            int ans = 0;
+            for (int l = 0, r = 0, cnt = 0; r < n; ++r) {
+                cnt += answerKey[r] != target;
+                while (cnt > k) {
+                    cnt -= answerKey[l++] != target;
+                }
+                ans = max(ans, r - l + 1);
+            }
+            return ans;
+        };
+        return max(helper('T'), helper('F'));
+    }
+};
