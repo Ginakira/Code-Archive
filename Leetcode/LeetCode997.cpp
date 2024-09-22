@@ -24,3 +24,17 @@ class Solution {
         return -1;
     }
 };
+
+class Solution2 {
+   public:
+    int findJudge(int n, vector<vector<int>>& trust) {
+        vector<tuple<int, int>> mark(n, {false, false});
+        for (auto& t : trust) {
+            int u = t[0], v = t[1];
+            ++get<0>(mark[u - 1]);
+            ++get<1>(mark[v - 1]);
+        }
+        auto it = ranges::find(mark, tuple{0, n - 1});
+        return it == mark.end() ? -1 : it - mark.begin() + 1;
+    }
+};
