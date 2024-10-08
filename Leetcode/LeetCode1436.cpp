@@ -22,3 +22,18 @@ class Solution {
         return {};
     }
 };
+
+class Solution2 {
+public:
+    string destCity(vector<vector<string>>& paths) {
+        unordered_map<string, tuple<int, int>> degs;
+        for (auto &path : paths) {
+            const auto &u = path[0], v = path[1];
+            ++get<0>(degs[v]);
+            ++get<1>(degs[u]);
+        }
+        return ranges::find_if(degs, [](const auto &deg) {
+            return get<1>(deg.second) == 0;
+        })->first;
+    }
+};
