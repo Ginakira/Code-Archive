@@ -14,3 +14,12 @@ class Solution {
         return max_num - min_num <= 2 * k ? 0 : max_num - min_num - 2 * k;
     }
 };
+
+class Solution2 {
+   public:
+    int smallestRangeI(vector<int>& nums, int k) {
+        int min_elem = *ranges::min_element(nums);
+        int max_elem = *ranges::max_element(nums);
+        return max(0, max_elem - min_elem - k * 2);
+    }
+};
