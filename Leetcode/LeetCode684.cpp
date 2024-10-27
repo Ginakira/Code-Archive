@@ -41,3 +41,42 @@ class Solution {
         return ret;
     }
 };
+
+class Solution2 {
+   private:
+    class UnionFind {
+       public:
+        UnionFind(size_t n) : parent_(n + 1) {
+            for (int i = 1; i <= n; ++i) {
+                parent_[i] = i;
+            }
+        }
+
+        int Find(int idx) {
+            if (parent_[idx] != idx) {
+                parent_[idx] = Find(parent_[idx]);
+            }
+            return parent_[idx];
+        }
+
+        void Union(int u, int v) { parent_[Find(u)] = parent_[Find(v)]; }
+
+       private:
+        vector<int> parent_;
+    };
+
+   public:
+    vector<int> findRedundantConnection(vector<vector<int>> &edges) {
+        size_t n = edges.size();
+        UnionFind uf(n);
+        for (auto &edge : edges) {
+            int u = edge[0], v = edge[1];
+            if (uf.Find(u) != uf.Find(v)) {
+                uf.Union(u, v);
+            } else {
+                return edge;
+            }
+        }
+        return {};
+    }
+};
