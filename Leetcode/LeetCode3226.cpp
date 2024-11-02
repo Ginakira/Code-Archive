@@ -29,3 +29,10 @@ class Solution {
         return ans;
     }
 };
+
+class Solution2 {
+   public:
+    int minChanges(int n, int k) {
+        return (n & k) == k ? __builtin_popcount(n ^ k) : -1;
+    }
+};
