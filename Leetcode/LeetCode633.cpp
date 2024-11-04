@@ -32,3 +32,21 @@ class Solution2 {
         return false;
     }
 };
+
+class Solution3 {
+   public:
+    bool judgeSquareSum(int c) {
+        int a = 0, b = sqrt(c);
+        while (a <= b) {
+            auto res = a * a <=> c - b * b;
+            if (res < 0) {
+                ++a;
+            } else if (res > 0) {
+                --b;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+};
