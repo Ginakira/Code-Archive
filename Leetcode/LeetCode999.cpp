@@ -31,3 +31,35 @@ class Solution {
         return ans;
     }
 };
+
+class Solution2 {
+   public:
+    int numRookCaptures(vector<vector<char>>& board) {
+        int n = board.size(), m = board[0].size();
+        int rook_x = 0, rook_y = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (board[i][j] == 'R') {
+                    rook_x = i;
+                    rook_y = j;
+                    goto found;
+                }
+            }
+        }
+    found:
+        auto attack = [&](int dx, int dy) {
+            int x = rook_x + dx, y = rook_y + dy;
+            while (x >= 0 && x < n && y >= 0 && y < m) {
+                if (board[x][y] == 'p') {
+                    return 1;
+                } else if (board[x][y] == 'B') {
+                    return 0;
+                }
+                x += dx;
+                y += dy;
+            }
+            return 0;
+        };
+        return attack(0, -1) + attack(0, 1) + attack(-1, 0) + attack(1, 0);
+    }
+};
