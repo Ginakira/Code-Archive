@@ -14,3 +14,15 @@ class Solution {
                                           : (coordinates[1] - '1' & 1);
     }
 };
+
+class Solution2 {
+   public:
+    bool squareIsWhite(string coordinates) {
+        auto col = coordinates[0] - 'a', row = coordinates[1] - '1';
+        int color = col & 1 ? 1 : 0;
+        if (row & 1) {
+            color = !color;
+        }
+        return color;
+    }
+};
