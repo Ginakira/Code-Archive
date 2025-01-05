@@ -1,4 +1,4 @@
-// LeetCode 2241 与对应负数同时存在的最大正整数
+// LeetCode 2241 设计一个 ATM 机器
 
 #include <algorithm>
 #include <array>
@@ -12,50 +12,46 @@
 #include <vector>
 using namespace std;
 
-class Solution {
+class ATM {
+   private:
+    static constexpr int kCashKinds = 5;
+    std::array<int, kCashKinds> balance_{{0}};
+    static constexpr std::array<int, kCashKinds> idx_to_deno_{
+        {20, 50, 100, 200, 500}};
+
    public:
-    int findMaxK(vector<int>& nums) {
-        int ans = -1;
-        unordered_set<int> us;
-        for (int num : nums) {
-            if (us.count(-num)) {
-                ans = max(ans, abs(num));
-            }
-            us.insert(num);
+    ATM() {}
+
+    void deposit(vector<int> banknotesCount) {
+        for (int i = 0; i < kCashKinds; ++i) {
+            balance_[i] += banknotesCount[i];
         }
-        return ans;
+    }
+
+    vector<int> withdraw(int amount) {
+        std::vector<int> res(kCashKinds, 0);
+        for (int i = kCashKinds - 1; i >= 0; --i) {
+            int cur = 0;
+            int deno = idx_to_deno_[i];
+            if (amount >= deno) {
+                cur = min(balance_[i], amount / deno);
+            }
+            res[i] = cur;
+            amount -= cur * deno;
+        }
+        if (amount > 0) {
+            return {-1};
+        }
+        for (int i = 0; i < kCashKinds; ++i) {
+            balance_[i] -= res[i];
+        }
+        return res;
     }
 };
 
-class Solution2 {
-   public:
-    int findMaxK(vector<int>& nums) {
-        int ans = -1;
-        std::array<bool, 2001> mark{{false}};
-        for (int num : nums) {
-            if (mark[-num + 1000]) {
-                ans = max(ans, abs(num));
-            }
-            mark[num + 1000] = true;
-        }
-        return ans;
-    }
-};
-
-class Solution3 {
-   public:
-    int findMaxK(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        int n = nums.size(), l = 0, r = n - 1;
-        while (l < r) {
-            while (l < r && -nums[l] < nums[r]) {
-                --r;
-            }
-            if (-nums[l] == nums[r]) {
-                return nums[r];
-            }
-            ++l;
-        }
-        return -1;
-    }
-};
+/**
+ * Your ATM object will be instantiated and called as such:
+ * ATM* obj = new ATM();
+ * obj->deposit(banknotesCount);
+ * vector<int> param_2 = obj->withdraw(amount);
+ */
