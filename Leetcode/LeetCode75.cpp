@@ -25,8 +25,6 @@ class Solution {
                 ++blue_cnt;
             }
         }
-        std::cout << red_cnt << ' ' << white_cnt << ' ' << blue_cnt
-                  << std::endl;
         for (int& num : nums) {
             if (red_cnt-- > 0) {
                 num = 0;
@@ -34,6 +32,27 @@ class Solution {
                 num = 1;
             } else if (blue_cnt-- > 0) {
                 num = 2;
+            }
+        }
+    }
+};
+
+class Solution2 {
+public:
+    void sortColors(vector<int>& nums) {
+        int n = nums.size();
+        int p0 = 0, p1 = 0;
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] == 0) {
+                swap(nums[i], nums[p0]);
+                if (p0 < p1) {
+                    swap(nums[i], nums[p1]);
+                }
+                ++p0;
+                ++p1;
+            } else if (nums[i] == 1) {
+                swap(nums[i], nums[p1]);
+                ++p1;
             }
         }
     }
