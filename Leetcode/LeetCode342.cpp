@@ -17,3 +17,10 @@ class Solution2 {
         return (n > 0) && !(n & (n - 1)) && (n & 0x55555555);
     }
 };
+
+class Solution3 {
+ public:
+  bool isPowerOfFour(int n) {
+    return __builtin_popcount(n) == 1 && !(__builtin_ctz(n) & 1);
+  }
+};
