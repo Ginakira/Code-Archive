@@ -52,3 +52,19 @@ class Solution2 {
         return ans;
     }
 };
+
+class Solution3 {
+ public:
+  vector<int> successfulPairs(vector<int>& spells, vector<int>& potions,
+                              long long success) {
+    vector<int> ans;
+    ans.reserve(spells.size());
+    ranges::sort(potions);
+    for (int spell : spells) {
+      long long target = ceil(1.0 * success / spell);
+      auto it = ranges::lower_bound(potions, target);
+      ans.emplace_back(distance(it, potions.end()));
+    }
+    return ans;
+  }
+};
