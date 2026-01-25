@@ -2,23 +2,36 @@
 
 #include <algorithm>
 #include <numeric>
-#include <unordered_map>
 #include <string>
+#include <unordered_map>
 #include <vector>
 using namespace std;
 
 class Solution {
-   public:
-    int minimumDifference(vector<int>& nums, int k) {
-        if (k == 1) {
-            return 0;
-        }
-        sort(nums.begin(), nums.end());
-        int left = 0, right = k - 1, min_diff = INT_MAX;
-        while (right < nums.size()) {
-            min_diff = min(min_diff, nums[right] - nums[left]);
-            ++left, ++right;
-        }
-        return min_diff;
+ public:
+  int minimumDifference(vector<int>& nums, int k) {
+    if (k == 1) {
+      return 0;
     }
+    sort(nums.begin(), nums.end());
+    int left = 0, right = k - 1, min_diff = INT_MAX;
+    while (right < nums.size()) {
+      min_diff = min(min_diff, nums[right] - nums[left]);
+      ++left, ++right;
+    }
+    return min_diff;
+  }
+};
+
+class Solution2 {
+ public:
+  int minimumDifference(vector<int>& nums, int k) {
+    ranges::sort(nums);
+    int n = nums.size();
+    int ans = nums[n - 1] - nums[0];
+    for (int i = 0; i <= n - k; ++i) {
+      ans = min(ans, nums[i + k - 1] - nums[i]);
+    }
+    return ans;
+  }
 };
