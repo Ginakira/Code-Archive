@@ -15,3 +15,11 @@ class Solution {
         return it == letters.end() ? letters[0] : *it;
     }
 };
+
+class Solution2 {
+ public:
+  char nextGreatestLetter(vector<char>& letters, char target) {
+    auto it = ranges::upper_bound(letters, target);
+    return it == letters.end() ? letters[0] : *it;
+  }
+};
