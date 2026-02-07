@@ -21,3 +21,16 @@ class Solution {
         return f;
     }
 };
+
+class Solution2 {
+ public:
+  int minimumDeletions(string s) {
+    int del = ranges::count(s, 'a');
+    int ans = del;
+    for (char c : s) {
+      c == 'a' ? --del : ++del;
+      ans = min(ans, del);
+    }
+    return ans;
+  }
+};
