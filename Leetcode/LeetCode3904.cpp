@@ -3,20 +3,16 @@
 class Solution {
  public:
   int firstStableIndex(vector<int>& nums, int k) {
-    stack<int> min_stk;
-    int cur_max = 0;
+    int cur_max = 0, cur_min = nums.back();
     int n = nums.size();
-    for (int i = n - 1; i >= 0; --i) {
-      if (min_stk.empty() || nums[i] <= nums[min_stk.top()]) {
-        min_stk.emplace(i);
-      }
+    vector<int> min_val(n);
+    min_val[n - 1] = cur_min;
+    for (int i = n - 2; i >= 0; --i) {
+      min_val[i] = min(nums[i], min_val[i + 1]);
     }
     for (int i = 0; i < n; ++i) {
       cur_max = max(cur_max, nums[i]);
-      while (!min_stk.empty() && min_stk.top() < i) {
-        min_stk.pop();
-      }
-      if (!min_stk.empty() && cur_max - nums[min_stk.top()] <= k) {
+      if (cur_max - min_val[i] <= k) {
         return i;
       }
     }
